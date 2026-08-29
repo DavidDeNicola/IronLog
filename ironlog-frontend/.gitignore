@@ -40,3 +40,16 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Backend
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# Frontend
+node_modules/
+dist/
+.angular/
+
+# IDE / OS
+.idea/
+.DS_Store
