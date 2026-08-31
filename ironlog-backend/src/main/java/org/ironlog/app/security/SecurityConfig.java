@@ -38,6 +38,7 @@ public class SecurityConfig {
             a.requestMatchers("/auth/**").permitAll();
             a.requestMatchers("/atleta/**").hasRole("ATHLETE");
             a.requestMatchers("/coach/**").hasRole("COACH");
+            a.requestMatchers("/catalogo/**").authenticated();
             a.anyRequest().authenticated();
         });
 

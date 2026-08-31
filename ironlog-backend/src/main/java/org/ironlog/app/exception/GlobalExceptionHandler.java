@@ -79,5 +79,5 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorMessageDTO> methodArgumentNotValid(MethodArgumentNotValidException e) {
         ErrorMessageDTO body = new ErrorMessageDTO("Parametri non validi");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
-    } 
+    }
 }
