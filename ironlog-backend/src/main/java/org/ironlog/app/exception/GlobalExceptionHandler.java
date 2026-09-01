@@ -80,4 +80,16 @@ public class GlobalExceptionHandler {
         ErrorMessageDTO body = new ErrorMessageDTO("Parametri non validi");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
     }
+
+    @ExceptionHandler(SchedaNonTrovataException.class)
+    public ResponseEntity<ErrorMessageDTO> schedaNonTrovata(SchedaNonTrovataException e) {
+        ErrorMessageDTO body = new ErrorMessageDTO("Scheda non trovata");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+    }
+
+    @ExceptionHandler(EsercizioNonTrovatoException.class)
+    public ResponseEntity<ErrorMessageDTO> esercizioNonTrovato(EsercizioNonTrovatoException e) {
+        ErrorMessageDTO body = new ErrorMessageDTO("Esercizio non trovato");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+    }
 }
