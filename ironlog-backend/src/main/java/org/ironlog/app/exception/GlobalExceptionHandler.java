@@ -92,4 +92,10 @@ public class GlobalExceptionHandler {
         ErrorMessageDTO body = new ErrorMessageDTO("Esercizio non trovato");
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
     }
+
+    @ExceptionHandler(UtenteNonTrovatoException.class)
+    public ResponseEntity<ErrorMessageDTO> utenteNonTrovato(UtenteNonTrovatoException e) {
+        ErrorMessageDTO body = new ErrorMessageDTO("Utente non trovato");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+    }
 }
