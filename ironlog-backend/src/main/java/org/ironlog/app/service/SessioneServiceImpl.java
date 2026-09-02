@@ -25,7 +25,7 @@ public class SessioneServiceImpl implements SessioneService {
     private final SerieEseguitaRepository serieEseguitaRepository;
     private final GiornoSchedaRepository giornoSchedaRepository;
     private final EsercizioSchedaRepository esercizioSchedaRepository;
-    EsercizioSchedaRepository serieSchedaRepository;
+    private final CalcolatoreProgressione calcolatoreProgressione;
     private final EsercizioRepository esercizioRepository;
     private final SessioneMapper sessioneMapper;
     private final SerieEseguitaMapper serieEseguitaMapper;
@@ -87,6 +87,7 @@ public class SessioneServiceImpl implements SessioneService {
         }
         sessione.setConclusaIl(LocalDateTime.now());
         sessioneRepository.save(sessione);
+        aggiornaProgressione(sessione);
         RiepilogoSessioneDTO dto = new RiepilogoSessioneDTO();
         dto.setSessioneId(sessioneId);
         dto.setEseguitaIl(sessione.getEseguitaIl());
@@ -119,5 +120,42 @@ public class SessioneServiceImpl implements SessioneService {
                 .stream()
                 .map(sessioneMapper::toSintesiDTO)
                 .toList();
+    }
+
+    private void aggiornaProgressione(Sessione sessione) {
+        if (sessione.getGiornoScheda() == null) {
+            return;
+        }
+
+        for (EsercizioScheda esercizioScheda : sessione.getGiornoScheda().getEsercizi()) {
+
+            List<SerieEseguita> serieDellEsercizio = sessione.getSerie().stream()
+                    .filter(s -> s.getEsercizio().getId().equals(esercizioScheda.getEsercizio().getId()))
+                    .toList();
+
+            if (serieDellEsercizio.isEmpty()) {
+                continue;
+            }
+
+            boolean completato = calcolatoreProgressione.isCompletato(
+                    serieDellEsercizio,
+                    esercizioScheda.getSerie(),
+                    esercizioScheda.getRipetizioni()
+            );
+
+            if (completato) {
+                esercizioScheda.setPesoAttuale(calcolatoreProgressione.aumenta(esercizioScheda.getPesoAttuale()));
+                esercizioScheda.setSeduteFallite(0);
+            } else {
+                esercizioScheda.setSeduteFallite(esercizioScheda.getSeduteFallite() + 1);
+
+                if (esercizioScheda.getSeduteFallite() >= 2) {
+                    esercizioScheda.setPesoAttuale(calcolatoreProgressione.diminuisci(esercizioScheda.getPesoAttuale()));
+                    esercizioScheda.setSeduteFallite(0);
+                }
+            }
+
+            esercizioSchedaRepository.save(esercizioScheda);
+        }
     }
 }
