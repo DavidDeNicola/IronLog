@@ -26,7 +26,7 @@ public class SerieEseguita {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "esercizio_id", nullable = false)
-    private EsercizioScheda esercizio;
+    private Esercizio esercizio;
 
     @Column(nullable = false)
     private Integer ripetizioni;
@@ -34,7 +34,6 @@ public class SerieEseguita {
     @Column(nullable = false, precision = 6, scale = 2)
     private BigDecimal peso;
 
-    @Column(nullable = false)
     private Integer ripObiettivo;
 
     @Column(nullable = false, precision = 6, scale = 2)

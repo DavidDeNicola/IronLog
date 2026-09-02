@@ -98,4 +98,28 @@ public class GlobalExceptionHandler {
         ErrorMessageDTO body = new ErrorMessageDTO("Utente non trovato");
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
     }
+
+    @ExceptionHandler(SessioneGiaApertaException.class)
+    public ResponseEntity<ErrorMessageDTO> sessioneGiaAperta(SessioneGiaApertaException e) {
+        ErrorMessageDTO body = new ErrorMessageDTO("Sessione gia aperta");
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
+    }
+
+    @ExceptionHandler(GiornoNonTrovatoException.class)
+    public ResponseEntity<ErrorMessageDTO> giornoNonTrovato(GiornoNonTrovatoException e) {
+        ErrorMessageDTO body = new ErrorMessageDTO("Giorno non trovato");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+    }
+
+    @ExceptionHandler(SessioneNonTrovataException.class)
+    public ResponseEntity<ErrorMessageDTO> sessioneNonTrovata(SessioneNonTrovataException e) {
+        ErrorMessageDTO body = new ErrorMessageDTO("Sessione non trovata");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+    }
+
+    @ExceptionHandler(SessioneGiaConclusaException.class)
+    public ResponseEntity<ErrorMessageDTO> sessioneGiaConclusa(SessioneGiaConclusaException e) {
+        ErrorMessageDTO body = new ErrorMessageDTO("Sessione gia conclusa");
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
+    }
 }

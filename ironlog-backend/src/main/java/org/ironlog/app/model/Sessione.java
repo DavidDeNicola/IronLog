@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -30,6 +31,8 @@ public class Sessione {
 
     @Column(nullable = false)
     private LocalDateTime eseguitaIl;
+
+    private LocalDateTime conclusaIl;
 
     @Column(length =  500)
     private String note;
