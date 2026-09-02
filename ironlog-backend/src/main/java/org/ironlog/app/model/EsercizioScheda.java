@@ -39,4 +39,7 @@ public class EsercizioScheda {
     private BigDecimal pesoAttuale;
 
     private Integer recupero;
+
+    @Column(nullable = false)
+    private Integer seduteFallite = 0;
 }
