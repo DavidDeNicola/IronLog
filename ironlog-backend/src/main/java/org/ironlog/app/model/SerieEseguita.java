@@ -38,4 +38,6 @@ public class SerieEseguita {
 
     @Column(nullable = false, precision = 6, scale = 2)
     private BigDecimal massimaleStimato;
+
+    private Integer rpe;
 }

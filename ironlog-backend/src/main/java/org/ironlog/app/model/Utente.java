@@ -9,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -45,6 +46,10 @@ public class Utente implements UserDetails {
 
     @Column(nullable = false)
     private LocalDateTime creatoIl;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "utente_preferito", joinColumns = @JoinColumn(name = "utente_id"), inverseJoinColumns = @JoinColumn(name = "esercizio_id"))
+    private List<Esercizio> preferiti = new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {

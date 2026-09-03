@@ -25,4 +25,7 @@ public class Esercizio {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gruppo_id")
     private GruppoMuscolare gruppoMuscolare;
+
+    @Column(length = 255)
+    private String immagineUrl;
 }

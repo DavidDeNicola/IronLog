@@ -18,4 +18,7 @@ public class GruppoMuscolare {
 
     @Column(length = 100, unique = true, nullable = false)
     private String nome;
+
+    @Column(length = 255)
+    private String immagineUrl;
 }
