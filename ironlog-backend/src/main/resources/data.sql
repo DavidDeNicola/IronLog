@@ -41,7 +41,7 @@ INSERT INTO esercizio (id, nome, descrizione, gruppo_id) VALUES
   (11, 'Rematore con bilanciere', 'Trazione orizzontale per lo spessore', 2),
   (12, 'Rematore con manubrio', 'Lavoro unilaterale sul gran dorsale', 2),
   (13, 'Pulley basso', 'Trazione orizzontale ai cavi', 2),
-  (14, 'Pullover ai cavi', 'Isolamento del gran dorsale', 2),
+  (14, 'Pullover', 'Isolamento del gran dorsale', 2),
   (15, 'Squat con bilanciere', 'Fondamentale per gli arti inferiori', 3),
   (16, 'Front squat', 'Maggiore enfasi sul quadricipite', 3),
   (17, 'Leg press 45 gradi', 'Alternativa guidata allo squat', 3),
@@ -53,7 +53,7 @@ INSERT INTO esercizio (id, nome, descrizione, gruppo_id) VALUES
   (23, 'Lento avanti con manubri', 'Spinta verticale con manubri', 4),
   (24, 'Alzate laterali', 'Isolamento del deltoide laterale', 4),
   (25, 'Alzate frontali', 'Isolamento del deltoide anteriore', 4),
-  (26, 'Alzate posteriori a 90 gradi', 'Isolamento del deltoide posteriore', 4),
+  (26, 'Alzate laterali ai cavi', 'Isolamento del deltoide laterale', 4),
   (27, 'Arnold press', 'Spinta con rotazione', 4),
   (28, 'Stacco rumeno', 'Enfasi sui femorali in allungamento', 5),
   (29, 'Leg curl sdraiato', 'Isolamento dei femorali', 5),
@@ -75,11 +75,11 @@ INSERT INTO esercizio (id, nome, descrizione, gruppo_id) VALUES
   (45, 'Glute bridge', 'Variante a terra senza panca', 8),
   (46, 'Abduzioni alla macchina', 'Isolamento del medio gluteo', 8),
   (47, 'Kickback ai cavi', 'Estensione dell''anca unilaterale', 8),
-  (48, 'Step up su rialzo', 'Unilaterale funzionale', 8),
+  (48, 'Glute ham raise', 'Enfasi sul grande gluteo', 8),
   (49, 'Calf raise in piedi', 'Enfasi sul gastrocnemio', 9),
   (50, 'Calf raise seduto', 'Enfasi sul soleo', 9),
   (51, 'Calf alla pressa', 'Variante alla leg press', 9),
-  (52, 'Donkey calf raise', 'Variante con anca flessa', 9);
+  (52, 'Calf raise con manubri', 'Enfasi sul gastrocnemio', 9);
 
 -- utente (20 righe: 5 coach, 15 atleti)
 INSERT INTO utente (id, nome, cognome, email, password, ruolo, coach_id, creato_il) VALUES
@@ -2834,3 +2834,73 @@ INSERT INTO serie_eseguita (id, sessione_id, numero_serie, esercizio_id, ripetiz
   (2300, 120, 11, 43, 12, 25.00, 12, 35.00),
   (2301, 120, 12, 43, 12, 25.00, 12, 35.00),
   (2302, 120, 13, 43, 11, 25.00, 12, 34.17);
+
+
+
+-- IronLog - percorsi delle immagini
+-- Da eseguire dopo data.sql, oppure da incorporare in fondo ad esso.
+
+-- gruppo_muscolare (9)
+UPDATE gruppo_muscolare SET immagine_url = '/images/gruppi/petto.png' WHERE id = 1;
+UPDATE gruppo_muscolare SET immagine_url = '/images/gruppi/dorso.png' WHERE id = 2;
+UPDATE gruppo_muscolare SET immagine_url = '/images/gruppi/quadricipiti.png' WHERE id = 3;
+UPDATE gruppo_muscolare SET immagine_url = '/images/gruppi/spalle.png' WHERE id = 4;
+UPDATE gruppo_muscolare SET immagine_url = '/images/gruppi/femorali.png' WHERE id = 5;
+UPDATE gruppo_muscolare SET immagine_url = '/images/gruppi/tricipiti.png' WHERE id = 6;
+UPDATE gruppo_muscolare SET immagine_url = '/images/gruppi/bicipiti.png' WHERE id = 7;
+UPDATE gruppo_muscolare SET immagine_url = '/images/gruppi/glutei.png' WHERE id = 8;
+UPDATE gruppo_muscolare SET immagine_url = '/images/gruppi/polpacci.png' WHERE id = 9;
+
+-- esercizio (52)
+UPDATE esercizio SET immagine_url = '/images/esercizi/panca-piana-con-bilanciere.jpg' WHERE id = 1;
+UPDATE esercizio SET immagine_url = '/images/esercizi/panca-inclinata-con-manubri.jpg' WHERE id = 2;
+UPDATE esercizio SET immagine_url = '/images/esercizi/panca-declinata-con-bilanciere.jpg' WHERE id = 3;
+UPDATE esercizio SET immagine_url = '/images/esercizi/croci-su-panca-piana.jpg' WHERE id = 4;
+UPDATE esercizio SET immagine_url = '/images/esercizi/croci-ai-cavi.jpg' WHERE id = 5;
+UPDATE esercizio SET immagine_url = '/images/esercizi/chest-press-alla-macchina.jpg' WHERE id = 6;
+UPDATE esercizio SET immagine_url = '/images/esercizi/piegamenti-a-terra.jpg' WHERE id = 7;
+UPDATE esercizio SET immagine_url = '/images/esercizi/stacco-da-terra.jpg' WHERE id = 8;
+UPDATE esercizio SET immagine_url = '/images/esercizi/trazioni-alla-sbarra.jpg' WHERE id = 9;
+UPDATE esercizio SET immagine_url = '/images/esercizi/lat-machine-avanti.jpg' WHERE id = 10;
+UPDATE esercizio SET immagine_url = '/images/esercizi/rematore-con-bilanciere.jpg' WHERE id = 11;
+UPDATE esercizio SET immagine_url = '/images/esercizi/rematore-con-manubrio.jpg' WHERE id = 12;
+UPDATE esercizio SET immagine_url = '/images/esercizi/pulley-basso.jpg' WHERE id = 13;
+UPDATE esercizio SET immagine_url = '/images/esercizi/pullover.jpg' WHERE id = 14;
+UPDATE esercizio SET immagine_url = '/images/esercizi/squat-con-bilanciere.jpg' WHERE id = 15;
+UPDATE esercizio SET immagine_url = '/images/esercizi/front-squat.jpg' WHERE id = 16;
+UPDATE esercizio SET immagine_url = '/images/esercizi/leg-press-45-gradi.jpg' WHERE id = 17;
+UPDATE esercizio SET immagine_url = '/images/esercizi/affondi-con-manubri.jpg' WHERE id = 18;
+UPDATE esercizio SET immagine_url = '/images/esercizi/leg-extension.jpg' WHERE id = 19;
+UPDATE esercizio SET immagine_url = '/images/esercizi/hack-squat.jpg' WHERE id = 20;
+UPDATE esercizio SET immagine_url = '/images/esercizi/bulgarian-split-squat.jpg' WHERE id = 21;
+UPDATE esercizio SET immagine_url = '/images/esercizi/military-press.jpg' WHERE id = 22;
+UPDATE esercizio SET immagine_url = '/images/esercizi/lento-avanti-con-manubri.jpg' WHERE id = 23;
+UPDATE esercizio SET immagine_url = '/images/esercizi/alzate-laterali.jpg' WHERE id = 24;
+UPDATE esercizio SET immagine_url = '/images/esercizi/alzate-frontali.jpg' WHERE id = 25;
+UPDATE esercizio SET immagine_url = '/images/esercizi/alzate-laterali-ai-cavi.jpg' WHERE id = 26;
+UPDATE esercizio SET immagine_url = '/images/esercizi/arnold-press.jpg' WHERE id = 27;
+UPDATE esercizio SET immagine_url = '/images/esercizi/stacco-rumeno.jpg' WHERE id = 28;
+UPDATE esercizio SET immagine_url = '/images/esercizi/leg-curl-sdraiato.jpg' WHERE id = 29;
+UPDATE esercizio SET immagine_url = '/images/esercizi/leg-curl-seduto.jpg' WHERE id = 30;
+UPDATE esercizio SET immagine_url = '/images/esercizi/good-morning.jpg' WHERE id = 31;
+UPDATE esercizio SET immagine_url = '/images/esercizi/stacco-a-gambe-tese.jpg' WHERE id = 32;
+UPDATE esercizio SET immagine_url = '/images/esercizi/nordic-curl.jpg' WHERE id = 33;
+UPDATE esercizio SET immagine_url = '/images/esercizi/panca-stretta.jpg' WHERE id = 34;
+UPDATE esercizio SET immagine_url = '/images/esercizi/french-press-con-bilanciere-ez.jpg' WHERE id = 35;
+UPDATE esercizio SET immagine_url = '/images/esercizi/push-down-ai-cavi.jpg' WHERE id = 36;
+UPDATE esercizio SET immagine_url = '/images/esercizi/dip-alle-parallele.jpg' WHERE id = 37;
+UPDATE esercizio SET immagine_url = '/images/esercizi/estensioni-sopra-la-testa-ai-cavi.jpg' WHERE id = 38;
+UPDATE esercizio SET immagine_url = '/images/esercizi/curl-con-bilanciere.jpg' WHERE id = 39;
+UPDATE esercizio SET immagine_url = '/images/esercizi/curl-con-manubri-alternato.jpg' WHERE id = 40;
+UPDATE esercizio SET immagine_url = '/images/esercizi/curl-a-martello.jpg' WHERE id = 41;
+UPDATE esercizio SET immagine_url = '/images/esercizi/curl-alla-panca-scott.jpg' WHERE id = 42;
+UPDATE esercizio SET immagine_url = '/images/esercizi/curl-ai-cavi.jpg' WHERE id = 43;
+UPDATE esercizio SET immagine_url = '/images/esercizi/hip-thrust-con-bilanciere.jpg' WHERE id = 44;
+UPDATE esercizio SET immagine_url = '/images/esercizi/glute-bridge.jpg' WHERE id = 45;
+UPDATE esercizio SET immagine_url = '/images/esercizi/abduzioni-alla-macchina.jpg' WHERE id = 46;
+UPDATE esercizio SET immagine_url = '/images/esercizi/kickback-ai-cavi.jpg' WHERE id = 47;
+UPDATE esercizio SET immagine_url = '/images/esercizi/glute-ham-raise.jpg' WHERE id = 48;
+UPDATE esercizio SET immagine_url = '/images/esercizi/calf-raise-in-piedi.jpg' WHERE id = 49;
+UPDATE esercizio SET immagine_url = '/images/esercizi/calf-raise-seduto.jpg' WHERE id = 50;
+UPDATE esercizio SET immagine_url = '/images/esercizi/calf-alla-pressa.jpg' WHERE id = 51;
+UPDATE esercizio SET immagine_url = '/images/esercizi/calf-raise-con-manubri.jpg' WHERE id = 52;
