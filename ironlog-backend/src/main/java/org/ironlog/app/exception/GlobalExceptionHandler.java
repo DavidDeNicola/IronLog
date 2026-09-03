@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -121,5 +122,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorMessageDTO> sessioneGiaConclusa(SessioneGiaConclusaException e) {
         ErrorMessageDTO body = new ErrorMessageDTO("Sessione gia conclusa");
         return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
+    }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<ErrorMessageDTO> metodoNonSupportato(HttpRequestMethodNotSupportedException e) {
+        ErrorMessageDTO body = new ErrorMessageDTO("Metodo non supportato");
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(body);
     }
 }
