@@ -1,6 +1,8 @@
 package org.ironlog.app.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.ironlog.app.dto.DashboardDTO;
+import org.ironlog.app.dto.PuntoVolumeDTO;
 import org.ironlog.app.dto.VolumeGruppoDTO;
 import org.ironlog.app.model.PeriodoStatistica;
 import org.ironlog.app.model.Utente;
@@ -26,5 +28,19 @@ public class StatisticheController {
     public ResponseEntity<List<VolumeGruppoDTO>> volumePerGruppo(@RequestParam PeriodoStatistica periodo, Authentication authentication) {
         Utente atleta = (Utente) authentication.getPrincipal();
         return ResponseEntity.ok(statisticheService.volumePerGruppo(atleta, periodo));
+    }
+
+    @GetMapping("/dashboard")
+    public ResponseEntity<DashboardDTO> dashboard(Authentication authentication) {
+        Utente atleta = (Utente) authentication.getPrincipal();
+        return ResponseEntity.ok(statisticheService.dashboard(atleta));
+    }
+
+    @GetMapping("/andamento")
+    public ResponseEntity<List<PuntoVolumeDTO>> andamentoVolume(
+            @RequestParam PeriodoStatistica periodo,
+            Authentication authentication) {
+        Utente atleta = (Utente) authentication.getPrincipal();
+        return ResponseEntity.ok(statisticheService.andamentoVolume(atleta, periodo));
     }
 }

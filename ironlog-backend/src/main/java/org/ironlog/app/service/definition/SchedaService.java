@@ -1,5 +1,6 @@
 package org.ironlog.app.service.definition;
 
+import org.ironlog.app.dto.ProssimoAllenamentoDTO;
 import org.ironlog.app.dto.SchedaRequestDTO;
 import org.ironlog.app.dto.SchedaResponseDTO;
 import org.ironlog.app.dto.SchedaSintesiDTO;
@@ -14,4 +15,6 @@ public interface SchedaService {
     List<SchedaSintesiDTO> findByAtleta(Utente atleta);
 
     SchedaResponseDTO findByIdAndAtleta(Long id, Utente atleta);
+
+    ProssimoAllenamentoDTO prossimoAllenamento(Utente atleta);
 }

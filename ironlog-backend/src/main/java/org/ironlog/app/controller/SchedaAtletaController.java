@@ -2,6 +2,7 @@ package org.ironlog.app.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.ironlog.app.dto.ProssimoAllenamentoDTO;
 import org.ironlog.app.dto.SchedaRequestDTO;
 import org.ironlog.app.dto.SchedaResponseDTO;
 import org.ironlog.app.dto.SchedaSintesiDTO;
@@ -39,5 +40,15 @@ public class SchedaAtletaController {
     public ResponseEntity<SchedaResponseDTO> findById(@PathVariable Long id, Authentication authentication) {
         Utente utente = (Utente) authentication.getPrincipal();
         return ResponseEntity.ok(schedaService.findByIdAndAtleta(id, utente));
+    }
+
+    @GetMapping("/prossimo")
+    public ResponseEntity<ProssimoAllenamentoDTO> prossimoAllenamento(Authentication authentication) {
+        Utente atleta = (Utente) authentication.getPrincipal();
+        ProssimoAllenamentoDTO dto = schedaService.prossimoAllenamento(atleta);
+        if (dto == null) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(dto);
     }
 }
