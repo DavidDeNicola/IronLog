@@ -1,0 +1,37 @@
+<aside class="sidebar">
+
+  <div class="sidebar-intestazione">
+    <i class="bi bi-activity logo-icona"></i>
+    <span class="logo-testo">IRONLOG</span>
+  </div>
+
+  <nav class="sidebar-nav">
+    @for (voce of voci; track voce.percorso) {
+      <a class="voce-menu"
+         [routerLink]="voce.percorso"
+         routerLinkActive="attiva">
+        <i class="voce-icona bi" [ngClass]="voce.icona"></i>
+        <span class="voce-etichetta">{{ voce.etichetta }}</span>
+      </a>
+    }
+  </nav>
+
+  <div class="sidebar-fondo">
+
+    <button class="toggle-tema" type="button">
+      <i class="voce-icona bi bi-moon"></i>
+      <span class="voce-etichetta">Modalità scura</span>
+    </button>
+
+    <div class="blocco-utente">
+      <span class="avatar"></span>
+      <span class="utente-info">
+        <span class="utente-nome">Andrea</span>
+        <span class="utente-ruolo">Atleta</span>
+      </span>
+      <i class="bi bi-chevron-down freccia"></i>
+    </div>
+
+  </div>
+
+</aside>

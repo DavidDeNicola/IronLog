@@ -1,0 +1,11 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.contenuto {
+  flex: 1;
+  min-width: 0;
+  padding: 1.75rem 2rem;
+  overflow-x: hidden;
+}

@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+@use "bootstrap/scss/bootstrap" as *;
+
+:root {
+  --sfondo-pagina: #0d1117;
+  --sfondo-sidebar: #131820;
+  --sfondo-card: #1a212c;
+  --sfondo-card-hover: #212936;
+  --bordo-card: #262f3d;
+
+  --testo-primario: #e6edf3;
+  --testo-secondario: #8b98a9;
+
+  --accento: #3b82f6;
+  --accento-hover: #2563eb;
+  --positivo: #22c55e;
+  --negativo: #ef4444;
+}
+
+body {
+  background-color: var(--sfondo-pagina);
+  color: var(--testo-primario);
+  min-height: 100vh;
+}
