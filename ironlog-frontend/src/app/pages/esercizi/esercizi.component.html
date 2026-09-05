@@ -1,0 +1,62 @@
+<div class="intestazione-pagina">
+  <h1>Esercizi</h1>
+</div>
+
+<div class="barra-ricerca">
+  <i class="bi bi-search"></i>
+  <input type="text"
+         class="form-control"
+         placeholder="Cerca esercizi…"
+         [(ngModel)]="testoRicerca"
+         (ngModelChange)="onRicercaCambiata()" />
+</div>
+
+<div class="filtri-gruppi">
+  <button type="button"
+          class="chip"
+          [class.attivo]="gruppoSelezionato === null"
+          (click)="selezionaGruppo(null)">
+    Tutti
+  </button>
+  @for (gruppo of gruppi; track gruppo.id) {
+    <button type="button"
+            class="chip"
+            [class.attivo]="gruppoSelezionato === gruppo.id"
+            (click)="selezionaGruppo(gruppo.id)">
+      {{ gruppo.nome }}
+    </button>
+  }
+</div>
+
+@if (caricamento) {
+  <p class="stato-messaggio">Caricamento…</p>
+}
+
+@else if (errore) {
+  <p class="stato-messaggio errore">
+    Impossibile caricare gli esercizi. Riprova più tardi.
+  </p>
+}
+
+@else if (esercizi.length === 0) {
+  <div class="stato-vuoto">
+    <i class="bi bi-search"></i>
+    <p>Nessun esercizio trovato.</p>
+  </div>
+}
+
+@else {
+  <div class="lista-esercizi">
+    @for (es of esercizi; track es.id) {
+      <div class="card-esercizio">
+        <div class="icona-esercizio">
+          <i class="bi bi-person-arms-up"></i>
+        </div>
+        <div class="info-esercizio">
+          <span class="nome-esercizio">{{ es.nome }}</span>
+          <span class="gruppo-esercizio">{{ es.gruppoMuscolareNome }}</span>
+        </div>
+      </div>
+    }
+  </div>
+}
