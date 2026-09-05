@@ -8,4 +8,6 @@ export interface Esercizio {
   nome: string;
   descrizione: string;
   gruppoMuscolareNome: string;
+  immagineUrl: string | null;
+  gruppoImmagineUrl: string | null;
 }

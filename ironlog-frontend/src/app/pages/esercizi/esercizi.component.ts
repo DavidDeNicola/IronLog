@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Subject, debounceTime, switchMap } from 'rxjs';
-
+import { environment } from '../../../environments/environment';
 import { CatalogoService } from '../../services/catalogo.service';
 import { GruppoMuscolare, Esercizio } from '../../models/catalogo.model';
 
@@ -58,5 +58,14 @@ export class EserciziComponent implements OnInit {
   selezionaGruppo(id: number | null): void {
     this.gruppoSelezionato = id;
     this.onRicercaCambiata();
+  }
+
+  urlImmagine(es: Esercizio): string | null {
+    const percorso = es.immagineUrl ?? es.gruppoImmagineUrl;
+    return percorso ? `${environment.apiUrl}${percorso}` : null;
+  }
+
+  onImmagineErrore(evento: Event): void {
+    (evento.target as HTMLImageElement).style.display = 'none';
   }
 }

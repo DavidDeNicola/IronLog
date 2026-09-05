@@ -14,6 +14,8 @@ public class EsercizioMapper {
         responseDTO.setNome(esercizio.getNome());
         responseDTO.setDescrizione(esercizio.getDescrizione());
         responseDTO.setGruppoMuscolareNome(esercizio.getGruppoMuscolare().getNome());
+        responseDTO.setImmagineUrl(esercizio.getImmagineUrl());
+        responseDTO.setGruppoImmagineUrl(esercizio.getGruppoMuscolare().getImmagineUrl());
         return responseDTO;
     }
 }

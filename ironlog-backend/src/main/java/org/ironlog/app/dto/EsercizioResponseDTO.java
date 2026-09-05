@@ -14,4 +14,6 @@ public class EsercizioResponseDTO {
     private String nome;
     private String descrizione;
     private String gruppoMuscolareNome;
+    private String immagineUrl;
+    private String gruppoImmagineUrl;
 }
