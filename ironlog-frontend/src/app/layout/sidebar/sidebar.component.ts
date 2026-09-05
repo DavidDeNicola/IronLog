@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import {Router, RouterLink, RouterLinkActive} from '@angular/router';
 import {NgClass} from '@angular/common';
+import {AuthService} from '../../services/auth.service';
 
 interface VoceMenu {
   etichetta: string;
@@ -26,4 +27,22 @@ export class SidebarComponent {
     { etichetta: 'Profilo',      percorso: '/profilo',      icona: 'bi-person' },
     { etichetta: 'Impostazioni', percorso: '/impostazioni', icona: 'bi-gear' }
   ];
+
+   constructor(
+     private authService: AuthService,
+     private router: Router
+   ) {}
+
+  get nomeUtente(): string {
+    return this.authService.getUtente()?.sub ?? '';
+  }
+
+  get ruoloUtente(): string {
+    return this.authService.getRuolo() === 'COACH' ? 'Coach' : 'Atleta';
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
 }

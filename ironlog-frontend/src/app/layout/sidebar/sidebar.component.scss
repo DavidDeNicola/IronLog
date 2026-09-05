@@ -114,11 +114,16 @@
   display: flex;
   flex-direction: column;
   line-height: 1.25;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .utente-nome {
   font-size: 0.875rem;
   font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .utente-ruolo {

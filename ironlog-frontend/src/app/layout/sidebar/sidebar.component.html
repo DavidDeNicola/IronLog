@@ -23,13 +23,13 @@
       <span class="voce-etichetta">Modalità scura</span>
     </button>
 
-    <div class="blocco-utente">
+    <div class="blocco-utente" (click)="logout()" title="Esci">
       <span class="avatar"></span>
       <span class="utente-info">
-        <span class="utente-nome">Andrea</span>
-        <span class="utente-ruolo">Atleta</span>
+        <span class="utente-nome">{{ nomeUtente }}</span>
+        <span class="utente-ruolo">{{ ruoloUtente }}</span>
       </span>
-      <i class="bi bi-chevron-down freccia"></i>
+      <i class="bi bi-box-arrow-right freccia"></i>
     </div>
 
   </div>
