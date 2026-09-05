@@ -23,6 +23,7 @@ public class GiornoSchedaMapper {
 
     public GiornoSchedaResponseDTO toResponseDTO(GiornoScheda giornoScheda){
         GiornoSchedaResponseDTO dto = new GiornoSchedaResponseDTO();
+        dto.setId(giornoScheda.getId());
         dto.setNome(giornoScheda.getNome());
         dto.setOrdine(giornoScheda.getOrdine());
         dto.setEsercizi(giornoScheda.getEsercizi().stream().map(esercizioSchedaMapper::toResponseDTO).toList());

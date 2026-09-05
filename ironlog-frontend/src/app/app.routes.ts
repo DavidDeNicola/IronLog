@@ -6,6 +6,7 @@ import { authGuard } from './app.guard';
 import { SchedeComponent } from './pages/schede/schede.component';
 import { DettaglioSchedaComponent } from './pages/dettaglio-scheda/dettaglio-scheda.component';
 import { EserciziComponent } from './pages/esercizi/esercizi.component';
+import { AllenamentoComponent } from './pages/allenamento/allenamento.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -18,6 +19,7 @@ export const routes: Routes = [
       { path: 'schede', component: SchedeComponent },
       { path: 'schede/:id', component: DettaglioSchedaComponent },
       { path: 'esercizi', component: EserciziComponent },
+      { path: 'allenamento', component: AllenamentoComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   },

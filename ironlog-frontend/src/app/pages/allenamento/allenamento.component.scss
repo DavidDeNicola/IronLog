@@ -1,0 +1,154 @@
+.intestazione-pagina {
+  margin-bottom: 1.5rem;
+
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+  }
+}
+
+.stato-messaggio {
+  color: var(--testo-secondario);
+
+  &.errore {
+    color: var(--negativo);
+  }
+}
+
+.card-prossimo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.18), rgba(59, 130, 246, 0.04));
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.prossimo-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.etichetta {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accento);
+  font-weight: 600;
+}
+
+.prossimo-nome {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.prossimo-dettagli {
+  font-size: 0.875rem;
+  color: var(--testo-secondario);
+}
+
+.sezione-scelta {
+  margin-bottom: 1.5rem;
+
+  h2 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0.875rem;
+  }
+}
+
+.lista-schede-mini {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chip-scheda {
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--bordo-card);
+  background-color: var(--sfondo-card);
+  color: var(--testo-secondario);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.15s;
+
+  &:hover {
+    color: var(--testo-primario);
+    border-color: var(--testo-secondario);
+  }
+
+  &.attivo {
+    background-color: var(--accento);
+    border-color: var(--accento);
+    color: #fff;
+  }
+}
+
+.lista-giorni {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.card-giorno {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  background-color: var(--sfondo-card);
+  border: 1px solid var(--bordo-card);
+}
+
+.giorno-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.giorno-nome {
+  font-weight: 600;
+}
+
+.giorno-dettagli {
+  font-size: 0.8rem;
+  color: var(--testo-secondario);
+}
+
+.btn-primary {
+  background-color: var(--accento);
+  border-color: var(--accento);
+  font-weight: 500;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: var(--accento-hover);
+    border-color: var(--accento-hover);
+  }
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 1px solid var(--accento);
+  color: var(--accento);
+  font-weight: 500;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: var(--accento);
+    color: #fff;
+  }
+}
+
+.card-sessione-aperta {
+  padding: 1.5rem;
+  border-radius: 14px;
+  background-color: var(--sfondo-card);
+  border: 1px solid var(--accento);
+}

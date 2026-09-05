@@ -12,6 +12,7 @@ import java.util.List;
 
 public class GiornoSchedaResponseDTO {
 
+    private Long id;
     private String nome;
     private Integer ordine;
     private List<EsercizioSchedaResponseDTO> esercizi;

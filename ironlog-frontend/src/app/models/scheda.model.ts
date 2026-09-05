@@ -17,6 +17,7 @@ export interface EsercizioScheda {
 }
 
 export interface GiornoScheda {
+  id: number;
   nome: string;
   ordine: number;
   esercizi: EsercizioScheda[];

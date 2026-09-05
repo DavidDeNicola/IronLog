@@ -1,0 +1,77 @@
+<div class="intestazione-pagina">
+  <h1>Allenamento</h1>
+</div>
+
+@if (caricamento) {
+  <p class="stato-messaggio">Caricamento…</p>
+}
+
+@else if (errore) {
+  <p class="stato-messaggio errore">
+    Impossibile caricare i dati. Riprova più tardi.
+  </p>
+}
+
+@else if (sessioneAperta) {
+  <div class="card-sessione-aperta">
+    <p>Hai una sessione in corso: <strong>{{ sessioneAperta.giornoNome ?? 'Allenamento libero' }}</strong></p>
+  </div>
+}
+
+@else {
+
+  @if (prossimo) {
+    <div class="card-prossimo">
+      <div class="prossimo-info">
+        <span class="etichetta">Prossimo allenamento consigliato</span>
+        <span class="prossimo-nome">{{ prossimo.giornoNome }}</span>
+        <span class="prossimo-dettagli">
+          {{ prossimo.schedaNome }} · {{ prossimo.numeroEsercizi }} esercizi
+        </span>
+      </div>
+      <button class="btn btn-primary" type="button" (click)="avvia(prossimo.giornoSchedaId)">
+        <i class="bi bi-play-fill"></i> Inizia allenamento
+      </button>
+    </div>
+  }
+
+  <div class="sezione-scelta">
+    <h2>Scegli una scheda</h2>
+
+    @if (schede.length === 0) {
+      <p class="stato-messaggio">Non hai ancora nessuna scheda.</p>
+    } @else {
+      <div class="lista-schede-mini">
+        @for (scheda of schede; track scheda.id) {
+          <button type="button"
+                  class="chip-scheda"
+                  [class.attivo]="schedaSelezionata?.id === scheda.id"
+                  (click)="selezionaScheda(scheda.id)">
+            {{ scheda.nome }}
+          </button>
+        }
+      </div>
+    }
+  </div>
+
+  @if (caricamentoGiorni) {
+    <p class="stato-messaggio">Caricamento giorni…</p>
+  }
+
+  @else if (schedaSelezionata) {
+    <div class="lista-giorni">
+      @for (giorno of schedaSelezionata.giorni; track giorno.id) {
+        <div class="card-giorno">
+          <div class="giorno-info">
+            <span class="giorno-nome">{{ giorno.nome }}</span>
+            <span class="giorno-dettagli">{{ giorno.esercizi.length }} esercizi</span>
+          </div>
+          <button class="btn btn-outline" type="button" (click)="avvia(giorno.id)">
+            <i class="bi bi-play-fill"></i> Inizia
+          </button>
+        </div>
+      }
+    </div>
+  }
+
+}
