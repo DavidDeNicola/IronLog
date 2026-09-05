@@ -1,0 +1,28 @@
+import { inject } from '@angular/core';
+import { CanActivateFn, Router } from '@angular/router';
+
+import { AuthService } from './services/auth.service';
+
+export const authGuard: CanActivateFn = () => {
+
+  const authService = inject(AuthService);
+  const router = inject(Router);
+
+  if (authService.isAutenticato()) {
+    return true;
+  }
+
+  return router.createUrlTree(['/login']);
+};
+
+export const coachGuard: CanActivateFn = () => {
+
+  const authService = inject(AuthService);
+  const router = inject(Router);
+
+  if (authService.getRuolo() === 'COACH') {
+    return true;
+  }
+
+  return router.createUrlTree(['/dashboard']);
+};

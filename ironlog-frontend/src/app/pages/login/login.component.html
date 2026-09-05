@@ -1,0 +1,50 @@
+<div class="pagina-login">
+
+  <div class="riquadro-login">
+
+    <div class="intestazione">
+      <i class="bi bi-activity logo-icona"></i>
+      <span class="logo-testo">IRONLOG</span>
+    </div>
+
+    <h1 class="titolo">Accedi</h1>
+    <p class="sottotitolo">Inserisci le tue credenziali per continuare</p>
+
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+
+      <div class="campo">
+        <label for="email">Email</label>
+        <input type="email"
+               id="email"
+               name="email"
+               class="form-control"
+               [(ngModel)]="credenziali.email"
+               required
+               email />
+      </div>
+
+      <div class="campo">
+        <label for="password">Password</label>
+        <input type="password"
+               id="password"
+               name="password"
+               class="form-control"
+               [(ngModel)]="credenziali.password"
+               required />
+      </div>
+
+      @if (errore) {
+        <div class="messaggio-errore">{{ errore }}</div>
+      }
+
+      <button type="submit"
+              class="btn btn-primary w-100"
+              [disabled]="loginForm.invalid || caricamento">
+        {{ caricamento ? 'Accesso in corso...' : 'Accedi' }}
+      </button>
+
+    </form>
+
+  </div>
+
+</div><p>login works!</p>
