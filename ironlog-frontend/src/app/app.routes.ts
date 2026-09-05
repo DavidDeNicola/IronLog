@@ -4,6 +4,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LoginComponent } from './pages/login/login.component';
 import { authGuard } from './app.guard';
 import { SchedeComponent } from './pages/schede/schede.component';
+import { DettaglioSchedaComponent } from './pages/dettaglio-scheda/dettaglio-scheda.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -14,6 +15,7 @@ export const routes: Routes = [
     children: [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'schede', component: SchedeComponent },
+      { path: 'schede/:id', component: DettaglioSchedaComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   },

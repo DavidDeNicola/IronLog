@@ -1,0 +1,69 @@
+<button class="btn-indietro" type="button" (click)="tornaIndietro()">
+  <i class="bi bi-arrow-left"></i> Le mie schede
+</button>
+
+@if (caricamento) {
+  <p class="stato-messaggio">Caricamento…</p>
+}
+
+@else if (errore) {
+  <p class="stato-messaggio errore">
+    Scheda non trovata.
+  </p>
+}
+
+@else if (scheda) {
+
+  <div class="testa-scheda">
+    <div class="testa-titolo">
+      <h1>{{ scheda.nome }}</h1>
+      @if (scheda.attiva) {
+        <span class="badge-attiva">Attiva</span>
+      }
+    </div>
+    <div class="testa-info">
+      <span><i class="bi bi-calendar3"></i> {{ scheda.dataInizio | date:'d MMM yyyy' }}</span>
+      <span><i class="bi bi-person"></i> {{ scheda.autoreNome }}</span>
+    </div>
+    @if (scheda.note) {
+      <p class="note">{{ scheda.note }}</p>
+    }
+  </div>
+
+  <div class="lista-giorni">
+    @for (giorno of scheda.giorni; track giorno.ordine) {
+      <div class="card-giorno">
+
+        <div class="card-giorno-testa">
+          <span class="giorno-nome">{{ giorno.nome }}</span>
+          <span class="giorno-conteggio">{{ giorno.esercizi.length }} esercizi</span>
+        </div>
+
+        <table class="tabella-esercizi">
+          <thead>
+          <tr>
+            <th>Esercizio</th>
+            <th>Serie</th>
+            <th>Rip.</th>
+            <th>Peso</th>
+            <th>Rec.</th>
+          </tr>
+          </thead>
+          <tbody>
+            @for (es of giorno.esercizi; track es.id) {
+              <tr>
+                <td class="col-nome">{{ es.esercizioNome }}</td>
+                <td>{{ es.serie }}</td>
+                <td>{{ es.ripetizioni }}</td>
+                <td>{{ es.pesoAttuale }} kg</td>
+                <td>{{ es.recupero }}s</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+
+      </div>
+    }
+  </div>
+
+}
