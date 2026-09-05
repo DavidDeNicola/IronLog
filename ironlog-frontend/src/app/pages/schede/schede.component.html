@@ -1,0 +1,51 @@
+<div class="intestazione-pagina">
+  <h1>Le mie schede</h1>
+  <button class="btn btn-primary" type="button">
+    <i class="bi bi-plus-lg"></i> Nuova scheda
+  </button>
+</div>
+
+@if (caricamento) {
+  <p class="stato-messaggio">Caricamento…</p>
+}
+
+@else if (errore) {
+  <p class="stato-messaggio errore">
+    Impossibile caricare le schede. Riprova più tardi.
+  </p>
+}
+
+@else if (schede.length === 0) {
+  <div class="stato-vuoto">
+    <i class="bi bi-journal-x"></i>
+    <p>Non hai ancora nessuna scheda.</p>
+  </div>
+}
+
+@else {
+  <div class="lista-schede">
+    @for (scheda of schede; track scheda.id) {
+      <div class="card-scheda" (click)="apriScheda(scheda.id)">
+
+        <div class="card-scheda-testa">
+          <span class="nome-scheda">{{ scheda.nome }}</span>
+          @if (scheda.attiva) {
+            <span class="badge-attiva">Attiva</span>
+          }
+        </div>
+
+        <div class="card-scheda-info">
+          <span>
+            <i class="bi bi-calendar3"></i>
+            {{ scheda.dataInizio | date:'d MMM yyyy' }}
+          </span>
+          <span>
+            <i class="bi bi-list-ol"></i>
+            {{ scheda.numeroGiorni }} {{ scheda.numeroGiorni === 1 ? 'giorno' : 'giorni' }}
+          </span>
+        </div>
+
+      </div>
+    }
+  </div>
+}
