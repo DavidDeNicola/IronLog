@@ -25,6 +25,7 @@ public class EsercizioSchedaMapper {
     public EsercizioSchedaResponseDTO toResponseDTO(EsercizioScheda esercizioScheda){
         EsercizioSchedaResponseDTO dto = new EsercizioSchedaResponseDTO();
         dto.setId(esercizioScheda.getId());
+        dto.setEsercizioId(esercizioScheda.getEsercizio().getId());
         dto.setEsercizioNome(esercizioScheda.getEsercizio().getNome());
         dto.setOrdine(esercizioScheda.getOrdine());
         dto.setSerie(esercizioScheda.getSerie());

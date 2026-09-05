@@ -22,6 +22,8 @@ public class SessioneMapper {
         dto.setSerie(sessione.getSerie().stream().map(serieEseguitaMapper::toResponseDTO).toList());
         dto.setGiornoNome(hasGiorno(sessione) ? sessione.getGiornoScheda().getNome() : null);
         dto.setSchedaNome(hasGiorno(sessione) ? sessione.getGiornoScheda().getScheda().getNome() : null);
+        dto.setGiornoSchedaId(hasGiorno(sessione) ? sessione.getGiornoScheda().getId() : null);
+        dto.setSchedaId(hasGiorno(sessione) ? sessione.getGiornoScheda().getScheda().getId() : null);
         return dto;
     }
 

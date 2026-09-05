@@ -147,8 +147,23 @@
 }
 
 .card-sessione-aperta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
   padding: 1.5rem;
   border-radius: 14px;
-  background-color: var(--sfondo-card);
-  border: 1px solid var(--accento);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.18), rgba(59, 130, 246, 0.04));
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.sessione-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.sessione-nome {
+  font-size: 1.25rem;
+  font-weight: 600;
 }

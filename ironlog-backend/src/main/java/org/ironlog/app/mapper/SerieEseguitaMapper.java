@@ -16,6 +16,7 @@ public class SerieEseguitaMapper {
     public SerieEseguitaResponseDTO toResponseDTO(SerieEseguita serieE) {
         SerieEseguitaResponseDTO dto = new SerieEseguitaResponseDTO();
         dto.setId(serieE.getId());
+        dto.setEsercizioId(serieE.getEsercizio().getId());
         dto.setNumeroSerie(serieE.getNumeroSerie());
         dto.setEsercizioNome(serieE.getEsercizio().getNome());
         dto.setRipetizioni(serieE.getRipetizioni());

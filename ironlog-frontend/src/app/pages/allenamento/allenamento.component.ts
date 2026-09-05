@@ -82,9 +82,25 @@ export class AllenamentoComponent implements OnInit {
     });
   }
 
-  avvia(giornoSchedaId: number): void {
+  avvia(giornoSchedaId: number, schedaId: number): void {
     this.router.navigate(['/allenamento/sessione'], {
-      queryParams: { giorno: giornoSchedaId }
+      queryParams: { giorno: giornoSchedaId, scheda: schedaId }
+    });
+  }
+
+  avviaProssimo(): void {
+    if (!this.prossimo) {
+      return;
+    }
+    const schedaAttiva = this.schede.find(s => s.attiva);
+    if (schedaAttiva) {
+      this.avvia(this.prossimo.giornoSchedaId, schedaAttiva.id);
+    }
+  }
+
+  riprendi(): void {
+    this.router.navigate(['/allenamento/sessione'], {
+      queryParams: { ripresa: true }
     });
   }
 }

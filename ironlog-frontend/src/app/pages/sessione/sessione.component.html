@@ -1,0 +1,126 @@
+@if (caricamento) {
+  <p class="stato-messaggio">Apertura sessione…</p>
+}
+
+@else if (errore) {
+  <p class="stato-messaggio errore">
+    Impossibile avviare l'allenamento.
+  </p>
+}
+
+@else if (riepilogo) {
+  <div class="riepilogo">
+    <div class="riepilogo-icona">
+      <i class="bi bi-check-circle-fill"></i>
+    </div>
+    <h1>Allenamento completato</h1>
+    <p class="riepilogo-sottotitolo">Ottimo lavoro!</p>
+
+    <div class="riepilogo-griglia">
+      <div class="riepilogo-stat">
+        <span class="stat-valore">{{ riepilogo.durataMinuti }}</span>
+        <span class="stat-etichetta">minuti</span>
+      </div>
+      <div class="riepilogo-stat">
+        <span class="stat-valore">{{ riepilogo.numeroSerie }}</span>
+        <span class="stat-etichetta">serie totali</span>
+      </div>
+      <div class="riepilogo-stat">
+        <span class="stat-valore">{{ riepilogo.volumeTotale }}</span>
+        <span class="stat-etichetta">kg di volume</span>
+      </div>
+      <div class="riepilogo-stat">
+        <span class="stat-valore">{{ riepilogo.serieCompletate }}</span>
+        <span class="stat-etichetta">serie a obiettivo</span>
+      </div>
+    </div>
+
+    <button class="btn btn-primary" type="button" (click)="tornaAllenamento()">
+      Torna agli allenamenti
+    </button>
+  </div>
+}
+
+@else if (sessione && giorno) {
+
+  <div class="testa-sessione">
+    <div class="testa-info">
+      <span class="etichetta">Allenamento in corso</span>
+      <h1>{{ giorno.nome }}</h1>
+    </div>
+    <button class="btn btn-termina" type="button"
+            [disabled]="conclusioneInCorso"
+            (click)="concludi()">
+      {{ conclusioneInCorso ? 'Conclusione…' : 'Termina' }}
+    </button>
+  </div>
+
+  @if (recuperoAttivo) {
+    <div class="timer-recupero">
+      <div class="cerchio-timer" [style.background]="'conic-gradient(var(--accento) ' + gradoProgresso + 'deg, var(--sfondo-pagina) 0deg)'">
+        <div class="cerchio-interno">
+          <span class="tempo-centro">{{ formattaTempo(secondiRimanenti) }}</span>
+        </div>
+      </div>
+      <button class="btn-salta" type="button" (click)="fermaRecupero()">
+        Salta recupero
+      </button>
+    </div>
+  }
+
+  <div class="lista-esercizi">
+    @for (es of giorno.esercizi; track es.id) {
+      <div class="card-esercizio">
+
+        <div class="esercizio-testa">
+          <div class="esercizio-nome-blocco">
+            <span class="esercizio-nome">{{ es.esercizioNome }}</span>
+            <span class="esercizio-target">
+              {{ es.serie }} × {{ es.ripetizioni }} · {{ es.pesoAttuale }} kg
+            </span>
+          </div>
+          <span class="serie-fatte">{{ serieDi(es.esercizioId) }}/{{ es.serie }}</span>
+        </div>
+
+        @if (serieDi(es.esercizioId) > 0) {
+          <div class="serie-registrate">
+            @for (serie of sessione.serie; track serie.id) {
+              @if (serie.esercizioId === es.esercizioId) {
+                <div class="riga-serie">
+                  <span class="num-serie">{{ serie.numeroSerie }}</span>
+                  <span>{{ serie.peso }} kg × {{ serie.ripetizioni }}</span>
+                  <span class="massimale">1RM {{ serie.massimaleStimato }} kg</span>
+                </div>
+              }
+            }
+          </div>
+        }
+
+        <div class="input-serie">
+          <div class="campo-input">
+            <label>Peso (kg)</label>
+            <input type="number"
+                   class="form-control"
+                   [value]="pesoInput(es) ?? ''"
+                   (input)="impostaPeso(es, $any($event.target).valueAsNumber)" />
+          </div>
+          <div class="campo-input">
+            <label>Ripetizioni</label>
+            <input type="number"
+                   class="form-control"
+                   [value]="ripInput(es) ?? ''"
+                   (input)="impostaRip(es, $any($event.target).valueAsNumber)" />
+          </div>
+          <button class="btn btn-aggiungi"
+                  type="button"
+                  [disabled]="salvataggioInCorso || pesoInput(es) === null || ripInput(es) === null"
+                  (click)="registraSerie(es)">
+            <i class="bi bi-plus-lg"></i>
+          </button>
+        </div>
+
+      </div>
+    }
+  </div>
+
+}

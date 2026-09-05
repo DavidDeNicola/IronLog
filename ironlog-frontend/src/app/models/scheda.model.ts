@@ -8,6 +8,7 @@ export interface SchedaSintesi {
 
 export interface EsercizioScheda {
   id: number;
+  esercizioId: number;
   esercizioNome: string;
   ordine: number;
   serie: number;

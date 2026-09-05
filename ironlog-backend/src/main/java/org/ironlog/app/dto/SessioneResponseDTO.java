@@ -13,6 +13,8 @@ import java.util.List;
 
 public class SessioneResponseDTO {
     private Long id;
+    private Long giornoSchedaId;
+    private Long schedaId;
     private LocalDateTime eseguitaIl;
     private LocalDateTime conclusaIl;
     private String giornoNome;

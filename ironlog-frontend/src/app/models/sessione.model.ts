@@ -19,6 +19,7 @@ export interface SerieEseguitaRequest {
 
 export interface SerieEseguitaResponse {
   id: number;
+  esercizioId: number;
   numeroSerie: number;
   esercizioNome: string;
   ripetizioni: number;
@@ -29,6 +30,8 @@ export interface SerieEseguitaResponse {
 
 export interface SessioneResponse {
   id: number;
+  giornoSchedaId: number | null;
+  schedaId: number | null;
   eseguitaIl: string;
   conclusaIl: string | null;
   giornoNome: string | null;

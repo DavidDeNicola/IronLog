@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 public class SerieEseguitaResponseDTO {
 
     private Long id;
+    private Long esercizioId;
     private Integer numeroSerie;
     private String esercizioNome;
     private Integer ripetizioni;
