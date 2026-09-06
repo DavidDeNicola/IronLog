@@ -8,6 +8,7 @@ import { DettaglioSchedaComponent } from './pages/dettaglio-scheda/dettaglio-sch
 import { EserciziComponent } from './pages/esercizi/esercizi.component';
 import { AllenamentoComponent } from './pages/allenamento/allenamento.component';
 import { SessioneComponent } from './pages/sessione/sessione.component';
+import { StoricoComponent } from './pages/storico/storico.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -23,6 +24,7 @@ export const routes: Routes = [
       { path: 'allenamento', component: AllenamentoComponent },
       { path: 'allenamento/sessione', component: SessioneComponent },
       { path: 'allenamento', component: AllenamentoComponent },
+      { path: 'storico', component: StoricoComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   },

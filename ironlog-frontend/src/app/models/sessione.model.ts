@@ -49,3 +49,11 @@ export interface RiepilogoSessione {
   volumeTotale: number;
   serieCompletate: number;
 }
+
+export interface SessioneSintesi {
+  id: number;
+  eseguitaIl: string;
+  conclusaIl: string | null;
+  giornoNome: string | null;
+  numeroSerie: number;
+}

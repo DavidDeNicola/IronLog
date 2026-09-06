@@ -1,0 +1,56 @@
+<div class="intestazione-pagina">
+  <h1>Storico allenamenti</h1>
+</div>
+
+@if (caricamento) {
+  <p class="stato-messaggio">Caricamento…</p>
+}
+
+@else if (errore) {
+  <p class="stato-messaggio errore">
+    Impossibile caricare lo storico. Riprova più tardi.
+  </p>
+}
+
+@else if (sessioni.length === 0) {
+  <div class="stato-vuoto">
+    <i class="bi bi-clock-history"></i>
+    <p>Non hai ancora completato nessun allenamento.</p>
+  </div>
+}
+
+@else {
+  <div class="lista-sessioni">
+    @for (sessione of sessioni; track sessione.id) {
+      <div class="card-sessione">
+
+        <div class="sessione-icona">
+          <i class="bi bi-lightning-charge-fill"></i>
+        </div>
+
+        <div class="sessione-corpo">
+          <span class="sessione-nome">{{ sessione.giornoNome ?? 'Allenamento libero' }}</span>
+          <span class="sessione-data">{{ sessione.eseguitaIl | date:'d MMM yyyy, HH:mm' }}</span>
+        </div>
+
+        <div class="sessione-stats">
+          <div class="stat">
+            <span class="stat-valore">{{ sessione.numeroSerie }}</span>
+            <span class="stat-etichetta">serie</span>
+          </div>
+          <div class="stat">
+            <span class="stat-valore">
+              @if (durataMinuti(sessione) !== null) {
+                {{ durataMinuti(sessione) }} min
+              } @else {
+                —
+              }
+            </span>
+            <span class="stat-etichetta">durata</span>
+          </div>
+        </div>
+
+      </div>
+    }
+  </div>
+}

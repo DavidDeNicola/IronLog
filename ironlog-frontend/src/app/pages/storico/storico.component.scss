@@ -1,0 +1,98 @@
+.intestazione-pagina {
+  margin-bottom: 1.5rem;
+
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+  }
+}
+
+.stato-messaggio {
+  color: var(--testo-secondario);
+
+  &.errore {
+    color: var(--negativo);
+  }
+}
+
+.stato-vuoto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 4rem 1rem;
+  color: var(--testo-secondario);
+
+  i {
+    font-size: 2.5rem;
+  }
+}
+
+.lista-sessioni {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.card-sessione {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  background-color: var(--sfondo-card);
+  border: 1px solid var(--bordo-card);
+}
+
+.sessione-icona {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background-color: rgba(59, 130, 246, 0.15);
+  color: var(--accento);
+  font-size: 1.15rem;
+}
+
+.sessione-corpo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.sessione-nome {
+  font-weight: 600;
+}
+
+.sessione-data {
+  font-size: 0.825rem;
+  color: var(--testo-secondario);
+}
+
+.sessione-stats {
+  display: flex;
+  gap: 1.75rem;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.15rem;
+}
+
+.stat-valore {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.stat-etichetta {
+  font-size: 0.75rem;
+  color: var(--testo-secondario);
+}

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { SessioneSintesi } from '../models/sessione.model';
 
 import { environment } from '../../environments/environment';
 import {
@@ -38,5 +39,9 @@ export class SessioneService {
 
   concludi(sessioneId: number): Observable<RiepilogoSessione> {
     return this.http.patch<RiepilogoSessione>(`${this.baseUrl}/${sessioneId}/conclusione`, {});
+  }
+
+  getStorico(): Observable<SessioneSintesi[]> {
+    return this.http.get<SessioneSintesi[]>(this.baseUrl);
   }
 }
