@@ -9,4 +9,14 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
   styleUrl: './main-layout.component.scss'
 })
 export class MainLayoutComponent {
+
+  sidebarAperta = false;
+
+  apriSidebar(): void {
+    this.sidebarAperta = true;
+  }
+
+  chiudiSidebar(): void {
+    this.sidebarAperta = false;
+  }
 }

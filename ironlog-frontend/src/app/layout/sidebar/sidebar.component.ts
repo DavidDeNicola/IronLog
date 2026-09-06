@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import {Router, RouterLink, RouterLinkActive} from '@angular/router';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { RouterLink, RouterLinkActive, Router } from '@angular/router';
+
+import { AuthService } from '../../services/auth.service';
 import {NgClass} from '@angular/common';
-import {AuthService} from '../../services/auth.service';
 
 interface VoceMenu {
   etichetta: string;
@@ -17,6 +18,8 @@ interface VoceMenu {
 })
 export class SidebarComponent {
 
+  @Output() voceSelezionata = new EventEmitter<void>();
+
   voci: VoceMenu[] = [
     { etichetta: 'Dashboard',    percorso: '/dashboard',    icona: 'bi-grid-1x2' },
     { etichetta: 'Schede',       percorso: '/schede',       icona: 'bi-journal-text' },
@@ -28,10 +31,10 @@ export class SidebarComponent {
     { etichetta: 'Impostazioni', percorso: '/impostazioni', icona: 'bi-gear' }
   ];
 
-   constructor(
-     private authService: AuthService,
-     private router: Router
-   ) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   get nomeUtente(): string {
     return this.authService.getUtente()?.sub ?? '';
@@ -44,5 +47,9 @@ export class SidebarComponent {
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/login']);
+  }
+
+  onVoceClick(): void {
+    this.voceSelezionata.emit();
   }
 }

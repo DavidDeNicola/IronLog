@@ -167,3 +167,37 @@
   font-size: 1.25rem;
   font-weight: 600;
 }
+
+@media (max-width: 768px) {
+  .card-prossimo {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.25rem;
+
+    .btn-primary, {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  .card-sessione-aperta{
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.25rem;
+
+    .btn-primary, {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  .card-giorno{
+    flex-wrap: wrap;
+    gap: 0.75rem;
+
+    .btn-outline{
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}

@@ -1,9 +1,17 @@
-<div class="layout">
+<div class="layout" [class.sidebar-aperta]="sidebarAperta">
 
-  <app-sidebar />
+  <button class="hamburger" type="button" (click)="apriSidebar()" aria-label="Apri menu">
+    <i class="bi bi-list"></i>
+  </button>
+
+  @if (sidebarAperta) {
+    <div class="overlay" (click)="chiudiSidebar()"></div>
+  }
+
+  <app-sidebar (voceSelezionata)="chiudiSidebar()" />
 
   <main class="contenuto">
-    <router-outlet></router-outlet>
+    <router-outlet />
   </main>
 
 </div>

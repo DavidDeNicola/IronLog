@@ -9,3 +9,43 @@
   padding: 1.75rem 2rem;
   overflow-x: hidden;
 }
+
+.hamburger {
+  display: none;
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 30;
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--bordo-card);
+  border-radius: 10px;
+  background-color: var(--sfondo-card);
+  color: var(--testo-primario);
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.overlay {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .contenuto {
+    padding: 4.5rem 1rem 1.5rem;
+  }
+
+  .overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+}

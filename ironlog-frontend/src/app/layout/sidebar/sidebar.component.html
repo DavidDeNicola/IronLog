@@ -9,7 +9,8 @@
     @for (voce of voci; track voce.percorso) {
       <a class="voce-menu"
          [routerLink]="voce.percorso"
-         routerLinkActive="attiva">
+         routerLinkActive="attiva"
+         (click)="onVoceClick()">
         <i class="voce-icona bi" [ngClass]="voce.icona"></i>
         <span class="voce-etichetta">{{ voce.etichetta }}</span>
       </a>

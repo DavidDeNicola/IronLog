@@ -14,6 +14,25 @@
   border-right: 1px solid var(--bordo-card);
 }
 
+@media (max-width: 768px) {
+  :host {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 50;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+  }
+
+  :host-context(.sidebar-aperta) {
+    transform: translateX(0);
+  }
+
+  .sidebar {
+    position: static;
+  }
+}
+
 .sidebar-intestazione {
   display: flex;
   align-items: center;
