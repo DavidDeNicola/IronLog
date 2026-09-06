@@ -295,3 +295,53 @@
     border-color: var(--accento-hover);
   }
 }
+
+@media (max-width: 768px) {
+  .testa-sessione {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    padding-top: 3rem;
+
+    .btn-termina {
+      width: 100%;
+      order: 2;
+    }
+
+    .testa-info{
+      order: 1;
+    }
+  }
+
+  .input-serie {
+    flex-wrap: wrap;
+  }
+
+  .campo-input {
+    flex: 1 1 40%;
+  }
+
+  .btn-aggiungi {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  .riga-serie {
+    flex-wrap: wrap;
+    gap: 0.35rem 1rem;
+
+    .massimale {
+      width: 100%;
+      margin-left: 0;
+    }
+  }
+
+  .riepilogo {
+    margin: 1rem auto;
+    padding: 1.75rem 1.25rem;
+  }
+
+  .riepilogo-griglia {
+    grid-template-columns: 1fr;
+  }
+}

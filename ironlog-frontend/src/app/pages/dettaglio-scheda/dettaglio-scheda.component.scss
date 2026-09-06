@@ -124,3 +124,27 @@
     white-space: nowrap;
   }
 }
+
+@media (max-width: 768px) {
+  .btn-indietro {
+    margin-top: 2.75rem;
+  }
+
+  .tabella-esercizi {
+    font-size: 0.8rem;
+
+    th,
+    td {
+      padding: 0.5rem 0.75rem;
+    }
+
+    th:nth-child(1),
+    td:nth-child(1) {
+      max-width: 120px;
+    }
+  }
+
+  .card-giorno {
+    overflow-x: auto;
+  }
+}
