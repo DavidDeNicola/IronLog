@@ -3,6 +3,7 @@ package org.ironlog.app.service;
 import lombok.RequiredArgsConstructor;
 import org.ironlog.app.dto.DashboardDTO;
 import org.ironlog.app.dto.PuntoVolumeDTO;
+import org.ironlog.app.dto.RiepilogoStatisticheDTO;
 import org.ironlog.app.dto.VolumeGruppoDTO;
 import org.ironlog.app.model.PeriodoStatistica;
 import org.ironlog.app.model.SerieEseguita;
@@ -126,6 +127,37 @@ public class StatisticheServiceImpl implements StatisticheService {
             punti.add(p);
         }
         return punti;
+    }
+
+    @Override
+    public RiepilogoStatisticheDTO riepilogo(Utente atleta, PeriodoStatistica periodo) {
+
+        LocalDateTime a = LocalDateTime.now();
+        LocalDateTime da = periodo == PeriodoStatistica.SETTIMANA
+                ? a.minusDays(7)
+                : a.minusMonths(1);
+
+        List<SerieEseguita> serie = serieEseguitaRepository
+                .findBySessioneAtletaAndSessioneEseguitaIlBetween(atleta, da, a);
+
+        BigDecimal volumeTotale = calcolaVolume(serie);
+        int serieTotali = serie.size();
+
+        long numeroAllenamenti = serie.stream()
+                .map(s -> s.getSessione().getId())
+                .distinct()
+                .count();
+
+        BigDecimal media = numeroAllenamenti == 0
+                ? BigDecimal.ZERO
+                : volumeTotale.divide(BigDecimal.valueOf(numeroAllenamenti), 2, RoundingMode.HALF_UP);
+
+        RiepilogoStatisticheDTO dto = new RiepilogoStatisticheDTO();
+        dto.setVolumeTotale(volumeTotale);
+        dto.setSerieTotali(serieTotali);
+        dto.setNumeroAllenamenti((int) numeroAllenamenti);
+        dto.setMediaPerAllenamento(media);
+        return dto;
     }
 
     private BigDecimal calcolaVolume(List<SerieEseguita> serie) {

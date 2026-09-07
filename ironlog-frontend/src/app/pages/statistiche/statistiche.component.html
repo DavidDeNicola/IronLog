@@ -1,0 +1,73 @@
+<div class="intestazione-pagina">
+  <h1>Statistiche</h1>
+  <div class="selettore-periodo">
+    <button type="button"
+            [class.attivo]="periodo === 'SETTIMANA'"
+            (click)="cambiaPeriodo('SETTIMANA')">
+      Settimana
+    </button>
+    <button type="button"
+            [class.attivo]="periodo === 'MESE'"
+            (click)="cambiaPeriodo('MESE')">
+      Mese
+    </button>
+  </div>
+</div>
+
+@if (errore) {
+  <p class="stato-messaggio errore">
+    Impossibile caricare le statistiche. Riprova più tardi.
+  </p>
+}
+
+@if (riepilogo && !caricamento) {
+  <div class="griglia-riepilogo">
+    <div class="card-stat">
+      <span class="stat-etichetta">Volume totale</span>
+      <span class="stat-valore">{{ riepilogo.volumeTotale }} kg</span>
+    </div>
+    <div class="card-stat">
+      <span class="stat-etichetta">Serie totali</span>
+      <span class="stat-valore">{{ riepilogo.serieTotali }}</span>
+    </div>
+    <div class="card-stat">
+      <span class="stat-etichetta">Media per allenamento</span>
+      <span class="stat-valore">{{ riepilogo.mediaPerAllenamento }} kg</span>
+    </div>
+  </div>
+}
+
+<div class="griglia-grafici" [class.nascosto]="errore">
+
+  <div class="card-grafico">
+    <h2>Andamento volume</h2>
+    <div class="contenitore-canvas">
+      <canvas #canvasAndamento></canvas>
+      @if (!caricamento && andamento.length === 0) {
+        <div class="velo-vuoto">Nessun dato per questo periodo.</div>
+      }
+    </div>
+  </div>
+
+  <div class="card-grafico">
+    <h2>Volume per gruppo muscolare</h2>
+    @if (!caricamento && barreVolume.length === 0) {
+      <p class="stato-vuoto-inline">Nessun dato per questo periodo.</p>
+    } @else {
+      <div class="lista-barre">
+        @for (barra of barreVolume; track barra.nome) {
+          <div class="riga-barra">
+            <span class="barra-nome">{{ barra.nome }}</span>
+            <div class="barra-traccia">
+              <div class="barra-riempimento"
+                   [style.width.%]="barra.percentuale"
+                   [style.background-color]="barra.colore"></div>
+            </div>
+            <span class="barra-percentuale">{{ barra.percentuale }}%</span>
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+</div>

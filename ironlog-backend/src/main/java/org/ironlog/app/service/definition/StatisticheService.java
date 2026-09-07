@@ -2,6 +2,7 @@ package org.ironlog.app.service.definition;
 
 import org.ironlog.app.dto.DashboardDTO;
 import org.ironlog.app.dto.PuntoVolumeDTO;
+import org.ironlog.app.dto.RiepilogoStatisticheDTO;
 import org.ironlog.app.dto.VolumeGruppoDTO;
 import org.ironlog.app.model.PeriodoStatistica;
 import org.ironlog.app.model.Utente;
@@ -15,4 +16,6 @@ public interface StatisticheService {
     DashboardDTO dashboard(Utente atleta);
 
     List<PuntoVolumeDTO> andamentoVolume(Utente atleta, PeriodoStatistica periodo);
+
+    RiepilogoStatisticheDTO riepilogo(Utente atleta, PeriodoStatistica periodo);
 }

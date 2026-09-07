@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.ironlog.app.dto.RiepilogoStatisticheDTO;
 
 import java.util.List;
 
@@ -42,5 +43,13 @@ public class StatisticheController {
             Authentication authentication) {
         Utente atleta = (Utente) authentication.getPrincipal();
         return ResponseEntity.ok(statisticheService.andamentoVolume(atleta, periodo));
+    }
+
+    @GetMapping("/riepilogo")
+    public ResponseEntity<RiepilogoStatisticheDTO> riepilogo(
+            @RequestParam PeriodoStatistica periodo,
+            Authentication authentication) {
+        Utente atleta = (Utente) authentication.getPrincipal();
+        return ResponseEntity.ok(statisticheService.riepilogo(atleta, periodo));
     }
 }
