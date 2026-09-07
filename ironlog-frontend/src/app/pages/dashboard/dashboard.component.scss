@@ -1,0 +1,198 @@
+.stato-messaggio {
+  color: var(--testo-secondario);
+
+  &.errore {
+    color: var(--negativo);
+  }
+}
+
+.intestazione-dashboard {
+  margin-bottom: 1.5rem;
+
+  h1 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin: 0 0 0.25rem;
+  }
+
+  p {
+    color: var(--testo-secondario);
+    margin: 0;
+  }
+}
+
+.griglia-stat {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.card-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: 14px;
+  background-color: var(--sfondo-card);
+  border: 1px solid var(--bordo-card);
+}
+
+.stat-etichetta {
+  font-size: 0.8rem;
+  color: var(--testo-secondario);
+}
+
+.stat-valore {
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.stat-nota {
+  font-size: 0.75rem;
+  color: var(--testo-secondario);
+
+  &.positivo {
+    color: var(--positivo);
+  }
+
+  &.negativo {
+    color: var(--negativo);
+  }
+}
+
+.griglia-grafici {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.card-grafico {
+  padding: 1.5rem;
+  border-radius: 14px;
+  background-color: var(--sfondo-card);
+  border: 1px solid var(--bordo-card);
+
+  h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 1.25rem;
+  }
+}
+
+.contenitore-canvas {
+  position: relative;
+  width: 100%;
+  height: 280px;
+
+  canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
+
+.velo-vuoto {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--testo-secondario);
+  font-size: 0.9rem;
+  background-color: var(--sfondo-card);
+}
+
+.sezione-prossimo {
+  h2 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0.875rem;
+  }
+}
+
+.card-prossimo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.18), rgba(59, 130, 246, 0.04));
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.prossimo-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.prossimo-nome {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.prossimo-dettagli {
+  font-size: 0.875rem;
+  color: var(--testo-secondario);
+}
+
+.btn-primary {
+  background-color: var(--accento);
+  border-color: var(--accento);
+  font-weight: 500;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: var(--accento-hover);
+    border-color: var(--accento-hover);
+  }
+}
+
+@media (max-width: 768px) {
+  .intestazione-dashboard {
+    padding-top: 2.75rem;
+  }
+
+  .griglia-stat {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .griglia-grafici {
+    grid-template-columns: 1fr;
+  }
+
+  .card-prossimo {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.5rem;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.18), rgba(59, 130, 246, 0.04));
+    border: 1px solid rgba(59, 130, 246, 0.3);
+  }
+
+  .prossimo-icona {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+    border-radius: 14px;
+    background-color: var(--accento);
+    color: #fff;
+    font-size: 1.6rem;
+  }
+
+  .prossimo-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex: 1;
+  }
+}

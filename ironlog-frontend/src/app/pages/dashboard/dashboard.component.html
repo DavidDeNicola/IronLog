@@ -1,1 +1,87 @@
-<p>dashboard works!</p>
+@if (caricamento) {
+  <p class="stato-messaggio">Caricamento…</p>
+}
+
+@else if (errore) {
+  <p class="stato-messaggio errore">
+    Impossibile caricare la dashboard. Riprova più tardi.
+  </p>
+}
+
+@else {
+
+  <div class="intestazione-dashboard">
+    <h1>Ciao, {{ nomeUtente }} 👋</h1>
+    <p>Ecco il riepilogo dei tuoi allenamenti</p>
+  </div>
+
+  <div class="griglia-stat">
+    <div class="card-stat">
+      <span class="stat-etichetta">Allenamenti</span>
+      <span class="stat-valore">{{ riepilogo?.allenamentiSettimana ?? 0 }}</span>
+      <span class="stat-nota">Questa settimana</span>
+    </div>
+    <div class="card-stat">
+      <span class="stat-etichetta">Volume</span>
+      <span class="stat-valore">{{ riepilogo?.volumeSettimana ?? 0 }} kg</span>
+      @if (riepilogo?.variazioneVolumePercentuale != null) {
+        <span class="stat-nota" [class.positivo]="(riepilogo?.variazioneVolumePercentuale ?? 0) >= 0"
+              [class.negativo]="(riepilogo?.variazioneVolumePercentuale ?? 0) < 0">
+          {{ (riepilogo?.variazioneVolumePercentuale ?? 0) >= 0 ? '+' : '' }}{{ riepilogo?.variazioneVolumePercentuale }}% vs settimana scorsa
+        </span>
+      } @else {
+        <span class="stat-nota">Questa settimana</span>
+      }
+    </div>
+    <div class="card-stat">
+      <span class="stat-etichetta">Serie totali</span>
+      <span class="stat-valore">{{ riepilogo?.serieSettimana ?? 0 }}</span>
+      <span class="stat-nota">Questa settimana</span>
+    </div>
+    <div class="card-stat">
+      <span class="stat-etichetta">Streak</span>
+      <span class="stat-valore">{{ riepilogo?.streak ?? 0 }} 🔥</span>
+      <span class="stat-nota">giorni</span>
+    </div>
+  </div>
+
+  <div class="griglia-grafici">
+    <div class="card-grafico">
+      <h2>Volume (kg)</h2>
+      <div class="contenitore-canvas">
+        <canvas #canvasAndamento></canvas>
+        @if (andamento.length === 0) {
+          <div class="velo-vuoto">Nessun dato questa settimana.</div>
+        }
+      </div>
+    </div>
+    <div class="card-grafico">
+      <h2>Gruppi muscolari</h2>
+      <div class="contenitore-canvas">
+        <canvas #canvasDonut></canvas>
+        @if (volumeGruppi.length === 0) {
+          <div class="velo-vuoto">Nessun dato questa settimana.</div>
+        }
+      </div>
+    </div>
+  </div>
+
+  @if (prossimo) {
+    <div class="sezione-prossimo">
+      <h2>Prossimo allenamento</h2>
+      <div class="card-prossimo">
+        <div class="prossimo-icona">
+          <i class="bi bi-lightning-charge-fill"></i>
+        </div>
+        <div class="prossimo-info">
+          <span class="prossimo-nome">{{ prossimo.giornoNome }}</span>
+          <span class="prossimo-dettagli">{{ prossimo.schedaNome }} · {{ prossimo.numeroEsercizi }} esercizi</span>
+        </div>
+        <button class="btn btn-primary" type="button" (click)="avviaProssimo()">
+          <i class="bi bi-play-fill"></i> Inizia allenamento
+        </button>
+      </div>
+    </div>
+  }
+
+}
