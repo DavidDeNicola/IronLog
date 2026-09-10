@@ -15,4 +15,8 @@ export class ProfiloService {
   getProfilo(): Observable<Profilo> {
     return this.http.get<Profilo>(this.baseUrl);
   }
+
+  azzeraStatistiche(): Observable<void> {
+    return this.http.delete<void>(`${environment.apiUrl}/atleta/sessioni`);
+  }
 }

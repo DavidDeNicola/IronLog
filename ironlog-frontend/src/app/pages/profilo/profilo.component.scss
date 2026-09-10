@@ -104,3 +104,119 @@
   text-align: right;
   word-break: break-word;
 }
+
+/* Azioni */
+
+.card-azioni {
+  max-width: 560px;
+  margin-top: 1.25rem;
+  padding: 0.5rem 1.5rem;
+  border-radius: 12px;
+  background-color: var(--sfondo-card);
+  border: 1px solid var(--bordo-card);
+}
+
+.azione {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 1rem 0;
+}
+
+.azione-testo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.azione-titolo {
+  font-weight: 600;
+}
+
+.azione-descrizione {
+  font-size: 0.85rem;
+  color: var(--testo-secondario);
+}
+
+.btn-azione {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-shrink: 0;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--negativo);
+  background-color: transparent;
+  color: var(--negativo);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background-color: rgba(239, 68, 68, 0.12);
+  }
+}
+
+.conferma {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.conferma-domanda {
+  font-size: 0.9rem;
+  color: var(--testo-secondario);
+}
+
+.btn-annulla,
+.btn-conferma {
+  padding: 0.5rem 0.9rem;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+}
+
+.btn-annulla {
+  border: 1px solid var(--bordo-card);
+  background-color: transparent;
+  color: var(--testo-primario);
+
+  &:hover:not(:disabled) {
+    background-color: var(--sfondo-card-hover);
+  }
+}
+
+.btn-conferma {
+  border: 1px solid var(--negativo);
+  background-color: var(--negativo);
+  color: #fff;
+
+  &:hover:not(:disabled) {
+    background-color: #dc2626;
+  }
+}
+
+.esito {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+
+  &.successo {
+    color: var(--positivo);
+  }
+
+  &.errore {
+    color: var(--negativo);
+  }
+}

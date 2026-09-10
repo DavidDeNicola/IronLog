@@ -16,4 +16,6 @@ public interface SessioneService {
     SessioneResponseDTO findAperta(Utente atleta);
 
     List<SessioneSintesiDTO> findStorico(Utente atleta);
+
+    void azzeraSessioni(Utente atleta);
 }

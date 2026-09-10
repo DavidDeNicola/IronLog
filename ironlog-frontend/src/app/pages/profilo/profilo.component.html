@@ -35,4 +35,46 @@
     </div>
 
   </div>
+
+  <div class="card-azioni">
+    <div class="azione">
+      <div class="azione-testo">
+        <span class="azione-titolo">Azzera statistiche</span>
+        <span class="azione-descrizione">
+          Elimina tutti i tuoi allenamenti registrati. Dashboard, statistiche
+          e storico ripartiranno da zero. L'operazione non è reversibile.
+        </span>
+      </div>
+
+      @if (!confermaAzzera) {
+        <button type="button" class="btn-azione" (click)="chiediConfermaAzzera()">
+          <i class="bi bi-trash"></i> Azzera
+        </button>
+      } @else {
+        <div class="conferma">
+          <span class="conferma-domanda">Sei sicuro?</span>
+          <button type="button" class="btn-annulla"
+                  (click)="annullaAzzera()" [disabled]="azzeramentoInCorso">
+            Annulla
+          </button>
+          <button type="button" class="btn-conferma"
+                  (click)="azzeraStatistiche()" [disabled]="azzeramentoInCorso">
+            {{ azzeramentoInCorso ? 'Azzeramento…' : 'Sì, azzera' }}
+          </button>
+        </div>
+      }
+    </div>
+
+    @if (azzeraEsito === 'successo') {
+      <p class="esito successo">
+        <i class="bi bi-check-circle"></i> Statistiche azzerate.
+      </p>
+    }
+    @else if (azzeraEsito === 'errore') {
+      <p class="esito errore">
+        <i class="bi bi-exclamation-circle"></i>
+        Non è stato possibile azzerare le statistiche. Riprova.
+      </p>
+    }
+  </div>
 }

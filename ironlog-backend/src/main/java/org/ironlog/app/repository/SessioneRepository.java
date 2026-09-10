@@ -10,6 +10,8 @@ import java.util.Optional;
 
 public interface SessioneRepository extends JpaRepository<Sessione, Long> {
 
+    List<Sessione> findByAtleta(Utente atleta);
+
     List<Sessione> findByAtletaOrderByEseguitaIlDesc(Utente atleta);
 
     List<Sessione> findByAtletaAndEseguitaIlBetweenOrderByEseguitaIlDesc(Utente atleta, LocalDateTime da, LocalDateTime a);

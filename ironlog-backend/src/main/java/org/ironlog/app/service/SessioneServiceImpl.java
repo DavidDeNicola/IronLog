@@ -1,5 +1,6 @@
 package org.ironlog.app.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.ironlog.app.dto.*;
 import org.ironlog.app.exception.*;
@@ -157,5 +158,12 @@ public class SessioneServiceImpl implements SessioneService {
 
             esercizioSchedaRepository.save(esercizioScheda);
         }
+    }
+
+    @Override
+    @Transactional
+    public void azzeraSessioni(Utente atleta) {
+        List<Sessione> sessioni = sessioneRepository.findByAtleta(atleta);
+        sessioneRepository.deleteAll(sessioni);
     }
 }

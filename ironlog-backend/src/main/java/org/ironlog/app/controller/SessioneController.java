@@ -56,4 +56,11 @@ public class SessioneController {
         return ResponseEntity.ok(sessioneService.findStorico(atleta));
     }
 
+    @DeleteMapping
+    public ResponseEntity<Void> azzeraStatistiche(Authentication authentication) {
+        Utente atleta = (Utente) authentication.getPrincipal();
+        sessioneService.azzeraSessioni(atleta);
+        return ResponseEntity.noContent().build();
+    }
+
 }

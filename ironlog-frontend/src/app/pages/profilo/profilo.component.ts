@@ -14,6 +14,11 @@ export class ProfiloComponent implements OnInit {
   caricamento = true;
   errore = false;
 
+  // Azzera statistiche
+  confermaAzzera = false;
+  azzeramentoInCorso = false;
+  azzeraEsito: 'successo' | 'errore' | null = null;
+
   constructor(private profiloService: ProfiloService) {}
 
   ngOnInit(): void {
@@ -41,5 +46,30 @@ export class ProfiloComponent implements OnInit {
       return '';
     }
     return this.profilo.ruolo === 'COACH' ? 'Coach' : 'Atleta';
+  }
+
+  chiediConfermaAzzera(): void {
+    this.confermaAzzera = true;
+    this.azzeraEsito = null;
+  }
+
+  annullaAzzera(): void {
+    this.confermaAzzera = false;
+  }
+
+  azzeraStatistiche(): void {
+    this.azzeramentoInCorso = true;
+    this.profiloService.azzeraStatistiche().subscribe({
+      next: () => {
+        this.azzeramentoInCorso = false;
+        this.confermaAzzera = false;
+        this.azzeraEsito = 'successo';
+      },
+      error: () => {
+        this.azzeramentoInCorso = false;
+        this.confermaAzzera = false;
+        this.azzeraEsito = 'errore';
+      }
+    });
   }
 }
