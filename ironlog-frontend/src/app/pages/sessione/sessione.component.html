@@ -55,19 +55,6 @@
     </button>
   </div>
 
-  @if (recuperoAttivo) {
-    <div class="timer-recupero">
-      <div class="cerchio-timer" [style.background]="'conic-gradient(var(--accento) ' + gradoProgresso + 'deg, var(--sfondo-pagina) 0deg)'">
-        <div class="cerchio-interno">
-          <span class="tempo-centro">{{ formattaTempo(secondiRimanenti) }}</span>
-        </div>
-      </div>
-      <button class="btn-salta" type="button" (click)="fermaRecupero()">
-        Salta recupero
-      </button>
-    </div>
-  }
-
   <div class="lista-esercizi">
     @for (es of giorno.esercizi; track es.id) {
       <div class="card-esercizio">
@@ -122,5 +109,21 @@
       </div>
     }
   </div>
+
+  @if (recuperoAttivo) {
+    <div class="overlay-recupero">
+      <div class="modulo-recupero">
+        <span class="recupero-titolo">Recupero</span>
+        <div class="cerchio-timer" [style.background]="'conic-gradient(var(--accento) ' + gradoProgresso + 'deg, var(--sfondo-pagina) 0deg)'">
+          <div class="cerchio-interno">
+            <span class="tempo-centro">{{ formattaTempo(secondiRimanenti) }}</span>
+          </div>
+        </div>
+        <button class="btn-salta" type="button" (click)="fermaRecupero()">
+          Salta recupero
+        </button>
+      </div>
+    </div>
+  }
 
 }
