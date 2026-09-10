@@ -16,6 +16,22 @@
   --negativo: #ef4444;
 }
 
+:root.tema-chiaro {
+  --sfondo-pagina: #f1f5f9;
+  --sfondo-sidebar: #f8fafc;
+  --sfondo-card: #ffffff;
+  --sfondo-card-hover: #eef2f7;
+  --bordo-card: #e2e8f0;
+
+  --testo-primario: #1e293b;
+  --testo-secondario: #64748b;
+
+  --accento: #3b82f6;
+  --accento-hover: #2563eb;
+  --positivo: #16a34a;
+  --negativo: #dc2626;
+}
+
 body {
   background-color: var(--sfondo-pagina);
   color: var(--testo-primario);

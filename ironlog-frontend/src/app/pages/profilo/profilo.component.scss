@@ -1,3 +1,8 @@
+.profilo-pagina {
+  max-width: 880px;
+  margin: 0 auto;
+}
+
 .intestazione-pagina {
   margin-bottom: 1.5rem;
 
@@ -16,9 +21,11 @@
   }
 }
 
+/* Card info */
+
 .card-profilo {
-  max-width: 560px;
   padding: 1.5rem;
+  margin-bottom: 1.25rem;
   border-radius: 12px;
   background-color: var(--sfondo-card);
   border: 1px solid var(--bordo-card);
@@ -105,11 +112,30 @@
   word-break: break-word;
 }
 
+/* Griglia password + azioni */
+
+.profilo-griglia {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.colonna-azioni {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+@media (max-width: 768px) {
+  .profilo-griglia {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Cambio password */
 
 .card-form {
-  max-width: 560px;
-  margin-top: 1.25rem;
   padding: 1.5rem;
   border-radius: 12px;
   background-color: var(--sfondo-card);
@@ -180,8 +206,6 @@
 /* Azioni */
 
 .card-azioni {
-  max-width: 560px;
-  margin-top: 1.25rem;
   padding: 0.5rem 1.5rem;
   border-radius: 12px;
   background-color: var(--sfondo-card);
@@ -192,7 +216,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1.25rem;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
   padding: 1rem 0;
 }
 
@@ -201,6 +226,7 @@
   flex-direction: column;
   gap: 0.25rem;
   min-width: 0;
+  flex: 1;
 }
 
 .azione-titolo {
@@ -238,8 +264,8 @@
 .conferma {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.5rem;
-  flex-shrink: 0;
 }
 
 .conferma-domanda {
@@ -300,8 +326,6 @@
 /* Elimina profilo (zona pericolosa) */
 
 .card-pericolo {
-  max-width: 560px;
-  margin-top: 1.25rem;
   padding: 0.5rem 1.5rem 1rem;
   border-radius: 12px;
   background-color: var(--sfondo-card);

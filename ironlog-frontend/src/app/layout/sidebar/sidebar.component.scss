@@ -5,7 +5,7 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  width: 240px;
+  width: 272px;
   height: 100vh;
   position: sticky;
   top: 0;
@@ -84,7 +84,7 @@
 
 .voce-menu.attiva {
   background-color: blue;
-  color: var(--testo-primario);
+  color: #fff;
   font-weight: 500;
 }
 
@@ -122,11 +122,17 @@
 }
 
 .avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 32px;
   height: 32px;
   flex-shrink: 0;
   border-radius: 50%;
-  background-color: var(--sfondo-card-hover);
+  background-color: rgba(59, 130, 246, 0.15);
+  color: var(--accento);
+  font-size: 0.75rem;
+  font-weight: 600;
 }
 
 .utente-info {

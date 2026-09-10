@@ -19,15 +19,15 @@
 
   <div class="sidebar-fondo">
 
-    <button class="toggle-tema" type="button">
-      <i class="voce-icona bi bi-moon"></i>
-      <span class="voce-etichetta">Modalità scura</span>
+    <button class="toggle-tema" type="button" (click)="alternaTema()">
+      <i class="voce-icona bi" [ngClass]="temaChiaro ? 'bi-sun' : 'bi-moon'"></i>
+      <span class="voce-etichetta">{{ temaChiaro ? 'Modalità chiara' : 'Modalità scura' }}</span>
     </button>
 
     <div class="blocco-utente" (click)="logout()" title="Esci">
-      <span class="avatar"></span>
+      <span class="avatar">{{ iniziali }}</span>
       <span class="utente-info">
-        <span class="utente-nome">{{ nomeUtente }}</span>
+        <span class="utente-nome">{{ nomeCompleto || emailUtente }}</span>
         <span class="utente-ruolo">{{ ruoloUtente }}</span>
       </span>
       <i class="bi bi-box-arrow-right freccia"></i>
