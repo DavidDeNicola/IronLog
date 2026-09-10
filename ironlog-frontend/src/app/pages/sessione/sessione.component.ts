@@ -22,7 +22,7 @@ export class SessioneComponent implements OnInit, OnDestroy {
 
   sessione: SessioneResponse | null = null;
   giorno: GiornoScheda | null = null;
-  inputSerie: { [esercizioSchedaId: number]: { peso: number | null; ripetizioni: number | null } } = {};
+  inputSerie: { [esercizioSchedaId: number]: { peso: string; ripetizioni: string } } = {};
   salvataggioInCorso = false;
 
   recuperoAttivo = false;
@@ -78,27 +78,62 @@ export class SessioneComponent implements OnInit, OnDestroy {
     });
   }
 
-  pesoInput(es: EsercizioScheda): number | null {
-    return this.inputSerie[es.id]?.peso ?? null;
+  /*
+   * I due campi sono di tipo testo e il valore digitato resta una stringa fino
+   * al momento in cui la serie viene registrata.
+   *
+   * Con <input type="number"> e la lettura di valueAsNumber, digitare il
+   * separatore decimale produceva un valore intermedio non valido ("20.",
+   * "20,"): valueAsNumber restituiva NaN, il binding [value] riscriveva NaN
+   * nell'input e il browser svuotava la casella, rendendo impossibile inserire
+   * i mezzi chili. Tenendo il testo cosi' com'e' il problema non si presenta, e
+   * la conversione avviene una sola volta, alla conferma.
+   */
+
+  pesoInput(es: EsercizioScheda): string {
+    return this.inputSerie[es.id]?.peso ?? '';
   }
 
-  impostaPeso(es: EsercizioScheda, valore: number | null): void {
+  impostaPeso(es: EsercizioScheda, valore: string): void {
     this.assicuraInput(es.id);
     this.inputSerie[es.id].peso = valore;
   }
 
-  ripInput(es: EsercizioScheda): number | null {
-    return this.inputSerie[es.id]?.ripetizioni ?? null;
+  ripInput(es: EsercizioScheda): string {
+    return this.inputSerie[es.id]?.ripetizioni ?? '';
   }
 
-  impostaRip(es: EsercizioScheda, valore: number | null): void {
+  impostaRip(es: EsercizioScheda, valore: string): void {
     this.assicuraInput(es.id);
     this.inputSerie[es.id].ripetizioni = valore;
   }
 
+  /** Peso valido: numero non negativo, con la virgola accettata al posto del punto. */
+  pesoNumerico(es: EsercizioScheda): number | null {
+    return this.aNumero(this.pesoInput(es));
+  }
+
+  /** Ripetizioni valide: numero intero maggiore di zero. */
+  ripNumeriche(es: EsercizioScheda): number | null {
+    const valore = this.aNumero(this.ripInput(es));
+    if (valore === null || valore < 1) {
+      return null;
+    }
+    return Math.trunc(valore);
+  }
+
+  private aNumero(testo: string): number | null {
+    const pulito = testo.trim().replace(',', '.');
+    if (pulito === '') {
+      return null;
+    }
+    const numero = Number(pulito);
+    return Number.isFinite(numero) && numero >= 0 ? numero : null;
+  }
+
   private assicuraInput(id: number): void {
     if (!this.inputSerie[id]) {
-      this.inputSerie[id] = { peso: null, ripetizioni: null };
+      this.inputSerie[id] = { peso: '', ripetizioni: '' };
     }
   }
 
@@ -110,16 +145,18 @@ export class SessioneComponent implements OnInit, OnDestroy {
   }
 
   registraSerie(es: EsercizioScheda): void {
-    const input = this.inputSerie[es.id];
-    if (!input || input.peso === null || input.ripetizioni === null || !this.sessione) {
+    const peso = this.pesoNumerico(es);
+    const ripetizioni = this.ripNumeriche(es);
+
+    if (peso === null || ripetizioni === null || !this.sessione) {
       return;
     }
 
     const richiesta: SerieEseguitaRequest = {
       esercizioSchedaId: es.id,
       esercizioId: es.esercizioId,
-      peso: input.peso,
-      ripetizioni: input.ripetizioni
+      peso: peso,
+      ripetizioni: ripetizioni
     };
 
     this.salvataggioInCorso = true;
@@ -127,7 +164,7 @@ export class SessioneComponent implements OnInit, OnDestroy {
     this.sessioneService.registraSerie(this.sessione.id, richiesta).subscribe({
       next: (serie) => {
         this.sessione!.serie.push(serie);
-        this.inputSerie[es.id] = { peso: input.peso, ripetizioni: null };
+        this.inputSerie[es.id] = { peso: this.pesoInput(es), ripetizioni: '' };
         this.salvataggioInCorso = false;
         this.avviaRecupero(es.recupero);
       },

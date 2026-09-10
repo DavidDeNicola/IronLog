@@ -28,6 +28,13 @@
         {{ gruppo.nome }}
       </button>
     }
+    <button type="button"
+            class="chip chip-preferiti"
+            [class.attivo]="soloPreferiti"
+            (click)="alternaFiltroPreferiti()">
+      <i class="bi" [class.bi-star-fill]="soloPreferiti" [class.bi-star]="!soloPreferiti"></i>
+      Preferiti
+    </button>
   </div>
 
 </div>
@@ -42,16 +49,16 @@
   </p>
 }
 
-@else if (esercizi.length === 0) {
+@else if (eserciziVisibili.length === 0) {
   <div class="stato-vuoto">
-    <i class="bi bi-search"></i>
-    <p>Nessun esercizio trovato.</p>
+    <i class="bi" [class.bi-star]="soloPreferiti" [class.bi-search]="!soloPreferiti"></i>
+    <p>{{ soloPreferiti ? 'Non hai ancora esercizi preferiti.' : 'Nessun esercizio trovato.' }}</p>
   </div>
 }
 
 @else {
   <div class="lista-esercizi">
-    @for (es of esercizi; track es.id) {
+    @for (es of eserciziVisibili; track es.id) {
       <div class="card-esercizio">
 
         <div class="immagine-esercizio">
@@ -61,6 +68,14 @@
             <i class="bi bi-person-arms-up"></i>
           }
         </div>
+
+        <button type="button"
+                class="bottone-preferito"
+                [class.attivo]="isPreferito(es)"
+                [attr.aria-label]="isPreferito(es) ? 'Rimuovi dai preferiti' : 'Aggiungi ai preferiti'"
+                (click)="alternaPreferito(es)">
+          <i class="bi" [class.bi-star-fill]="isPreferito(es)" [class.bi-star]="!isPreferito(es)"></i>
+        </button>
 
         <div class="corpo-esercizio">
           <span class="badge-gruppo">{{ es.gruppoMuscolareNome }}</span>

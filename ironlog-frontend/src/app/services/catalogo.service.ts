@@ -32,4 +32,16 @@ export class CatalogoService {
 
     return this.http.get<Esercizio[]>(`${this.baseUrl}/esercizi/cerca`, { params });
   }
+
+  getPreferiti(): Observable<Esercizio[]> {
+    return this.http.get<Esercizio[]>(`${this.baseUrl}/esercizi/preferiti`);
+  }
+
+  aggiungiPreferito(esercizioId: number): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/esercizi/${esercizioId}/preferito`, {});
+  }
+
+  rimuoviPreferito(esercizioId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/esercizi/${esercizioId}/preferito`);
+  }
 }

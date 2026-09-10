@@ -86,21 +86,27 @@
         <div class="input-serie">
           <div class="campo-input">
             <label>Peso (kg)</label>
-            <input type="number"
+            <input type="text"
                    class="form-control"
-                   [value]="pesoInput(es) ?? ''"
-                   (input)="impostaPeso(es, $any($event.target).valueAsNumber)" />
+                   inputmode="decimal"
+                   autocomplete="off"
+                   placeholder="0"
+                   [value]="pesoInput(es)"
+                   (input)="impostaPeso(es, $any($event.target).value)" />
           </div>
           <div class="campo-input">
             <label>Ripetizioni</label>
-            <input type="number"
+            <input type="text"
                    class="form-control"
-                   [value]="ripInput(es) ?? ''"
-                   (input)="impostaRip(es, $any($event.target).valueAsNumber)" />
+                   inputmode="numeric"
+                   autocomplete="off"
+                   placeholder="0"
+                   [value]="ripInput(es)"
+                   (input)="impostaRip(es, $any($event.target).value)" />
           </div>
           <button class="btn btn-aggiungi"
                   type="button"
-                  [disabled]="salvataggioInCorso || pesoInput(es) === null || ripInput(es) === null"
+                  [disabled]="salvataggioInCorso || pesoNumerico(es) === null || ripNumeriche(es) === null"
                   (click)="registraSerie(es)">
             <i class="bi bi-plus-lg"></i>
           </button>

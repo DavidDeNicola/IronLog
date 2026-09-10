@@ -1,15 +1,17 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { Router } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
 
 import { StatisticheService } from '../../services/statistiche.service';
+import { ThemeService } from '../../services/theme.service';
 import { SessioneService } from '../../services/sessione.service';
 import { AuthService } from '../../services/auth.service';
 import { Dashboard, VolumeGruppo, PuntoVolume } from '../../models/statistiche.model';
 import { ProssimoAllenamento } from '../../models/sessione.model';
 import { SchedaSintesi } from '../../models/scheda.model';
 import { SchedaService } from '../../services/scheda.service';
+import { ProfiloService } from '../../services/profilo.service';
 
 Chart.register(...registerables);
 
@@ -41,20 +43,25 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   private graficoAndamento?: Chart;
   private graficoDonut?: Chart;
   private vistaPronta = false;
+  private sottoscrizioneTema?: Subscription;
+  private nomeProfilo = '';
 
   constructor(
     private statisticheService: StatisticheService,
     private sessioneService: SessioneService,
     private schedaService: SchedaService,
+    private profiloService: ProfiloService,
+    private themeService: ThemeService,
     private authService: AuthService,
     private router: Router,
     private cdr: ChangeDetectorRef
   ) {}
 
   ngOnDestroy(): void {
+    this.sottoscrizioneTema?.unsubscribe();
     this.graficoAndamento?.destroy();
     this.graficoDonut?.destroy();
-    }
+  }
 
   ngAfterViewInit(): void {
     this.vistaPronta = true;
@@ -87,11 +94,27 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       next: (prossimo) => this.prossimo = prossimo,
       error: () => {}
     });
+
+    this.profiloService.getProfilo().subscribe({
+      next: (profilo) => this.nomeProfilo = profilo.nome,
+      error: () => {}
+    });
+
+    // Al cambio di tema i grafici vanno ricostruiti con i nuovi colori.
+    this.sottoscrizioneTema = this.themeService.cambiamenti.subscribe(() => {
+      this.graficoAndamento?.destroy();
+      this.graficoDonut?.destroy();
+      this.graficoAndamento = undefined;
+      this.graficoDonut = undefined;
+      this.disegnaGrafici();
+    });
   }
 
   get nomeUtente(): string {
-    const sub = this.authService.getUtente()?.sub ?? '';
-    return sub.split('@')[0];
+    if (this.nomeProfilo) {
+      return this.nomeProfilo;
+    }
+    return this.authService.getUtente()?.sub.split('@')[0] ?? '';
   }
 
   avviaProssimo(): void {
@@ -111,6 +134,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
 
+    const colori = this.themeService.coloriGrafico();
+
     if (this.canvasAndamento && !this.graficoAndamento) {
       this.graficoAndamento = new Chart(this.canvasAndamento.nativeElement, {
         type: 'line',
@@ -118,7 +143,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
           labels: this.andamento.map(p => this.formattaData(p.data)),
           datasets: [{
             data: this.andamento.map(p => p.volume),
-            borderColor: '#3b82f6',
+            borderColor: colori.accento,
             backgroundColor: 'rgba(59, 130, 246, 0.1)',
             fill: true,
             tension: 0.3,
@@ -130,8 +155,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
           maintainAspectRatio: false,
           plugins: { legend: { display: false } },
           scales: {
-            x: { ticks: { color: '#8b98a9' }, grid: { color: '#262f3d' } },
-            y: { ticks: { color: '#8b98a9' }, grid: { color: '#262f3d' } }
+            x: { ticks: { color: colori.testo }, grid: { color: colori.griglia } },
+            y: { ticks: { color: colori.testo }, grid: { color: colori.griglia } }
           }
         }
       });
@@ -145,7 +170,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
           datasets: [{
             data: this.volumeGruppi.map(v => v.volumeTotale),
             backgroundColor: COLORI,
-            borderColor: '#1a212c',
+            borderColor: colori.sfondoCard,
             borderWidth: 2
           }]
         },
@@ -156,7 +181,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
           plugins: {
             legend: {
               position: 'bottom',
-              labels: { color: '#e6edf3', padding: 12, boxWidth: 12, font: { size: 11 } }
+              labels: { color: colori.testo, padding: 12, boxWidth: 12, font: { size: 11 } }
             }
           }
         }

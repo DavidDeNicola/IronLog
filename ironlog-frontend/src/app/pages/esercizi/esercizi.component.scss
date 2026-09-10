@@ -97,6 +97,7 @@
 }
 
 .card-esercizio {
+  position: relative;
   display: flex;
   flex-direction: column;
   border-radius: 12px;
@@ -171,4 +172,38 @@
   padding-right: 2rem;
   padding-bottom: 0.75rem;
   background-color: var(--sfondo-pagina);
+}
+
+.chip-preferiti {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.bottone-preferito {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: rgba(13, 17, 23, 0.65);
+  color: #ffffff;
+  font-size: 0.9375rem;
+  backdrop-filter: blur(4px);
+  transition: color 0.15s, transform 0.15s;
+
+  &:hover {
+    transform: scale(1.08);
+  }
+
+  &.attiva {
+    color: #f59e0b;
+  }
 }

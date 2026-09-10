@@ -11,6 +11,8 @@ export interface RegisterRequest {
   email: string;
   password: string;
   ruolo: Ruolo;
+  /** Solo per gli atleti: coach da cui farsi seguire. Facoltativo. */
+  coachId: number | null;
 }
 
 export interface UtenteResponse {

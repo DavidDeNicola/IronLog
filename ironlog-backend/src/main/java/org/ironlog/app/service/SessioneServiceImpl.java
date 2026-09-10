@@ -1,6 +1,6 @@
 package org.ironlog.app.service;
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.ironlog.app.dto.*;
 import org.ironlog.app.exception.*;
@@ -33,6 +33,7 @@ public class SessioneServiceImpl implements SessioneService {
 
 
     @Override
+    @Transactional
     public SessioneResponseDTO apri(SessioneRequestDTO dto, Utente atleta) {
         if (!sessioneRepository.findByAtletaAndConclusaIlNull(atleta).isEmpty()) {
             throw new SessioneGiaApertaException("Sessione gia aperta");
@@ -48,6 +49,7 @@ public class SessioneServiceImpl implements SessioneService {
     }
 
     @Override
+    @Transactional
     public SerieEseguitaResponseDTO registraSerie(Long sessioneId, SerieEseguitaRequestDTO dto, Utente atleta) {
 
         Sessione sessione = sessioneRepository.findByIdAndAtleta(sessioneId, atleta).orElseThrow(() -> new SessioneNonTrovataException("Sessione non trovata"));
@@ -81,6 +83,7 @@ public class SessioneServiceImpl implements SessioneService {
     }
 
     @Override
+    @Transactional
     public RiepilogoSessioneDTO concludi(Long sessioneId, Utente atleta) {
         Sessione sessione = sessioneRepository.findByIdAndAtleta(sessioneId, atleta).orElseThrow(() -> new SessioneNonTrovataException("Sessione non trovata"));
         if(sessione.getConclusaIl() != null){

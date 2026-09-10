@@ -102,7 +102,17 @@ public class SchedaServiceImpl implements SchedaService {
             if (s.getGiornoScheda() != null
                     && s.getGiornoScheda().getScheda().getId().equals(scheda.getId())) {
 
-                int indiceUltimo = giorni.indexOf(s.getGiornoScheda());
+                Long ultimoId = s.getGiornoScheda().getId();
+                int indiceUltimo = -1;
+                for (int i = 0; i < giorni.size(); i++) {
+                    if (giorni.get(i).getId().equals(ultimoId)) {
+                        indiceUltimo = i;
+                        break;
+                    }
+                }
+                if (indiceUltimo < 0) {
+                    break;
+                }
                 prossimo = giorni.get((indiceUltimo + 1) % giorni.size());
                 break;
             }

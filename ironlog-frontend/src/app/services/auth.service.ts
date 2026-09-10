@@ -4,7 +4,8 @@ import { Observable, tap, map } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 
 import { environment } from '../../environments/environment';
-import { LoginRequest, RegisterRequest, UtenteResponse, PayloadToken, Ruolo } from '../models/auth.model';
+import { LoginRequest, RegisterRequest, PayloadToken, Ruolo } from '../models/auth.model';
+import { Cliente } from '../models/coach.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -33,8 +34,14 @@ export class AuthService {
       );
   }
 
-  register(dati: RegisterRequest): Observable<UtenteResponse> {
-    return this.http.post<UtenteResponse>(`${this.baseUrl}/register`, dati);
+  /** Il backend risponde 201 senza body. */
+  register(dati: RegisterRequest): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/register`, dati);
+  }
+
+  /** Coach selezionabili in fase di registrazione. */
+  getCoachDisponibili(): Observable<Cliente[]> {
+    return this.http.get<Cliente[]>(`${this.baseUrl}/coach`);
   }
 
   logout(): void {

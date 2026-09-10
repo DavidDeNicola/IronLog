@@ -1,7 +1,10 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 
+import { Subscription } from 'rxjs';
+
 import { StatisticheService } from '../../services/statistiche.service';
+import { ThemeService } from '../../services/theme.service';
 import { VolumeGruppo, PuntoVolume, RiepilogoStatistiche, PeriodoStatistica } from '../../models/statistiche.model';
 
 Chart.register(...registerables);
@@ -20,9 +23,9 @@ const COLORI = [
 export class StatisticheComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('canvasAndamento') canvasAndamento?: ElementRef<HTMLCanvasElement>;
-  @ViewChild('canvasVolume') canvasVolume?: ElementRef<HTMLCanvasElement>;
 
   periodo: PeriodoStatistica = 'SETTIMANA';
+  private datiCaricati = 0;
   caricamento = true;
   errore = false;
 
@@ -31,13 +34,24 @@ export class StatisticheComponent implements OnInit, AfterViewInit, OnDestroy {
   riepilogo: RiepilogoStatistiche | null = null;
 
   private graficoAndamento?: Chart;
-  private graficoVolume?: Chart;
+  private sottoscrizioneTema?: Subscription;
 
 
-  constructor(private statisticheService: StatisticheService) {}
+  constructor(
+    private statisticheService: StatisticheService,
+    private themeService: ThemeService
+  ) {}
 
   ngOnInit(): void {
     this.caricaDati();
+
+    // Al cambio di tema il grafico va ricostruito con i nuovi colori.
+    this.sottoscrizioneTema = this.themeService.cambiamenti.subscribe(() => {
+      this.graficoAndamento?.destroy();
+      this.graficoAndamento = undefined;
+      this.creaGrafici();
+      this.aggiornaGrafici();
+    });
   }
 
   ngAfterViewInit(): void {
@@ -45,13 +59,12 @@ export class StatisticheComponent implements OnInit, AfterViewInit, OnDestroy {
     this.aggiornaGrafici();
     setTimeout(() => {
       this.graficoAndamento?.resize();
-      this.graficoVolume?.resize();
     }, 100);
   }
 
   ngOnDestroy(): void {
+    this.sottoscrizioneTema?.unsubscribe();
     this.graficoAndamento?.destroy();
-    this.graficoVolume?.destroy();
   }
 
   cambiaPeriodo(periodo: PeriodoStatistica): void {
@@ -101,8 +114,6 @@ export class StatisticheComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  private datiCaricati = 0;
-
   private controllaCompletamento(): void {
     this.datiCaricati++;
     if (this.datiCaricati >= 3) {
@@ -112,12 +123,14 @@ export class StatisticheComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private creaGrafici(): void {
+    const colori = this.themeService.coloriGrafico();
+
     if (this.canvasAndamento) {
       this.graficoAndamento = new Chart(this.canvasAndamento.nativeElement, {
         type: 'line',
         data: { labels: [], datasets: [{
             data: [],
-            borderColor: '#3b82f6',
+            borderColor: colori.accento,
             backgroundColor: 'rgba(59, 130, 246, 0.1)',
             fill: true,
             tension: 0.3,
@@ -128,8 +141,8 @@ export class StatisticheComponent implements OnInit, AfterViewInit, OnDestroy {
           maintainAspectRatio: false,
           plugins: { legend: { display: false } },
           scales: {
-            x: { ticks: { color: '#8b98a9' }, grid: { color: '#262f3d' } },
-            y: { ticks: { color: '#8b98a9' }, grid: { color: '#262f3d' } }
+            x: { ticks: { color: colori.testo }, grid: { color: colori.griglia } },
+            y: { ticks: { color: colori.testo }, grid: { color: colori.griglia } }
           }
         }
       });

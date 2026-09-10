@@ -20,6 +20,9 @@ export class EserciziComponent implements OnInit {
 
   testoRicerca = '';
   gruppoSelezionato: number | null = null;
+  soloPreferiti = false;
+
+  private preferiti = new Set<number>();
 
   private ricerca$ = new Subject<void>();
 
@@ -47,7 +50,51 @@ export class EserciziComponent implements OnInit {
         }
       });
 
+    this.catalogoService.getPreferiti().subscribe({
+      next: (preferiti) => this.preferiti = new Set(preferiti.map(e => e.id)),
+      error: () => {}
+    });
+
     this.ricerca$.next();
+  }
+
+  get eserciziVisibili(): Esercizio[] {
+    return this.soloPreferiti
+      ? this.esercizi.filter(e => this.preferiti.has(e.id))
+      : this.esercizi;
+  }
+
+  isPreferito(es: Esercizio): boolean {
+    return this.preferiti.has(es.id);
+  }
+
+  alternaPreferito(es: Esercizio): void {
+    const eraPreferito = this.preferiti.has(es.id);
+
+    // Aggiornamento ottimistico: l'icona reagisce subito, in caso di errore si ripristina.
+    if (eraPreferito) {
+      this.preferiti.delete(es.id);
+    } else {
+      this.preferiti.add(es.id);
+    }
+
+    const richiesta$ = eraPreferito
+      ? this.catalogoService.rimuoviPreferito(es.id)
+      : this.catalogoService.aggiungiPreferito(es.id);
+
+    richiesta$.subscribe({
+      error: () => {
+        if (eraPreferito) {
+          this.preferiti.add(es.id);
+        } else {
+          this.preferiti.delete(es.id);
+        }
+      }
+    });
+  }
+
+  alternaFiltroPreferiti(): void {
+    this.soloPreferiti = !this.soloPreferiti;
   }
 
   onRicercaCambiata(): void {

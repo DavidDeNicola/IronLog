@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LoginComponent } from './pages/login/login.component';
+import { RegistrazioneComponent } from './pages/registrazione/registrazione.component';
 import {authGuard, coachGuard} from './app.guard';
 import { SchedeComponent } from './pages/schede/schede.component';
 import { DettaglioSchedaComponent } from './pages/dettaglio-scheda/dettaglio-scheda.component';
@@ -19,6 +20,7 @@ import {StatisticheClientiComponent} from './pages/statistiche-clienti/statistic
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
+  { path: 'registrazione', component: RegistrazioneComponent },
   {
     path: '',
     component: MainLayoutComponent,

@@ -14,14 +14,33 @@ public class CalcolatoreProgressione {
     private static final BigDecimal DECREMENTO = BigDecimal.valueOf(0.9);
     private static final BigDecimal DISCO = BigDecimal.valueOf(1.25);
 
+    /**
+     * Aumenta il carico del 2,5% arrotondando al disco piu' vicino.
+     * Sotto i 25 kg il 2,5% e' inferiore a mezzo disco e l'arrotondamento
+     * riporterebbe al peso di partenza: in quel caso si sale di un disco pieno,
+     * cosi' la progressione non resta mai bloccata.
+     */
     public BigDecimal aumenta(BigDecimal pesoAttuale) {
-        BigDecimal aumentato = pesoAttuale.multiply(INCREMENTO);
-        return arrotondaAlDisco(aumentato);
+        BigDecimal aumentato = arrotondaAlDisco(pesoAttuale.multiply(INCREMENTO));
+
+        if (aumentato.compareTo(pesoAttuale) <= 0) {
+            return arrotondaAlDisco(pesoAttuale.add(DISCO));
+        }
+        return aumentato;
     }
 
+    /**
+     * Riduce il carico del 10% arrotondando al disco piu' vicino, con la
+     * simmetrica garanzia di scendere di almeno un disco (senza mai andare
+     * sotto lo zero).
+     */
     public BigDecimal diminuisci(BigDecimal pesoAttuale) {
-        BigDecimal diminuito = pesoAttuale.multiply(DECREMENTO);
-        return arrotondaAlDisco(diminuito);
+        BigDecimal diminuito = arrotondaAlDisco(pesoAttuale.multiply(DECREMENTO));
+
+        if (diminuito.compareTo(pesoAttuale) >= 0) {
+            diminuito = arrotondaAlDisco(pesoAttuale.subtract(DISCO));
+        }
+        return diminuito.max(BigDecimal.ZERO.setScale(2));
     }
 
     private BigDecimal arrotondaAlDisco(BigDecimal peso) {

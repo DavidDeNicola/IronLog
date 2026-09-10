@@ -13,8 +13,6 @@ public interface EsercizioRepository extends JpaRepository<Esercizio, Long> {
 
     List<Esercizio> findAllByOrderByNomeAsc();
 
-    List<Esercizio> findByNomeContainingIgnoreCaseOrderByNomeAsc(String nome);
-
     @Query("SELECT e FROM Esercizio e WHERE " +
             "(:nome IS NULL OR LOWER(e.nome) LIKE LOWER(CONCAT('%', :nome, '%'))) " +
             "AND (:gruppoId IS NULL OR e.gruppoMuscolare.id = :gruppoId) " +

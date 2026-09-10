@@ -1,4 +1,4 @@
-.pagina-login {
+.pagina-registrazione {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -6,9 +6,9 @@
   padding: 1.5rem;
 }
 
-.riquadro-login {
+.riquadro-registrazione {
   width: 100%;
-  max-width: 400px;
+  max-width: 460px;
   padding: 2.25rem 2rem;
   border-radius: 14px;
   background-color: var(--sfondo-card);
@@ -42,7 +42,43 @@
 .sottotitolo {
   font-size: 0.875rem;
   color: var(--testo-secondario);
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.selettore-ruolo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.625rem;
+  margin-bottom: 1.375rem;
+}
+
+.opzione-ruolo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.875rem 0.5rem;
+  border-radius: 10px;
+  border: 1px solid var(--bordo-card);
+  background-color: var(--sfondo-pagina);
+  color: var(--testo-secondario);
+  font-size: 0.875rem;
+
+  i {
+    font-size: 1.25rem;
+  }
+
+  &.attiva {
+    border-color: var(--accento);
+    color: var(--testo-primario);
+    background-color: var(--sfondo-card-hover);
+  }
+}
+
+.riga {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
 }
 
 .campo {
@@ -56,7 +92,19 @@
   }
 }
 
-.form-control {
+.facoltativo {
+  opacity: 0.7;
+}
+
+.nota {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--testo-secondario);
+  margin-top: 0.3125rem;
+}
+
+.form-control,
+.form-select {
   background-color: var(--sfondo-pagina);
   border: 1px solid var(--bordo-card);
   color: var(--testo-primario);
@@ -67,10 +115,6 @@
     color: var(--testo-primario);
     border-color: var(--accento);
     box-shadow: none;
-  }
-
-  &::placeholder {
-    color: var(--testo-secondario);
   }
 }
 
@@ -109,5 +153,12 @@
     &:hover {
       text-decoration: underline;
     }
+  }
+}
+
+@media (max-width: 420px) {
+  .riga {
+    grid-template-columns: 1fr;
+    gap: 0;
   }
 }

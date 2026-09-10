@@ -31,6 +31,32 @@ class CalcolatoreProgressioneTest {
     }
 
     @Test
+    void aumentaDiUnDiscoQuandoLaPercentualeNonBastaASuperareLArrotondamento() {
+        // 20 kg + 2,5% = 20,5 kg: arrotondato al disco tornerebbe a 20 kg.
+        BigDecimal risultato = calcolatore.aumenta(new BigDecimal("20.00"));
+        assertEquals(new BigDecimal("21.25"), risultato);
+    }
+
+    @Test
+    void aumentaSempreAncheSuiCarichiMoltoLeggeri() {
+        BigDecimal risultato = calcolatore.aumenta(new BigDecimal("5.00"));
+        assertEquals(new BigDecimal("6.25"), risultato);
+    }
+
+    @Test
+    void diminuisceDiAlmenoUnDiscoSuiCarichiLeggeri() {
+        // 5 kg - 10% = 4,5 kg: arrotondato al disco tornerebbe a 5 kg.
+        BigDecimal risultato = calcolatore.diminuisci(new BigDecimal("5.00"));
+        assertEquals(new BigDecimal("3.75"), risultato);
+    }
+
+    @Test
+    void nonScendeMaiSottoLoZero() {
+        BigDecimal risultato = calcolatore.diminuisci(new BigDecimal("0.00"));
+        assertEquals(new BigDecimal("0.00"), risultato);
+    }
+
+    @Test
     void completatoQuandoTutteLeSerieRaggiungonoLObiettivo() {
         List<SerieEseguita> serie = List.of(serieCon(8), serieCon(8), serieCon(9), serieCon(8));
         assertTrue(calcolatore.isCompletato(serie, 4, 8));
