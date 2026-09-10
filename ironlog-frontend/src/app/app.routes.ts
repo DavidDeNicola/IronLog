@@ -13,6 +13,7 @@ import { StatisticheComponent } from './pages/statistiche/statistiche.component'
 import { ProfiloComponent } from './pages/profilo/profilo.component';
 import {CreaSchedaComponent} from './pages/crea-scheda/crea-scheda.component';
 import {ClientiComponent} from './pages/clienti/clienti.component';
+import {ClienteDettaglioComponent} from './pages/cliente-dettaglio/cliente-dettaglio.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -32,6 +33,7 @@ export const routes: Routes = [
       { path: 'statistiche', component: StatisticheComponent },
       { path: 'profilo', component: ProfiloComponent },
       { path: 'coach/clienti', component: ClientiComponent, canActivate: [coachGuard] },
+      { path: 'coach/clienti/:id', component: ClienteDettaglioComponent, canActivate: [coachGuard] },
       { path: 'coach/clienti/:id/scheda-nuova', component: CreaSchedaComponent, canActivate: [coachGuard] },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]

@@ -38,7 +38,7 @@ export class ClientiComponent implements OnInit {
     return (cliente.nome.charAt(0) + cliente.cognome.charAt(0)).toUpperCase();
   }
 
-  nuovaScheda(clienteId: number): void {
-    this.router.navigate(['/coach/clienti', clienteId, 'scheda-nuova']);
+  apriCliente(clienteId: number): void {
+    this.router.navigate(['/coach/clienti', clienteId]);
   }
 }

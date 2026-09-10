@@ -38,12 +38,17 @@
 .card-cliente {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 0.75rem 1rem;
+  gap: 1rem;
   padding: 1rem 1.25rem;
   border-radius: 12px;
   background-color: var(--sfondo-card);
   border: 1px solid var(--bordo-card);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background-color: var(--sfondo-card-hover);
+  }
 }
 
 .cliente-avatar {
@@ -76,21 +81,7 @@
   color: var(--testo-secondario);
 }
 
-.btn-nuova-scheda {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  flex-shrink: 0;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  border: 1px solid var(--accento);
-  background-color: transparent;
-  color: var(--accento);
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.15s ease;
-
-  &:hover {
-    background-color: rgba(59, 130, 246, 0.12);
-  }
+.freccia {
+  color: var(--testo-secondario);
+  font-size: 0.9rem;
 }

@@ -1,0 +1,54 @@
+<button type="button" class="link-indietro" (click)="indietro()">
+  <i class="bi bi-arrow-left"></i> Clienti
+</button>
+
+@if (cliente) {
+  <div class="testata-cliente">
+    <span class="cliente-avatar">{{ iniziali }}</span>
+    <div class="cliente-info">
+      <h1>{{ cliente.nome }} {{ cliente.cognome }}</h1>
+      <span class="cliente-email">{{ cliente.email }}</span>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="nuovaScheda()">
+      <i class="bi bi-plus-lg"></i> Nuova scheda
+    </button>
+  </div>
+}
+
+<div class="sezione-titolo">Schede</div>
+
+@if (caricamento) {
+  <p class="stato-messaggio">Caricamento…</p>
+}
+
+@else if (errore) {
+  <p class="stato-messaggio errore">
+    Impossibile caricare le schede del cliente. Riprova più tardi.
+  </p>
+}
+
+@else if (schede.length === 0) {
+  <div class="stato-vuoto">
+    <i class="bi bi-journal-x"></i>
+    <p>Questo cliente non ha ancora schede.</p>
+  </div>
+}
+
+@else {
+  <div class="lista-schede">
+    @for (scheda of schede; track scheda.id) {
+      <div class="card-scheda">
+        <div class="card-scheda-testa">
+          <span class="nome-scheda">{{ scheda.nome }}</span>
+          @if (scheda.attiva) {
+            <span class="badge-attiva">Attiva</span>
+          }
+        </div>
+        <div class="card-scheda-info">
+          <span><i class="bi bi-calendar3"></i> {{ scheda.dataInizio | date:'d MMM yyyy' }}</span>
+          <span><i class="bi bi-list-ol"></i> {{ scheda.numeroGiorni }} {{ scheda.numeroGiorni === 1 ? 'giorno' : 'giorni' }}</span>
+        </div>
+      </div>
+    }
+  </div>
+}

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Cliente } from '../models/coach.model';
 import { Profilo } from '../models/profilo.model';
-import { SchedaCreazione, SchedaResponse } from '../models/scheda.model';
+import { SchedaCreazione, SchedaResponse, SchedaSintesi } from '../models/scheda.model';
 
 @Injectable({ providedIn: 'root' })
 export class CoachService {
@@ -20,6 +20,10 @@ export class CoachService {
 
   getProfilo(): Observable<Profilo> {
     return this.http.get<Profilo>(`${this.baseUrl}/profilo`);
+  }
+
+  getSchedeAtleta(atletaId: number): Observable<SchedaSintesi[]> {
+    return this.http.get<SchedaSintesi[]>(`${this.baseUrl}/atleti/${atletaId}/schede`);
   }
 
   creaSchedaPerAtleta(atletaId: number, scheda: SchedaCreazione): Observable<SchedaResponse> {
