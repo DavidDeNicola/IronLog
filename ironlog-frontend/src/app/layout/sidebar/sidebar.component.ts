@@ -27,8 +27,7 @@ export class SidebarComponent {
     { etichetta: 'Esercizi',     percorso: '/esercizi',     icona: 'bi-list-check' },
     { etichetta: 'Statistiche',  percorso: '/statistiche',  icona: 'bi-bar-chart' },
     { etichetta: 'Storico',      percorso: '/storico',      icona: 'bi-clock-history' },
-    { etichetta: 'Profilo',      percorso: '/profilo',      icona: 'bi-person' },
-    { etichetta: 'Impostazioni', percorso: '/impostazioni', icona: 'bi-gear' }
+    { etichetta: 'Profilo',      percorso: '/profilo',      icona: 'bi-person' }
   ];
 
   constructor(

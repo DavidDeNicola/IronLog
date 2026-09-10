@@ -10,6 +10,7 @@ import { AllenamentoComponent } from './pages/allenamento/allenamento.component'
 import { SessioneComponent } from './pages/sessione/sessione.component';
 import { StoricoComponent } from './pages/storico/storico.component';
 import { StatisticheComponent } from './pages/statistiche/statistiche.component';
+import { ProfiloComponent } from './pages/profilo/profilo.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -27,6 +28,7 @@ export const routes: Routes = [
       { path: 'allenamento', component: AllenamentoComponent },
       { path: 'storico', component: StoricoComponent },
       { path: 'statistiche', component: StatisticheComponent },
+      { path: 'profilo', component: ProfiloComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   },

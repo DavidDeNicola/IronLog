@@ -1,0 +1,38 @@
+<div class="intestazione-pagina">
+  <h1>Profilo</h1>
+</div>
+
+@if (caricamento) {
+  <p class="stato-messaggio">Caricamento…</p>
+}
+
+@else if (errore) {
+  <p class="stato-messaggio errore">
+    Impossibile caricare il profilo. Riprova più tardi.
+  </p>
+}
+
+@else if (profilo) {
+  <div class="card-profilo">
+
+    <div class="profilo-testata">
+      <div class="profilo-avatar">{{ iniziali }}</div>
+      <div class="profilo-identita">
+        <span class="profilo-nome">{{ profilo.nome }} {{ profilo.cognome }}</span>
+        <span class="profilo-badge">{{ ruoloEtichetta }}</span>
+      </div>
+    </div>
+
+    <div class="profilo-dettagli">
+      <div class="dettaglio">
+        <span class="dettaglio-etichetta"><i class="bi bi-envelope"></i> Email</span>
+        <span class="dettaglio-valore">{{ profilo.email }}</span>
+      </div>
+      <div class="dettaglio">
+        <span class="dettaglio-etichetta"><i class="bi bi-shield-check"></i> Ruolo</span>
+        <span class="dettaglio-valore">{{ ruoloEtichetta }}</span>
+      </div>
+    </div>
+
+  </div>
+}

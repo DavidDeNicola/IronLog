@@ -1,0 +1,106 @@
+.intestazione-pagina {
+  margin-bottom: 1.5rem;
+
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+  }
+}
+
+.stato-messaggio {
+  color: var(--testo-secondario);
+
+  &.errore {
+    color: var(--negativo);
+  }
+}
+
+.card-profilo {
+  max-width: 560px;
+  padding: 1.5rem;
+  border-radius: 12px;
+  background-color: var(--sfondo-card);
+  border: 1px solid var(--bordo-card);
+}
+
+.profilo-testata {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--bordo-card);
+}
+
+.profilo-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background-color: rgba(59, 130, 246, 0.15);
+  color: var(--accento);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.profilo-identita {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.profilo-nome {
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.profilo-badge {
+  align-self: flex-start;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: rgba(59, 130, 246, 0.15);
+  color: var(--accento);
+}
+
+.profilo-dettagli {
+  display: flex;
+  flex-direction: column;
+  padding-top: 0.5rem;
+}
+
+.dettaglio {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--bordo-card);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.dettaglio-etichetta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--testo-secondario);
+  font-size: 0.9rem;
+
+  i {
+    font-size: 1rem;
+  }
+}
+
+.dettaglio-valore {
+  font-weight: 500;
+  text-align: right;
+  word-break: break-word;
+}
