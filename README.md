@@ -390,4 +390,4 @@ Distribuito con licenza MIT — vedi [LICENSE](LICENSE).
 
 ---
 
-Progetto sviluppato da **David De Nicola** durante il Master ELIS "Sviluppo App & Servizi".
+Progetto sviluppato da **David De Nicola** 
