@@ -205,6 +205,10 @@
 
 .azione-titolo {
   font-weight: 600;
+
+  &.pericolo {
+    color: var(--negativo);
+  }
 }
 
 .azione-descrizione {
@@ -291,4 +295,42 @@
   &.errore {
     color: var(--negativo);
   }
+}
+
+/* Elimina profilo (zona pericolosa) */
+
+.card-pericolo {
+  max-width: 560px;
+  margin-top: 1.25rem;
+  padding: 0.5rem 1.5rem 1rem;
+  border-radius: 12px;
+  background-color: var(--sfondo-card);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.riquadro-conferma {
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.conferma-testo {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin: 0 0 0.85rem;
+  font-size: 0.9rem;
+  color: var(--testo-primario);
+
+  i {
+    color: var(--negativo);
+    margin-top: 0.1rem;
+  }
+}
+
+.conferma-azioni {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
 }

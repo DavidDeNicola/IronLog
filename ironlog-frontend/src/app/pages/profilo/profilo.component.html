@@ -124,4 +124,50 @@
       </p>
     }
   </div>
+
+  <div class="card-pericolo">
+    <div class="azione">
+      <div class="azione-testo">
+        <span class="azione-titolo pericolo">Elimina profilo</span>
+        <span class="azione-descrizione">
+          Cancella definitivamente il tuo account e tutti i dati collegati
+          (schede, allenamenti, statistiche, preferiti). L'operazione è
+          irreversibile.
+        </span>
+      </div>
+
+      @if (!confermaElimina) {
+        <button type="button" class="btn-azione" (click)="chiediConfermaElimina()">
+          <i class="bi bi-person-x"></i> Elimina
+        </button>
+      }
+    </div>
+
+    @if (confermaElimina) {
+      <div class="riquadro-conferma">
+        <p class="conferma-testo">
+          <i class="bi bi-exclamation-triangle"></i>
+          Sei davvero sicuro? Questa azione non può essere annullata e verrai
+          disconnesso.
+        </p>
+        <div class="conferma-azioni">
+          <button type="button" class="btn-annulla"
+                  (click)="annullaElimina()" [disabled]="eliminazioneInCorso">
+            Annulla
+          </button>
+          <button type="button" class="btn-conferma"
+                  (click)="eliminaProfilo()" [disabled]="eliminazioneInCorso">
+            {{ eliminazioneInCorso ? 'Eliminazione…' : 'Elimina definitivamente' }}
+          </button>
+        </div>
+      </div>
+    }
+
+    @if (eliminaErrore) {
+      <p class="esito errore">
+        <i class="bi bi-exclamation-circle"></i>
+        Non è stato possibile eliminare il profilo. Riprova.
+      </p>
+    }
+  </div>
 }

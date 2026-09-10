@@ -23,4 +23,8 @@ export class ProfiloService {
   cambiaPassword(richiesta: CambioPasswordRequest): Observable<void> {
     return this.http.put<void>(`${this.baseUrl}/password`, richiesta);
   }
+
+  eliminaProfilo(): Observable<void> {
+    return this.http.delete<void>(this.baseUrl);
+  }
 }

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { ProfiloService } from '../../services/profilo.service';
+import { AuthService } from '../../services/auth.service';
 import { Profilo } from '../../models/profilo.model';
 
 @Component({
@@ -31,7 +33,16 @@ export class ProfiloComponent implements OnInit {
   cambioErrore: string | null = null;
   cambioSuccesso = false;
 
-  constructor(private profiloService: ProfiloService) {}
+  // Elimina profilo
+  confermaElimina = false;
+  eliminazioneInCorso = false;
+  eliminaErrore = false;
+
+  constructor(
+    private profiloService: ProfiloService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.profiloService.getProfilo().subscribe({
@@ -109,6 +120,30 @@ export class ProfiloComponent implements OnInit {
         this.cambioErrore = err.status === 400
           ? (err.error?.messaggio ?? 'La password attuale non è corretta.')
           : 'Impossibile cambiare la password. Riprova.';
+      }
+    });
+  }
+
+  chiediConfermaElimina(): void {
+    this.confermaElimina = true;
+    this.eliminaErrore = false;
+  }
+
+  annullaElimina(): void {
+    this.confermaElimina = false;
+  }
+
+  eliminaProfilo(): void {
+    this.eliminazioneInCorso = true;
+    this.eliminaErrore = false;
+    this.profiloService.eliminaProfilo().subscribe({
+      next: () => {
+        this.authService.logout();
+        this.router.navigate(['/login']);
+      },
+      error: () => {
+        this.eliminazioneInCorso = false;
+        this.eliminaErrore = true;
       }
     });
   }
