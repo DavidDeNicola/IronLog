@@ -33,7 +33,10 @@ export class LoginComponent {
     this.authService.login(this.credenziali).subscribe({
       next: () => {
         this.caricamento = false;
-        this.router.navigate(['/dashboard']);
+        const destinazione = this.authService.getRuolo() === 'COACH'
+          ? '/coach/clienti'
+          : '/dashboard';
+        this.router.navigate([destinazione]);
       },
       error: (err) => {
         this.caricamento = false;

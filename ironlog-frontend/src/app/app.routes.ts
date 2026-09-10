@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LoginComponent } from './pages/login/login.component';
-import { authGuard } from './app.guard';
+import {authGuard, coachGuard} from './app.guard';
 import { SchedeComponent } from './pages/schede/schede.component';
 import { DettaglioSchedaComponent } from './pages/dettaglio-scheda/dettaglio-scheda.component';
 import { EserciziComponent } from './pages/esercizi/esercizi.component';
@@ -12,6 +12,7 @@ import { StoricoComponent } from './pages/storico/storico.component';
 import { StatisticheComponent } from './pages/statistiche/statistiche.component';
 import { ProfiloComponent } from './pages/profilo/profilo.component';
 import {CreaSchedaComponent} from './pages/crea-scheda/crea-scheda.component';
+import {ClientiComponent} from './pages/clienti/clienti.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -30,6 +31,8 @@ export const routes: Routes = [
       { path: 'storico', component: StoricoComponent },
       { path: 'statistiche', component: StatisticheComponent },
       { path: 'profilo', component: ProfiloComponent },
+      { path: 'coach/clienti', component: ClientiComponent, canActivate: [coachGuard] },
+      { path: 'coach/clienti/:id/scheda-nuova', component: CreaSchedaComponent, canActivate: [coachGuard] },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   },

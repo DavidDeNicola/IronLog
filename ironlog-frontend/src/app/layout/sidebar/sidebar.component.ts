@@ -3,6 +3,7 @@ import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
 import { ProfiloService } from '../../services/profilo.service';
+import { CoachService } from '../../services/coach.service';
 import { ThemeService } from '../../services/theme.service';
 import { NgClass } from '@angular/common';
 
@@ -23,8 +24,9 @@ export class SidebarComponent implements OnInit {
   @Output() voceSelezionata = new EventEmitter<void>();
 
   nomeCompleto = '';
+  voci: VoceMenu[] = [];
 
-  voci: VoceMenu[] = [
+  private vociAtleta: VoceMenu[] = [
     { etichetta: 'Dashboard',    percorso: '/dashboard',    icona: 'bi-grid-1x2' },
     { etichetta: 'Schede',       percorso: '/schede',       icona: 'bi-journal-text' },
     { etichetta: 'Allenamenti',  percorso: '/allenamento',  icona: 'bi-lightning-charge' },
@@ -34,15 +36,27 @@ export class SidebarComponent implements OnInit {
     { etichetta: 'Profilo',      percorso: '/profilo',      icona: 'bi-person' }
   ];
 
+  private vociCoach: VoceMenu[] = [
+    { etichetta: 'Clienti',      percorso: '/coach/clienti', icona: 'bi-people' }
+  ];
+
   constructor(
     private authService: AuthService,
     private profiloService: ProfiloService,
+    private coachService: CoachService,
     private themeService: ThemeService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.profiloService.getProfilo().subscribe({
+    const ruolo = this.authService.getRuolo();
+    this.voci = ruolo === 'COACH' ? this.vociCoach : this.vociAtleta;
+
+    const profilo$ = ruolo === 'COACH'
+      ? this.coachService.getProfilo()
+      : this.profiloService.getProfilo();
+
+    profilo$.subscribe({
       next: (profilo) => {
         this.nomeCompleto = `${profilo.nome} ${profilo.cognome}`;
       },

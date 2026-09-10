@@ -2,6 +2,9 @@
 
   <div class="intestazione-pagina">
     <h1>Nuova scheda</h1>
+    @if (modalitaCoach && nomeCliente) {
+      <p class="sottotitolo">Per {{ nomeCliente }}</p>
+    }
   </div>
 
   <div class="card-sezione">

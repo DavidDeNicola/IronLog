@@ -1,0 +1,37 @@
+<div class="intestazione-pagina">
+  <h1>I miei clienti</h1>
+</div>
+
+@if (caricamento) {
+  <p class="stato-messaggio">Caricamento…</p>
+}
+
+@else if (errore) {
+  <p class="stato-messaggio errore">
+    Impossibile caricare i clienti. Riprova più tardi.
+  </p>
+}
+
+@else if (clienti.length === 0) {
+  <div class="stato-vuoto">
+    <i class="bi bi-people"></i>
+    <p>Non hai ancora clienti assegnati.</p>
+  </div>
+}
+
+@else {
+  <div class="lista-clienti">
+    @for (cliente of clienti; track cliente.id) {
+      <div class="card-cliente">
+        <span class="cliente-avatar">{{ iniziali(cliente) }}</span>
+        <div class="cliente-info">
+          <span class="cliente-nome">{{ cliente.nome }} {{ cliente.cognome }}</span>
+          <span class="cliente-email">{{ cliente.email }}</span>
+        </div>
+        <button type="button" class="btn-nuova-scheda" (click)="nuovaScheda(cliente.id)">
+          <i class="bi bi-plus-lg"></i> Nuova scheda
+        </button>
+      </div>
+    }
+  </div>
+}
