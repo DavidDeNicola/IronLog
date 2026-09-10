@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 import { Cliente } from '../models/coach.model';
-import { Profilo } from '../models/profilo.model';
+import { Profilo, CambioPasswordRequest } from '../models/profilo.model';
 import { SchedaCreazione, SchedaResponse, SchedaSintesi } from '../models/scheda.model';
 
 @Injectable({ providedIn: 'root' })
@@ -28,5 +28,13 @@ export class CoachService {
 
   creaSchedaPerAtleta(atletaId: number, scheda: SchedaCreazione): Observable<SchedaResponse> {
     return this.http.post<SchedaResponse>(`${this.baseUrl}/atleti/${atletaId}/schede`, scheda);
+  }
+
+  cambiaPassword(richiesta: CambioPasswordRequest): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/profilo/password`, richiesta);
+  }
+
+  eliminaProfilo(): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/profilo`);
   }
 }

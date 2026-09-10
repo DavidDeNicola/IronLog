@@ -1,0 +1,130 @@
+<div class="profilo-pagina">
+
+  <div class="intestazione-pagina">
+    <h1>Profilo</h1>
+  </div>
+
+  @if (caricamento) {
+    <p class="stato-messaggio">Caricamento…</p>
+  }
+
+  @else if (errore) {
+    <p class="stato-messaggio errore">
+      Impossibile caricare il profilo. Riprova più tardi.
+    </p>
+  }
+
+  @else if (profilo) {
+
+    <div class="card-profilo">
+      <div class="profilo-testata">
+        <div class="profilo-avatar">{{ iniziali }}</div>
+        <div class="profilo-identita">
+          <span class="profilo-nome">{{ profilo.nome }} {{ profilo.cognome }}</span>
+          <span class="profilo-badge">{{ ruoloEtichetta }}</span>
+        </div>
+      </div>
+
+      <div class="profilo-dettagli">
+        <div class="dettaglio">
+          <span class="dettaglio-etichetta"><i class="bi bi-envelope"></i> Email</span>
+          <span class="dettaglio-valore">{{ profilo.email }}</span>
+        </div>
+        <div class="dettaglio">
+          <span class="dettaglio-etichetta"><i class="bi bi-shield-check"></i> Ruolo</span>
+          <span class="dettaglio-valore">{{ ruoloEtichetta }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="profilo-griglia">
+
+      <div class="card-form">
+        <div class="form-testata">
+          <span class="form-titolo">Cambia password</span>
+          <span class="form-descrizione">
+            Inserisci la password attuale e scegline una nuova (almeno 8 caratteri).
+          </span>
+        </div>
+
+        <form (ngSubmit)="cambiaPassword()" #formPassword="ngForm">
+          <div class="campo">
+            <label for="passwordAttuale">Password attuale</label>
+            <input type="password" id="passwordAttuale" class="form-control"
+                   [(ngModel)]="password.attuale" name="passwordAttuale" required />
+          </div>
+          <div class="campo">
+            <label for="nuovaPassword">Nuova password</label>
+            <input type="password" id="nuovaPassword" class="form-control"
+                   [(ngModel)]="password.nuova" name="nuovaPassword" required minlength="8" />
+          </div>
+          <div class="campo">
+            <label for="confermaPassword">Conferma nuova password</label>
+            <input type="password" id="confermaPassword" class="form-control"
+                   [(ngModel)]="password.conferma" name="confermaPassword" required />
+          </div>
+
+          @if (cambioErrore) {
+            <p class="esito errore"><i class="bi bi-exclamation-circle"></i> {{ cambioErrore }}</p>
+          }
+          @else if (cambioSuccesso) {
+            <p class="esito successo"><i class="bi bi-check-circle"></i> Password aggiornata.</p>
+          }
+
+          <button type="submit" class="btn btn-primary"
+                  [disabled]="formPassword.invalid || cambioInCorso">
+            {{ cambioInCorso ? 'Salvataggio…' : 'Aggiorna password' }}
+          </button>
+        </form>
+      </div>
+
+      <div class="card-pericolo">
+        <div class="azione">
+          <div class="azione-testo">
+            <span class="azione-titolo pericolo">Elimina profilo</span>
+            <span class="azione-descrizione">
+              Cancella definitivamente il tuo account. Le schede che hai scritto
+              ai tuoi clienti restano a loro. L'operazione è irreversibile.
+            </span>
+          </div>
+
+          @if (!confermaElimina) {
+            <button type="button" class="btn-azione" (click)="chiediConfermaElimina()">
+              <i class="bi bi-person-x"></i> Elimina
+            </button>
+          }
+        </div>
+
+        @if (confermaElimina) {
+          <div class="riquadro-conferma">
+            <p class="conferma-testo">
+              <i class="bi bi-exclamation-triangle"></i>
+              Sei davvero sicuro? Questa azione non può essere annullata e verrai
+              disconnesso.
+            </p>
+            <div class="conferma-azioni">
+              <button type="button" class="btn-annulla"
+                      (click)="annullaElimina()" [disabled]="eliminazioneInCorso">
+                Annulla
+              </button>
+              <button type="button" class="btn-conferma"
+                      (click)="eliminaProfilo()" [disabled]="eliminazioneInCorso">
+                {{ eliminazioneInCorso ? 'Eliminazione…' : 'Elimina definitivamente' }}
+              </button>
+            </div>
+          </div>
+        }
+
+        @if (eliminaErrore) {
+          <p class="esito errore">
+            <i class="bi bi-exclamation-circle"></i>
+            Non è stato possibile eliminare il profilo. Riprova.
+          </p>
+        }
+      </div>
+
+    </div>
+
+  }
+
+</div>

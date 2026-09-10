@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.ironlog.app.dto.CambioPasswordRequestDTO;
 import org.ironlog.app.exception.PasswordAttualeErrataException;
 import org.ironlog.app.exception.UtenteNonTrovatoException;
+import org.ironlog.app.model.Scheda;
 import org.ironlog.app.model.Utente;
 import org.ironlog.app.repository.SchedaRepository;
 import org.ironlog.app.repository.SessioneRepository;
@@ -45,22 +46,28 @@ public class ProfiloServiceImpl implements ProfiloService {
                 .orElseThrow(() -> new UtenteNonTrovatoException("Utente non trovato"));
 
         // 1. Sessioni (con le serie a cascata). PRIMA delle schede: le sessioni
-        //    referenziano i giorni delle schede (giorno_id), quindi vanno tolte
-        //    prima di eliminare le schede a cui quei giorni appartengono.
+        //    referenziano i giorni delle schede (giorno_id).
         sessioneRepository.deleteAll(sessioneRepository.findByAtleta(gestito));
 
         // 2. Schede dell'atleta (con giorni ed esercizi-scheda a cascata).
         schedaRepository.deleteAll(schedaRepository.findByAtleta(gestito));
 
-        // 3. Sgancia eventuali atleti che avevano questo utente come coach
-        //    (coach_id è nullable): non li elimino, resto solo senza coach.
+        // 2b. Schede che l'utente ha scritto per altri atleti (è autore ma non
+        //     atleta): restano all'atleta, l'autore diventa l'atleta stesso.
+        //     Dopo la cancellazione al punto 2, qui rimangono solo quelle di altri.
+        List<Scheda> scritteDaLui = schedaRepository.findByAutore(gestito);
+        for (Scheda scheda : scritteDaLui) {
+            scheda.setAutore(scheda.getAtleta());
+        }
+        schedaRepository.saveAll(scritteDaLui);
+
+        // 3. Sgancia gli atleti che avevano questo utente come coach (coach_id nullable).
         List<Utente> atletiSeguiti = utenteRepository.findByCoach(gestito);
         atletiSeguiti.forEach(atleta -> atleta.setCoach(null));
         utenteRepository.saveAll(atletiSeguiti);
 
         // 4. Elimina l'utente: le righe di utente_preferito vengono rimosse in
-        //    automatico (è il lato proprietario della ManyToMany), e la sua
-        //    stessa relazione coach sparisce con la riga.
+        //    automatico (lato proprietario della ManyToMany).
         utenteRepository.delete(gestito);
     }
 }

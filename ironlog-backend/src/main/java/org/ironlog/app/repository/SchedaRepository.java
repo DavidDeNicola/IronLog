@@ -13,6 +13,8 @@ public interface SchedaRepository extends JpaRepository<Scheda, Long> {
 
     List<Scheda> findByAtletaAndAttivaTrue(Utente atleta);
 
+    List<Scheda> findByAutore(Utente autore);
+
     Optional<Scheda> findByIdAndAtleta(Long id, Utente atleta);
 
 }

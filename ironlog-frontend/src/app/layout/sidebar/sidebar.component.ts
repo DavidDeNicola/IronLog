@@ -37,7 +37,8 @@ export class SidebarComponent implements OnInit {
   ];
 
   private vociCoach: VoceMenu[] = [
-    { etichetta: 'Clienti',      percorso: '/coach/clienti', icona: 'bi-people' }
+    { etichetta: 'Clienti',      percorso: '/coach/clienti', icona: 'bi-people' },
+    { etichetta: 'Profilo',      percorso: '/coach/profilo', icona: 'bi-person' }
   ];
 
   constructor(
