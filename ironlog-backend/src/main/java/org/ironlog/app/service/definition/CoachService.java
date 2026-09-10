@@ -3,6 +3,7 @@ package org.ironlog.app.service.definition;
 import org.ironlog.app.dto.SchedaRequestDTO;
 import org.ironlog.app.dto.SchedaResponseDTO;
 import org.ironlog.app.dto.SchedaSintesiDTO;
+import org.ironlog.app.dto.StatisticaClienteDTO;
 import org.ironlog.app.dto.UtenteResponseDTO;
 import org.ironlog.app.model.Utente;
 
@@ -15,4 +16,6 @@ public interface CoachService {
     SchedaResponseDTO createSchedaPerAtleta(SchedaRequestDTO dto, Long atletaId, Utente coach);
 
     List<SchedaSintesiDTO> findSchedeAtleta(Long atletaId, Utente coach);
+
+    List<StatisticaClienteDTO> statisticheClienti(Utente coach);
 }

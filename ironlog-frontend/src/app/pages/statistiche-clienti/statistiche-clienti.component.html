@@ -1,0 +1,57 @@
+<div class="intestazione-pagina">
+  <h1>Statistiche clienti</h1>
+</div>
+
+@if (caricamento) {
+  <p class="stato-messaggio">Caricamento…</p>
+}
+
+@else if (errore) {
+  <p class="stato-messaggio errore">
+    Impossibile caricare le statistiche. Riprova più tardi.
+  </p>
+}
+
+@else if (clienti.length === 0) {
+  <div class="stato-vuoto">
+    <i class="bi bi-bar-chart"></i>
+    <p>Non hai ancora clienti.</p>
+  </div>
+}
+
+@else {
+  <div class="riepilogo">
+    <div class="card-riepilogo">
+      <span class="riepilogo-valore">{{ clienti.length }}</span>
+      <span class="riepilogo-etichetta">clienti</span>
+    </div>
+    <div class="card-riepilogo">
+      <span class="riepilogo-valore">{{ totaleAllenamenti }}</span>
+      <span class="riepilogo-etichetta">allenamenti (ultimi 30gg)</span>
+    </div>
+  </div>
+
+  <div class="lista-clienti">
+    @for (cliente of clienti; track cliente.atletaId) {
+      <div class="card-cliente">
+        <span class="cliente-avatar">{{ iniziali(cliente) }}</span>
+        <span class="cliente-nome">{{ cliente.nome }} {{ cliente.cognome }}</span>
+
+        <div class="metriche">
+          <div class="metrica">
+            <span class="metrica-valore">{{ cliente.numeroSchede }}</span>
+            <span class="metrica-etichetta">schede</span>
+          </div>
+          <div class="metrica">
+            <span class="metrica-valore">{{ cliente.allenamentiUltimi30Giorni }}</span>
+            <span class="metrica-etichetta">allenam. 30gg</span>
+          </div>
+          <span class="badge-progressione" [ngClass]="classeProgressione(cliente.progressione)">
+            <i class="bi" [ngClass]="iconaProgressione(cliente.progressione)"></i>
+            {{ etichettaProgressione(cliente.progressione) }}
+          </span>
+        </div>
+      </div>
+    }
+  </div>
+}

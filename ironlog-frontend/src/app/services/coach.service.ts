@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
-import { Cliente } from '../models/coach.model';
+import { Cliente, StatisticaCliente } from '../models/coach.model';
 import { Profilo, CambioPasswordRequest } from '../models/profilo.model';
 import { SchedaCreazione, SchedaResponse, SchedaSintesi } from '../models/scheda.model';
 
@@ -24,6 +24,10 @@ export class CoachService {
 
   getSchedeAtleta(atletaId: number): Observable<SchedaSintesi[]> {
     return this.http.get<SchedaSintesi[]>(`${this.baseUrl}/atleti/${atletaId}/schede`);
+  }
+
+  getStatisticheClienti(): Observable<StatisticaCliente[]> {
+    return this.http.get<StatisticaCliente[]>(`${this.baseUrl}/statistiche/clienti`);
   }
 
   creaSchedaPerAtleta(atletaId: number, scheda: SchedaCreazione): Observable<SchedaResponse> {
