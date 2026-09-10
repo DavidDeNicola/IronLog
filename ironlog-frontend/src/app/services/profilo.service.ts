@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
-import { Profilo } from '../models/profilo.model';
+import { Profilo, CambioPasswordRequest } from '../models/profilo.model';
 
 @Injectable({ providedIn: 'root' })
 export class ProfiloService {
@@ -18,5 +18,9 @@ export class ProfiloService {
 
   azzeraStatistiche(): Observable<void> {
     return this.http.delete<void>(`${environment.apiUrl}/atleta/sessioni`);
+  }
+
+  cambiaPassword(richiesta: CambioPasswordRequest): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/password`, richiesta);
   }
 }

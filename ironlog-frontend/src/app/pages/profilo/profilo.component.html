@@ -36,6 +36,53 @@
 
   </div>
 
+  <div class="card-form">
+    <div class="form-testata">
+      <span class="form-titolo">Cambia password</span>
+      <span class="form-descrizione">
+        Inserisci la password attuale e scegline una nuova (almeno 8 caratteri).
+      </span>
+    </div>
+
+    <form (ngSubmit)="cambiaPassword()" #formPassword="ngForm">
+
+      <div class="campo">
+        <label for="passwordAttuale">Password attuale</label>
+        <input type="password" id="passwordAttuale" name="passwordAttuale"
+               class="form-control" [(ngModel)]="password.attuale" required />
+      </div>
+
+      <div class="campo">
+        <label for="nuovaPassword">Nuova password</label>
+        <input type="password" id="nuovaPassword" name="nuovaPassword"
+               class="form-control" [(ngModel)]="password.nuova" required minlength="8" />
+      </div>
+
+      <div class="campo">
+        <label for="confermaPassword">Conferma nuova password</label>
+        <input type="password" id="confermaPassword" name="confermaPassword"
+               class="form-control" [(ngModel)]="password.conferma" required />
+      </div>
+
+      @if (cambioErrore) {
+        <p class="esito errore">
+          <i class="bi bi-exclamation-circle"></i> {{ cambioErrore }}
+        </p>
+      }
+      @else if (cambioSuccesso) {
+        <p class="esito successo">
+          <i class="bi bi-check-circle"></i> Password aggiornata.
+        </p>
+      }
+
+      <button type="submit" class="btn btn-primary"
+              [disabled]="formPassword.invalid || cambioInCorso">
+        {{ cambioInCorso ? 'Salvataggio…' : 'Aggiorna password' }}
+      </button>
+
+    </form>
+  </div>
+
   <div class="card-azioni">
     <div class="azione">
       <div class="azione-testo">

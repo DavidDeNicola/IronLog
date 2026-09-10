@@ -129,4 +129,10 @@ public class GlobalExceptionHandler {
         ErrorMessageDTO body = new ErrorMessageDTO("Metodo non supportato");
         return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(body);
     }
+
+    @ExceptionHandler(PasswordAttualeErrataException.class)
+    public ResponseEntity<ErrorMessageDTO> passwordAttualeErrata(PasswordAttualeErrataException e) {
+        ErrorMessageDTO body = new ErrorMessageDTO("La password attuale non è corretta");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
+    }
 }

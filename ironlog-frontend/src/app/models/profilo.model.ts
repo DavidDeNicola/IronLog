@@ -7,3 +7,8 @@ export interface Profilo {
   email: string;
   ruolo: Ruolo;
 }
+
+export interface CambioPasswordRequest {
+  passwordAttuale: string;
+  nuovaPassword: string;
+}
