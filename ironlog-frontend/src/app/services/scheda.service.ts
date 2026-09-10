@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
-import { SchedaSintesi, SchedaResponse } from '../models/scheda.model';
+import { SchedaSintesi, SchedaResponse, SchedaCreazione } from '../models/scheda.model';
 
 @Injectable({ providedIn: 'root' })
 export class SchedaService {
@@ -18,5 +18,9 @@ export class SchedaService {
 
   getScheda(id: number): Observable<SchedaResponse> {
     return this.http.get<SchedaResponse>(`${this.baseUrl}/${id}`);
+  }
+
+  creaScheda(scheda: SchedaCreazione): Observable<SchedaResponse> {
+    return this.http.post<SchedaResponse>(this.baseUrl, scheda);
   }
 }

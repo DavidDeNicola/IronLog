@@ -38,4 +38,8 @@ export class SchedeComponent implements OnInit {
   apriScheda(id: number): void {
     this.router.navigate(['/schede', id]);
   }
+
+  nuovaScheda(): void {
+    this.router.navigate(['/schede/nuova']);
+  }
 }

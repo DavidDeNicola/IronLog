@@ -11,6 +11,7 @@ import { SessioneComponent } from './pages/sessione/sessione.component';
 import { StoricoComponent } from './pages/storico/storico.component';
 import { StatisticheComponent } from './pages/statistiche/statistiche.component';
 import { ProfiloComponent } from './pages/profilo/profilo.component';
+import {CreaSchedaComponent} from './pages/crea-scheda/crea-scheda.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -21,11 +22,11 @@ export const routes: Routes = [
     children: [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'schede', component: SchedeComponent },
+      { path: 'schede/nuova', component: CreaSchedaComponent },
       { path: 'schede/:id', component: DettaglioSchedaComponent },
       { path: 'esercizi', component: EserciziComponent },
       { path: 'allenamento', component: AllenamentoComponent },
       { path: 'allenamento/sessione', component: SessioneComponent },
-      { path: 'allenamento', component: AllenamentoComponent },
       { path: 'storico', component: StoricoComponent },
       { path: 'statistiche', component: StatisticheComponent },
       { path: 'profilo', component: ProfiloComponent },

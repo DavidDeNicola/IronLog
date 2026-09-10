@@ -1,0 +1,97 @@
+<div class="crea-pagina">
+
+  <div class="intestazione-pagina">
+    <h1>Nuova scheda</h1>
+  </div>
+
+  <div class="card-sezione">
+    <div class="campo">
+      <label for="nome">Nome scheda</label>
+      <input type="text" id="nome" class="form-control"
+             [(ngModel)]="scheda.nome" placeholder="Es. Push Pull Legs" />
+    </div>
+
+    <div class="campo">
+      <label for="dataInizio">Data inizio</label>
+      <input type="date" id="dataInizio" class="form-control"
+             [(ngModel)]="scheda.dataInizio" />
+    </div>
+
+    <div class="campo">
+      <label for="note">Note (facoltative)</label>
+      <textarea id="note" class="form-control" rows="2"
+                [(ngModel)]="scheda.note"></textarea>
+    </div>
+  </div>
+
+  @for (giorno of scheda.giorni; track $index) {
+    <div class="card-giorno">
+      <div class="giorno-testa">
+        <input type="text" class="form-control input-nome-giorno"
+               [(ngModel)]="giorno.nome" placeholder="Nome giorno" />
+        <button type="button" class="btn-rimuovi" (click)="rimuoviGiorno($index)" title="Rimuovi giorno">
+          <i class="bi bi-trash"></i>
+        </button>
+      </div>
+
+      @for (es of giorno.esercizi; track $index) {
+        <div class="riga-esercizio">
+          <select class="form-select select-esercizio" [(ngModel)]="es.esercizioId">
+            <option [ngValue]="null" disabled>Scegli esercizio…</option>
+            @for (gruppo of gruppiEsercizi; track gruppo.gruppo) {
+              <optgroup [label]="gruppo.gruppo">
+                @for (e of gruppo.esercizi; track e.id) {
+                  <option [ngValue]="e.id">{{ e.nome }}</option>
+                }
+              </optgroup>
+            }
+          </select>
+
+          <div class="mini-campo">
+            <label>Serie</label>
+            <input type="number" class="form-control" min="1" [(ngModel)]="es.serie" />
+          </div>
+          <div class="mini-campo">
+            <label>Rip.</label>
+            <input type="number" class="form-control" min="1" [(ngModel)]="es.ripetizioni" />
+          </div>
+          <div class="mini-campo">
+            <label>Peso (kg)</label>
+            <input type="number" class="form-control" min="0" step="0.5" [(ngModel)]="es.pesoAttuale" />
+          </div>
+          <div class="mini-campo">
+            <label>Rec. (s)</label>
+            <input type="number" class="form-control" min="0" step="15" [(ngModel)]="es.recupero" />
+          </div>
+
+          <button type="button" class="btn-rimuovi-es" (click)="rimuoviEsercizio(giorno, $index)" title="Rimuovi esercizio">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+      }
+
+      <button type="button" class="btn-aggiungi-es" (click)="aggiungiEsercizio(giorno)">
+        <i class="bi bi-plus-lg"></i> Aggiungi esercizio
+      </button>
+    </div>
+  }
+
+  <button type="button" class="btn-aggiungi-giorno" (click)="aggiungiGiorno()">
+    <i class="bi bi-plus-lg"></i> Aggiungi giorno
+  </button>
+
+  @if (errore) {
+    <p class="esito errore"><i class="bi bi-exclamation-circle"></i> {{ errore }}</p>
+  }
+
+  <div class="barra-azioni">
+    <button type="button" class="btn-annulla" (click)="annulla()" [disabled]="salvataggioInCorso">
+      Annulla
+    </button>
+    <button type="button" class="btn btn-primary" (click)="salva()"
+            [disabled]="!valida || salvataggioInCorso">
+      {{ salvataggioInCorso ? 'Salvataggio…' : 'Salva scheda' }}
+    </button>
+  </div>
+
+</div>

@@ -35,3 +35,23 @@ export interface SchedaResponse {
   autoreNome: string;
   giorni: GiornoScheda[];
 }
+
+export interface EsercizioCreazione {
+  esercizioId: number | null;
+  serie: number | null;
+  ripetizioni: number | null;
+  pesoAttuale: number | null;
+  recupero: number | null;
+}
+
+export interface GiornoCreazione {
+  nome: string;
+  esercizi: EsercizioCreazione[];
+}
+
+export interface SchedaCreazione {
+  nome: string;
+  note: string | null;
+  dataInizio: string;
+  giorni: GiornoCreazione[];
+}
