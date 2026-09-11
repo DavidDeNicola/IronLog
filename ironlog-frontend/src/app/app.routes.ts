@@ -17,6 +17,13 @@ import {ClientiComponent} from './pages/clienti/clienti.component';
 import {ClienteDettaglioComponent} from './pages/cliente-dettaglio/cliente-dettaglio.component';
 import {ProfiloCoachComponent} from './pages/profilo-coach/profilo-coach.component';
 import {StatisticheClientiComponent} from './pages/statistiche-clienti/statistiche-clienti.component';
+import {MisurazioniComponent} from './pages/misurazioni/misurazioni.component';
+import {ProfiloMetabolicoComponent} from './pages/profilo-metabolico/profilo-metabolico.component';
+import {FasiComponent} from './pages/fasi/fasi.component';
+import {DiarioAlimentareComponent} from './pages/diario-alimentare/diario-alimentare.component';
+import {AcquaComponent} from './pages/acqua/acqua.component';
+import {IntegratoriComponent} from './pages/integratori/integratori.component';
+import {PianoAlimentareComponent} from './pages/piano-alimentare/piano-alimentare.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -36,6 +43,13 @@ export const routes: Routes = [
       { path: 'storico', component: StoricoComponent },
       { path: 'statistiche', component: StatisticheComponent },
       { path: 'profilo', component: ProfiloComponent },
+      { path: 'misurazioni', component: MisurazioniComponent },
+      { path: 'profilo-metabolico', component: ProfiloMetabolicoComponent },
+      { path: 'fasi', component: FasiComponent },
+      { path: 'diario-alimentare', component: DiarioAlimentareComponent },
+      { path: 'acqua', component: AcquaComponent },
+      { path: 'integratori', component: IntegratoriComponent },
+      { path: 'piano-alimentare', component: PianoAlimentareComponent },
       { path: 'coach/clienti', component: ClientiComponent, canActivate: [coachGuard] },
       { path: 'coach/clienti/:id', component: ClienteDettaglioComponent, canActivate: [coachGuard] },
       { path: 'coach/clienti/:id/scheda-nuova', component: CreaSchedaComponent, canActivate: [coachGuard] },

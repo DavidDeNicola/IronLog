@@ -1,0 +1,138 @@
+<div class="intestazione-pagina">
+  <h1>Fasi</h1>
+</div>
+
+@if (caricamento) {
+  <p class="stato-messaggio">Caricamento…</p>
+}
+
+@else if (errore) {
+  <p class="stato-messaggio errore">Impossibile caricare le fasi. Riprova più tardi.</p>
+}
+
+@else {
+
+  @if (faseAttiva) {
+    <div class="card-fase-attiva">
+      <div class="fase-attiva-testa">
+        <span class="fase-tipo">{{ faseAttiva.tipo }}</span>
+        <span class="badge-attiva">Attiva</span>
+      </div>
+
+      <div class="fase-attiva-corpo">
+        <div class="fase-target-calorico">
+          <span class="target-valore">{{ faseAttiva.targetCaloricoAttuale }} kcal</span>
+          @if (badgeAdattato) {
+            <span class="badge-adattato" [title]="'Target base: ' + faseAttiva.baseTargetCalorico + ' kcal'">
+              <i class="bi bi-arrow-repeat"></i> Adattato
+            </span>
+          }
+        </div>
+
+        <div class="fase-macro">
+          <span><strong>{{ faseAttiva.targetProteineG }}</strong> g proteine</span>
+          <span><strong>{{ faseAttiva.targetGrassiG }}</strong> g grassi</span>
+          <span><strong>{{ faseAttiva.targetCarboidratiG }}</strong> g carboidrati</span>
+        </div>
+
+        <div class="fase-info">
+          <span><i class="bi bi-calendar3"></i> Iniziata il {{ faseAttiva.dataInizio | date:'d MMM yyyy' }}</span>
+          <span><i class="bi bi-hourglass-split"></i> {{ faseAttiva.giorniTrascorsi }} giorni trascorsi</span>
+          @if (faseAttiva.durataSuggeritaMesi !== null) {
+            <span><i class="bi bi-flag"></i> Durata suggerita: {{ faseAttiva.durataSuggeritaMesi }} mesi</span>
+          }
+        </div>
+      </div>
+
+      @if (erroreChiusura) {
+        <p class="esito errore"><i class="bi bi-exclamation-circle"></i> {{ erroreChiusura }}</p>
+      }
+
+      <button type="button" class="btn-chiudi" (click)="chiudiFase()" [disabled]="chiusuraInCorso">
+        {{ chiusuraInCorso ? 'Chiusura…' : 'Chiudi fase' }}
+      </button>
+    </div>
+  } @else {
+
+    <div class="card-form">
+      <div class="form-testata">
+        <span class="form-titolo">Nuova fase</span>
+      </div>
+
+      <form (ngSubmit)="creaFase()" #formFase="ngForm">
+        <div class="griglia-campi">
+          <div class="campo">
+            <label for="tipo">Tipo</label>
+            <select id="tipo" name="tipo" class="form-select" [(ngModel)]="form.tipo" required>
+              @for (t of tipi; track t.valore) {
+                <option [value]="t.valore">{{ t.etichetta }}</option>
+              }
+            </select>
+          </div>
+          <div class="campo">
+            <label for="dataInizio">Data inizio</label>
+            <input type="date" id="dataInizio" name="dataInizio" class="form-control"
+                   [(ngModel)]="form.dataInizio" required />
+          </div>
+        </div>
+
+        <div class="griglia-campi">
+          <div class="campo">
+            <label for="targetCalorico">Target calorico (facoltativo)</label>
+            <input type="number" id="targetCalorico" name="targetCalorico" class="form-control" min="0"
+                   [(ngModel)]="form.targetCaloricoOverride" />
+          </div>
+          <div class="campo">
+            <label for="targetProteine">Proteine g (facoltativo)</label>
+            <input type="number" id="targetProteine" name="targetProteine" class="form-control" min="0"
+                   [(ngModel)]="form.targetProteineGOverride" />
+          </div>
+          <div class="campo">
+            <label for="targetGrassi">Grassi g (facoltativo)</label>
+            <input type="number" id="targetGrassi" name="targetGrassi" class="form-control" min="0"
+                   [(ngModel)]="form.targetGrassiGOverride" />
+          </div>
+          <div class="campo">
+            <label for="targetCarboidrati">Carboidrati g (facoltativo)</label>
+            <input type="number" id="targetCarboidrati" name="targetCarboidrati" class="form-control" min="0"
+                   [(ngModel)]="form.targetCarboidratiGOverride" />
+          </div>
+        </div>
+
+        @if (erroreSalvataggio) {
+          <p class="esito errore"><i class="bi bi-exclamation-circle"></i> {{ erroreSalvataggio }}</p>
+        }
+
+        <button type="submit" class="btn btn-primary" [disabled]="formFase.invalid || salvataggioInCorso">
+          {{ salvataggioInCorso ? 'Creazione…' : 'Avvia fase' }}
+        </button>
+      </form>
+    </div>
+
+  }
+
+  <div class="sezione-titolo">Storico</div>
+
+  @if (storico.length === 0) {
+    <div class="stato-vuoto">
+      <i class="bi bi-graph-up-arrow"></i>
+      <p>Nessuna fase registrata finora.</p>
+    </div>
+  } @else {
+    <div class="lista-storico">
+      @for (f of storico; track f.id) {
+        <div class="card-storico">
+          <span class="storico-tipo">{{ f.tipo }}</span>
+          <span class="storico-data"><i class="bi bi-calendar3"></i> {{ f.dataInizio | date:'d MMM yyyy' }}</span>
+          @if (f.dataFine) {
+            <span class="storico-data"><i class="bi bi-calendar-check"></i> {{ f.dataFine | date:'d MMM yyyy' }}</span>
+          }
+          @if (f.attiva) {
+            <span class="badge-attiva">Attiva</span>
+          }
+        </div>
+      }
+    </div>
+  }
+
+}

@@ -135,4 +135,64 @@ public class GlobalExceptionHandler {
         ErrorMessageDTO body = new ErrorMessageDTO("La password attuale non è corretta");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
     }
+
+    @ExceptionHandler(DatiBiometriciMancantiException.class)
+    public ResponseEntity<ErrorMessageDTO> datiBiometriciMancanti(DatiBiometriciMancantiException e) {
+        ErrorMessageDTO body = new ErrorMessageDTO("Dati biometrici (sesso e data di nascita) mancanti");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
+    }
+
+    @ExceptionHandler(MisurazioneNonTrovataException.class)
+    public ResponseEntity<ErrorMessageDTO> misurazioneNonTrovata(MisurazioneNonTrovataException e) {
+        ErrorMessageDTO body = new ErrorMessageDTO("Nessuna misurazione corporea trovata");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+    }
+
+    @ExceptionHandler(ProfiloMetabolicoNonTrovatoException.class)
+    public ResponseEntity<ErrorMessageDTO> profiloMetabolicoNonTrovato(ProfiloMetabolicoNonTrovatoException e) {
+        ErrorMessageDTO body = new ErrorMessageDTO("Nessun profilo metabolico trovato");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+    }
+
+    @ExceptionHandler(FaseNonTrovataException.class)
+    public ResponseEntity<ErrorMessageDTO> faseNonTrovata(FaseNonTrovataException e) {
+        ErrorMessageDTO body = new ErrorMessageDTO("Fase non trovata");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+    }
+
+    @ExceptionHandler(FaseNonAttivaException.class)
+    public ResponseEntity<ErrorMessageDTO> faseNonAttiva(FaseNonAttivaException e) {
+        ErrorMessageDTO body = new ErrorMessageDTO("La fase non è attiva");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
+    }
+
+    @ExceptionHandler(AlimentoNonTrovatoException.class)
+    public ResponseEntity<ErrorMessageDTO> alimentoNonTrovato(AlimentoNonTrovatoException e) {
+        ErrorMessageDTO body = new ErrorMessageDTO("Alimento non trovato");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+    }
+
+    @ExceptionHandler(VoceDiarioNonTrovataException.class)
+    public ResponseEntity<ErrorMessageDTO> voceDiarioNonTrovata(VoceDiarioNonTrovataException e) {
+        ErrorMessageDTO body = new ErrorMessageDTO("Voce diario non trovata");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+    }
+
+    @ExceptionHandler(IntegratoreNonTrovatoException.class)
+    public ResponseEntity<ErrorMessageDTO> integratoreNonTrovato(IntegratoreNonTrovatoException e) {
+        ErrorMessageDTO body = new ErrorMessageDTO("Integratore non trovato");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+    }
+
+    @ExceptionHandler(PianoAlimentareNonTrovatoException.class)
+    public ResponseEntity<ErrorMessageDTO> pianoAlimentareNonTrovato(PianoAlimentareNonTrovatoException e) {
+        ErrorMessageDTO body = new ErrorMessageDTO("Piano alimentare non trovato");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+    }
+
+    @ExceptionHandler(NessunAlimentoDisponibileException.class)
+    public ResponseEntity<ErrorMessageDTO> nessunAlimentoDisponibile(NessunAlimentoDisponibileException e) {
+        ErrorMessageDTO body = new ErrorMessageDTO("Nessun alimento disponibile per generare il piano");
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
+    }
 }

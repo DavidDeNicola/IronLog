@@ -106,11 +106,88 @@
   background-color: var(--sfondo-card);
 }
 
-.sezione-prossimo {
+.sezione-prossimo,
+.sezione-nutrizione {
   h2 {
     font-size: 1.05rem;
     font-weight: 600;
     margin-bottom: 0.875rem;
+  }
+}
+
+.sezione-nutrizione {
+  margin-top: 1.5rem;
+}
+
+.card-nutrizione {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: 14px;
+  background-color: var(--sfondo-card);
+  border: 1px solid var(--bordo-card);
+}
+
+.nutrizione-fase {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.nutrizione-tipo {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.nutrizione-target {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--testo-secondario);
+}
+
+.badge-adattato {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  background-color: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+}
+
+.nutrizione-oggi {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
+}
+
+.nutrizione-oggi-etichetta {
+  font-size: 0.75rem;
+  color: var(--testo-secondario);
+}
+
+.nutrizione-oggi-valore {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.nutrizione-oggi-differenza {
+  font-size: 0.8rem;
+
+  &.positivo {
+    color: var(--positivo);
+  }
+
+  &.negativo {
+    color: var(--negativo);
   }
 }
 

@@ -1,0 +1,112 @@
+<div class="intestazione-pagina">
+  <h1>Integratori</h1>
+  <input type="date" class="form-control input-data" [(ngModel)]="data" (change)="cambiaData()" />
+</div>
+
+@if (caricamento) {
+  <p class="stato-messaggio">Caricamento…</p>
+}
+
+@else if (errore) {
+  <p class="stato-messaggio errore">Impossibile caricare gli integratori. Riprova più tardi.</p>
+}
+
+@else {
+
+  <div class="card-form">
+    <div class="form-testata">
+      <span class="form-titolo">Registra assunzione</span>
+    </div>
+
+    @if (integratori.length === 0) {
+      <p class="stato-vuoto-inline">Nessun integratore nel catalogo. Aggiungine uno per iniziare.</p>
+    } @else {
+      <div class="riga-form">
+        <div class="campo">
+          <label for="integratore">Integratore</label>
+          <select id="integratore" class="form-select" [(ngModel)]="formAssunzione.integratoreId" (ngModelChange)="selezionaIntegratore()">
+            <option [ngValue]="null" disabled>Seleziona…</option>
+            @for (i of integratori; track i.id) {
+              <option [ngValue]="i.id">{{ i.nome }}</option>
+            }
+          </select>
+        </div>
+        <div class="campo">
+          <label for="dosaggio">Dosaggio</label>
+          <input type="number" id="dosaggio" class="form-control" min="0" step="0.1"
+                 [(ngModel)]="formAssunzione.dosaggioAssunto" />
+        </div>
+        <button type="button" class="btn btn-primary"
+                (click)="registraAssunzione()"
+                [disabled]="!formAssunzione.integratoreId || !formAssunzione.dosaggioAssunto || registrazioneInCorso">
+          {{ registrazioneInCorso ? 'Registrazione…' : 'Registra' }}
+        </button>
+      </div>
+    }
+
+    @if (erroreRegistrazione) {
+      <p class="esito errore"><i class="bi bi-exclamation-circle"></i> {{ erroreRegistrazione }}</p>
+    }
+  </div>
+
+  @if (!mostraFormNuovo) {
+    <button type="button" class="btn-aggiungi-catalogo" (click)="apriFormNuovo()">
+      <i class="bi bi-plus-lg"></i> Nuovo integratore nel catalogo
+    </button>
+  } @else {
+    <div class="card-form">
+      <div class="form-testata">
+        <span class="form-titolo">Nuovo integratore</span>
+      </div>
+
+      <div class="riga-form">
+        <div class="campo">
+          <label for="nomeNuovo">Nome</label>
+          <input type="text" id="nomeNuovo" class="form-control" [(ngModel)]="formNuovo.nome" />
+        </div>
+        <div class="campo">
+          <label for="dosaggioDefault">Dosaggio default</label>
+          <input type="number" id="dosaggioDefault" class="form-control" min="0" step="0.1"
+                 [(ngModel)]="formNuovo.dosaggioDefault" />
+        </div>
+        <div class="campo">
+          <label for="unita">Unità</label>
+          <input type="text" id="unita" class="form-control" placeholder="es. mg, capsule" [(ngModel)]="formNuovo.unita" />
+        </div>
+      </div>
+
+      @if (erroreCatalogo) {
+        <p class="esito errore"><i class="bi bi-exclamation-circle"></i> {{ erroreCatalogo }}</p>
+      }
+
+      <div class="barra-azioni">
+        <button type="button" class="btn-annulla" (click)="annullaFormNuovo()" [disabled]="salvataggioCatalogoInCorso">
+          Annulla
+        </button>
+        <button type="button" class="btn btn-primary" (click)="salvaNuovoIntegratore()" [disabled]="salvataggioCatalogoInCorso">
+          {{ salvataggioCatalogoInCorso ? 'Salvataggio…' : 'Salva' }}
+        </button>
+      </div>
+    </div>
+  }
+
+  <div class="sezione-titolo">Assunzioni del giorno</div>
+
+  @if (assunzioni.length === 0) {
+    <div class="stato-vuoto">
+      <i class="bi bi-capsule"></i>
+      <p>Nessuna assunzione registrata per questo giorno.</p>
+    </div>
+  } @else {
+    <div class="lista-assunzioni">
+      @for (a of assunzioni; track a.id) {
+        <div class="riga-assunzione">
+          <i class="bi bi-capsule"></i>
+          <span class="assunzione-nome">{{ a.integratoreNome }}</span>
+          <span class="assunzione-dosaggio">{{ a.dosaggioAssunto }}</span>
+        </div>
+      }
+    </div>
+  }
+
+}

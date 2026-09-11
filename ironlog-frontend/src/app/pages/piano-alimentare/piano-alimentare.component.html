@@ -1,0 +1,98 @@
+<div class="intestazione-pagina">
+  <h1>Piano alimentare</h1>
+</div>
+
+@if (caricamento) {
+  <p class="stato-messaggio">Caricamento…</p>
+}
+
+@else if (errore) {
+  <p class="stato-messaggio errore">Impossibile caricare i piani alimentari. Riprova più tardi.</p>
+}
+
+@else if (!faseAttiva) {
+  <div class="stato-vuoto">
+    <i class="bi bi-basket2"></i>
+    <p>Devi avere una fase attiva per generare un piano alimentare.</p>
+  </div>
+}
+
+@else {
+
+  <div class="card-genera">
+    <div class="genera-info">
+      <span class="genera-titolo">Fase attiva: {{ faseAttiva.tipo }}</span>
+      <span class="genera-sottotitolo">Target {{ faseAttiva.targetCaloricoAttuale }} kcal</span>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="genera()" [disabled]="generazioneInCorso">
+      <i class="bi bi-magic"></i> {{ generazioneInCorso ? 'Generazione…' : 'Genera nuovo piano' }}
+    </button>
+  </div>
+
+  @if (erroreGenerazione) {
+    <p class="esito errore"><i class="bi bi-exclamation-circle"></i> {{ erroreGenerazione }}</p>
+  }
+
+  @if (pianoSelezionato) {
+    <div class="card-dettaglio-piano">
+      <div class="dettaglio-testa">
+        <span class="dettaglio-titolo">Piano del {{ pianoSelezionato.dataGenerazione | date:'d MMM yyyy' }}</span>
+        @if (!pianoSelezionato.vincoliSoddisfatti) {
+          <span class="badge-warning">
+            <i class="bi bi-exclamation-triangle"></i> Vincoli non soddisfatti completamente
+          </span>
+        }
+      </div>
+
+      <div class="dettaglio-totali">
+        <span><strong>{{ pianoSelezionato.calorieTotali }}</strong> kcal</span>
+        <span><strong>{{ pianoSelezionato.proteineTotali }}</strong> g proteine</span>
+        <span><strong>{{ pianoSelezionato.grassiTotali }}</strong> g grassi</span>
+        <span><strong>{{ pianoSelezionato.carboidratiTotali }}</strong> g carboidrati</span>
+      </div>
+
+      <div class="lista-pasti">
+        @for (gruppo of gruppiPasto; track gruppo.tipoPasto) {
+          <div class="gruppo-pasto">
+            <div class="gruppo-pasto-testa">
+              <span class="gruppo-pasto-titolo"><i class="bi" [ngClass]="gruppo.icona"></i> {{ gruppo.etichetta }}</span>
+              <span class="gruppo-pasto-calorie">{{ gruppo.calorieTotali }} kcal</span>
+            </div>
+            <div class="lista-voci-piano">
+              @for (v of gruppo.voci; track v.alimentoId) {
+                <div class="riga-voce-piano">
+                  <span class="voce-nome">{{ v.alimentoNome }}</span>
+                  <span class="voce-quantita">{{ v.quantitaGrammi }} g</span>
+                  <span class="voce-calorie">{{ v.calorie }} kcal</span>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  <div class="sezione-titolo">Storico piani</div>
+
+  @if (piani.length === 0) {
+    <div class="stato-vuoto">
+      <i class="bi bi-basket2"></i>
+      <p>Non hai ancora generato piani per questa fase.</p>
+    </div>
+  } @else {
+    <div class="lista-storico">
+      @for (p of piani; track p.id) {
+        <button type="button" class="card-storico" (click)="selezionaPiano(p)">
+          <span class="storico-data"><i class="bi bi-calendar3"></i> {{ p.dataGenerazione | date:'d MMM yyyy' }}</span>
+          @if (!p.vincoliSoddisfatti) {
+            <span class="badge-warning-piccolo">
+              <i class="bi bi-exclamation-triangle"></i> Parziale
+            </span>
+          }
+        </button>
+      }
+    </div>
+  }
+
+}

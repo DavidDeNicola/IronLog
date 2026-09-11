@@ -142,3 +142,103 @@
     margin-right: 0.25rem;
   }
 }
+
+.stato-vuoto-inline {
+  color: var(--testo-secondario);
+  font-size: 0.9rem;
+  margin: 0 0 1.25rem;
+}
+
+.card-nutrizione-fase {
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.25rem;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.18), rgba(59, 130, 246, 0.04));
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.nutrizione-fase-testa {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.6rem;
+}
+
+.nutrizione-tipo {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.nutrizione-fase-corpo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.nutrizione-target {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+.badge-adattato {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  background-color: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+}
+
+.nutrizione-macro {
+  font-size: 0.82rem;
+  color: var(--testo-secondario);
+}
+
+.griglia-nutrizione {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.card-mini {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1.1rem 1.25rem;
+  border-radius: 12px;
+  background-color: var(--sfondo-card);
+  border: 1px solid var(--bordo-card);
+}
+
+.mini-titolo {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--testo-secondario);
+}
+
+.mini-valore {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.mini-nota {
+  font-size: 0.8rem;
+  color: var(--testo-secondario);
+}
+
+.mini-riga {
+  font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
+  .griglia-nutrizione {
+    grid-template-columns: 1fr 1fr;
+  }
+}

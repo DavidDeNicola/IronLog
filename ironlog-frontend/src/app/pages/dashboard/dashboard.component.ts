@@ -1,7 +1,8 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { Router } from '@angular/router';
-import { forkJoin, Subscription } from 'rxjs';
+import { forkJoin, of, Subscription } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 import { StatisticheService } from '../../services/statistiche.service';
 import { ThemeService } from '../../services/theme.service';
@@ -12,6 +13,9 @@ import { ProssimoAllenamento } from '../../models/sessione.model';
 import { SchedaSintesi } from '../../models/scheda.model';
 import { SchedaService } from '../../services/scheda.service';
 import { ProfiloService } from '../../services/profilo.service';
+import { FaseService } from '../../services/fase.service';
+import { DiarioService } from '../../services/diario.service';
+import { Fase, RiepilogoDiario } from '../../models/nutrizione.model';
 
 Chart.register(...registerables);
 
@@ -36,6 +40,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   andamento: PuntoVolume[] = [];
   prossimo: ProssimoAllenamento | null = null;
   schede: SchedaSintesi[] = [];
+  faseAttiva: Fase | null = null;
+  riepilogoNutrizionale: RiepilogoDiario | null = null;
 
   @ViewChild('canvasAndamento') canvasAndamento?: ElementRef<HTMLCanvasElement>;
   @ViewChild('canvasDonut') canvasDonut?: ElementRef<HTMLCanvasElement>;
@@ -51,6 +57,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     private sessioneService: SessioneService,
     private schedaService: SchedaService,
     private profiloService: ProfiloService,
+    private faseService: FaseService,
+    private diarioService: DiarioService,
     private themeService: ThemeService,
     private authService: AuthService,
     private router: Router,
@@ -69,17 +77,23 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
   ngOnInit(): void {
+    const oggi = new Date().toISOString().substring(0, 10);
+
     forkJoin({
       riepilogo: this.statisticheService.dashboard(),
       volume: this.statisticheService.volumePerGruppo('SETTIMANA'),
       andamento: this.statisticheService.andamentoVolume('SETTIMANA'),
-      schede: this.schedaService.getSchede()
+      schede: this.schedaService.getSchede(),
+      faseAttiva: this.faseService.getFaseAttiva().pipe(catchError(() => of(null))),
+      riepilogoNutrizionale: this.diarioService.getRiepilogo(oggi).pipe(catchError(() => of(null)))
     }).subscribe({
       next: (risultati) => {
         this.riepilogo = risultati.riepilogo;
         this.volumeGruppi = risultati.volume;
         this.andamento = risultati.andamento;
         this.schede = risultati.schede;
+        this.faseAttiva = risultati.faseAttiva;
+        this.riepilogoNutrizionale = risultati.riepilogoNutrizionale;
         this.caricamento = false;
         this.cdr.detectChanges();
         this.disegnaGrafici();
@@ -108,6 +122,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       this.graficoDonut = undefined;
       this.disegnaGrafici();
     });
+  }
+
+  get badgeAdattato(): boolean {
+    return !!this.faseAttiva && this.faseAttiva.targetCaloricoAttuale !== this.faseAttiva.baseTargetCalorico;
   }
 
   get nomeUtente(): string {

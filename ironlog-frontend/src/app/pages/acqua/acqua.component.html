@@ -1,0 +1,71 @@
+<div class="intestazione-pagina">
+  <h1>Acqua</h1>
+  <input type="date" class="form-control input-data" [(ngModel)]="data" (change)="cambiaData()" />
+</div>
+
+@if (caricamento) {
+  <p class="stato-messaggio">Caricamento…</p>
+}
+
+@else if (errore) {
+  <p class="stato-messaggio errore">Impossibile caricare i consumi d'acqua. Riprova più tardi.</p>
+}
+
+@else {
+
+  <div class="card-progresso">
+    <div class="progresso-testa">
+      <i class="bi bi-cup-straw"></i>
+      <span class="progresso-valore">{{ totaleConsumato }} ml</span>
+      @if (obiettivo) {
+        <span class="progresso-obiettivo">/ {{ obiettivo }} ml</span>
+      }
+    </div>
+
+    @if (obiettivo) {
+      <div class="barra-traccia">
+        <div class="barra-riempimento" [style.width.%]="percentuale"></div>
+      </div>
+      <span class="progresso-percentuale">{{ percentuale }}%</span>
+    }
+  </div>
+
+  <div class="card-azioni-rapide">
+    <button type="button" class="btn-rapido" (click)="aggiungiRapido(250)" [disabled]="registrazioneInCorso">
+      <i class="bi bi-plus-lg"></i> 250 ml
+    </button>
+    <button type="button" class="btn-rapido" (click)="aggiungiRapido(500)" [disabled]="registrazioneInCorso">
+      <i class="bi bi-plus-lg"></i> 500 ml
+    </button>
+
+    <div class="campo-libero">
+      <input type="number" class="form-control" min="1" placeholder="ml" [(ngModel)]="mlLiberi" />
+      <button type="button" class="btn btn-primary" (click)="aggiungiLibero()"
+              [disabled]="!mlLiberi || registrazioneInCorso">
+        Aggiungi
+      </button>
+    </div>
+
+    <div class="campo-obiettivo">
+      <label for="obiettivo">Obiettivo giornaliero (ml)</label>
+      <input type="number" id="obiettivo" class="form-control" min="1" [(ngModel)]="obiettivo" />
+    </div>
+  </div>
+
+  @if (erroreRegistrazione) {
+    <p class="esito errore"><i class="bi bi-exclamation-circle"></i> {{ erroreRegistrazione }}</p>
+  }
+
+  @if (consumi.length > 0) {
+    <div class="sezione-titolo">Registrazioni del giorno</div>
+    <div class="lista-eventi">
+      @for (c of consumi; track c.id) {
+        <div class="riga-evento">
+          <i class="bi bi-cup-straw"></i>
+          <span>{{ c.mlConsumati }} ml</span>
+        </div>
+      }
+    </div>
+  }
+
+}

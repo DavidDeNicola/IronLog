@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 import { Profilo, CambioPasswordRequest } from '../models/profilo.model';
+import { DatiBiometriciRequest } from '../models/nutrizione.model';
 
 @Injectable({ providedIn: 'root' })
 export class ProfiloService {
@@ -14,6 +15,10 @@ export class ProfiloService {
 
   getProfilo(): Observable<Profilo> {
     return this.http.get<Profilo>(this.baseUrl);
+  }
+
+  aggiornaDatiBiometrici(richiesta: DatiBiometriciRequest): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/dati-biometrici`, richiesta);
   }
 
   azzeraStatistiche(): Observable<void> {

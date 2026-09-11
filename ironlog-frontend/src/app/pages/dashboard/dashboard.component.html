@@ -84,4 +84,35 @@
     </div>
   }
 
+  @if (faseAttiva) {
+    <div class="sezione-nutrizione">
+      <h2>Nutrizione</h2>
+      <div class="card-nutrizione">
+        <div class="nutrizione-fase">
+          <span class="nutrizione-tipo">{{ faseAttiva.tipo }}</span>
+          <span class="nutrizione-target">
+            {{ faseAttiva.targetCaloricoAttuale }} kcal
+            @if (badgeAdattato) {
+              <span class="badge-adattato"><i class="bi bi-arrow-repeat"></i> Adattato</span>
+            }
+          </span>
+        </div>
+
+        @if (riepilogoNutrizionale) {
+          <div class="nutrizione-oggi">
+            <span class="nutrizione-oggi-etichetta">Oggi</span>
+            <span class="nutrizione-oggi-valore">{{ riepilogoNutrizionale.calorieTotali }} kcal</span>
+            @if (riepilogoNutrizionale.differenzaCalorica !== null) {
+              <span class="nutrizione-oggi-differenza"
+                    [class.positivo]="riepilogoNutrizionale.differenzaCalorica <= 0"
+                    [class.negativo]="riepilogoNutrizionale.differenzaCalorica > 0">
+                {{ riepilogoNutrizionale.differenzaCalorica > 0 ? '+' : '' }}{{ riepilogoNutrizionale.differenzaCalorica }} kcal
+              </span>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  }
+
 }

@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -43,6 +44,11 @@ public class Utente implements UserDetails {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "coach_id")
     private Utente coach;
+
+    @Enumerated(EnumType.STRING)
+    private Sesso sesso;
+
+    private LocalDate dataNascita;
 
     @Column(nullable = false)
     private LocalDateTime creatoIl;

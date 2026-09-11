@@ -3,6 +3,7 @@ package org.ironlog.app.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.ironlog.app.dto.CambioPasswordRequestDTO;
+import org.ironlog.app.dto.DatiBiometriciRequestDTO;
 import org.ironlog.app.dto.ProfiloResponseDTO;
 import org.ironlog.app.model.Utente;
 import org.ironlog.app.service.definition.ProfiloService;
@@ -32,7 +33,17 @@ public class ProfiloController {
         dto.setCognome(utente.getCognome());
         dto.setEmail(utente.getEmail());
         dto.setRuolo(utente.getRuolo());
+        dto.setSesso(utente.getSesso());
+        dto.setDataNascita(utente.getDataNascita());
         return ResponseEntity.ok(dto);
+    }
+
+    @PutMapping("/dati-biometrici")
+    public ResponseEntity<Void> aggiornaDatiBiometrici(Authentication authentication,
+                                                        @Valid @RequestBody DatiBiometriciRequestDTO request) {
+        Utente utente = (Utente) authentication.getPrincipal();
+        profiloService.aggiornaDatiBiometrici(utente, request);
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/password")

@@ -4,6 +4,17 @@
 -- Password di tutti gli utenti: 'password' (hash BCrypt)
 
 SET FOREIGN_KEY_CHECKS = 0;
+DELETE FROM voce_piano_alimentare;
+DELETE FROM piano_alimentare;
+DELETE FROM assunzione_integratore;
+DELETE FROM integratore;
+DELETE FROM consumo_acqua;
+DELETE FROM voce_diario;
+DELETE FROM micronutriente_alimento;
+DELETE FROM alimento;
+DELETE FROM fase;
+DELETE FROM profilo_metabolico;
+DELETE FROM misurazione_corporea;
 DELETE FROM serie_eseguita;
 DELETE FROM sessione;
 DELETE FROM esercizio_scheda;
@@ -82,27 +93,27 @@ INSERT INTO esercizio (id, nome, descrizione, gruppo_id) VALUES
                                                              (52, 'Calf raise con manubri', 'Enfasi sul gastrocnemio', 9);
 
 -- utente (20 righe: 5 coach, 15 atleti)
-INSERT INTO utente (id, nome, cognome, email, password, ruolo, coach_id, creato_il) VALUES
-                                                                                        (1, 'Marco', 'Rossi', 'marco.rossi@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'COACH', NULL, '2025-10-19 18:30:00'),
-                                                                                        (2, 'Luca', 'Bianchi', 'luca.bianchi@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'COACH', NULL, '2025-10-22 18:30:00'),
-                                                                                        (3, 'Giulia', 'Ferrari', 'giulia.ferrari@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'COACH', NULL, '2025-10-25 18:30:00'),
-                                                                                        (4, 'Sara', 'Verdi', 'sara.verdi@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'COACH', NULL, '2025-10-28 18:30:00'),
-                                                                                        (5, 'Andrea', 'Russo', 'andrea.russo@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'COACH', NULL, '2025-10-31 18:30:00'),
-                                                                                        (6, 'Francesca', 'Romano', 'francesca.romano@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'ATHLETE', 1, '2025-11-03 18:30:00'),
-                                                                                        (7, 'Matteo', 'Gallo', 'matteo.gallo@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'ATHLETE', 2, '2025-11-06 18:30:00'),
-                                                                                        (8, 'Chiara', 'Costa', 'chiara.costa@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'ATHLETE', 3, '2025-11-09 18:30:00'),
-                                                                                        (9, 'Davide', 'Conti', 'davide.conti@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'ATHLETE', NULL, '2025-11-12 18:30:00'),
-                                                                                        (10, 'Elena', 'Greco', 'elena.greco@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'ATHLETE', 5, '2025-11-15 18:30:00'),
-                                                                                        (11, 'Simone', 'Bruno', 'simone.bruno@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'ATHLETE', 1, '2025-11-18 18:30:00'),
-                                                                                        (12, 'Martina', 'Rizzo', 'martina.rizzo@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'ATHLETE', 2, '2025-11-21 18:30:00'),
-                                                                                        (13, 'Alessio', 'Moretti', 'alessio.moretti@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'ATHLETE', NULL, '2025-11-24 18:30:00'),
-                                                                                        (14, 'Federica', 'Barbieri', 'federica.barbieri@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'ATHLETE', 4, '2025-11-27 18:30:00'),
-                                                                                        (15, 'Riccardo', 'Fontana', 'riccardo.fontana@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'ATHLETE', 5, '2025-11-30 18:30:00'),
-                                                                                        (16, 'Valentina', 'Caruso', 'valentina.caruso@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'ATHLETE', 1, '2025-12-03 18:30:00'),
-                                                                                        (17, 'Stefano', 'Marino', 'stefano.marino@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'ATHLETE', NULL, '2025-12-06 18:30:00'),
-                                                                                        (18, 'Alice', 'De Luca', 'alice.deluca@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'ATHLETE', 3, '2025-12-09 18:30:00'),
-                                                                                        (19, 'Lorenzo', 'Serra', 'lorenzo.serra@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'ATHLETE', 4, '2025-12-12 18:30:00'),
-                                                                                        (20, 'Ilaria', 'Villa', 'ilaria.villa@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'ATHLETE', 5, '2025-12-15 18:30:00');
+INSERT INTO utente (id, nome, cognome, email, password, ruolo, coach_id, sesso, data_nascita, creato_il) VALUES
+                                                                                        (1, 'Marco', 'Rossi', 'marco.rossi@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'COACH', NULL, 'MASCHIO', '1988-04-12', '2025-10-19 18:30:00'),
+                                                                                        (2, 'Luca', 'Bianchi', 'luca.bianchi@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'COACH', NULL, 'MASCHIO', '1985-09-23', '2025-10-22 18:30:00'),
+                                                                                        (3, 'Giulia', 'Ferrari', 'giulia.ferrari@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'COACH', NULL, 'FEMMINA', '1990-01-15', '2025-10-25 18:30:00'),
+                                                                                        (4, 'Sara', 'Verdi', 'sara.verdi@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'COACH', NULL, 'FEMMINA', '1987-06-30', '2025-10-28 18:30:00'),
+                                                                                        (5, 'Andrea', 'Russo', 'andrea.russo@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'COACH', NULL, 'MASCHIO', '1983-11-05', '2025-10-31 18:30:00'),
+                                                                                        (6, 'Francesca', 'Romano', 'francesca.romano@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'ATHLETE', 1, 'FEMMINA', '1996-03-22', '2025-11-03 18:30:00'),
+                                                                                        (7, 'Matteo', 'Gallo', 'matteo.gallo@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'ATHLETE', 2, 'MASCHIO', '1998-07-14', '2025-11-06 18:30:00'),
+                                                                                        (8, 'Chiara', 'Costa', 'chiara.costa@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'ATHLETE', 3, 'FEMMINA', '1993-12-02', '2025-11-09 18:30:00'),
+                                                                                        (9, 'Davide', 'Conti', 'davide.conti@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'ATHLETE', NULL, 'MASCHIO', '1991-05-19', '2025-11-12 18:30:00'),
+                                                                                        (10, 'Elena', 'Greco', 'elena.greco@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'ATHLETE', 5, 'FEMMINA', '1999-02-08', '2025-11-15 18:30:00'),
+                                                                                        (11, 'Simone', 'Bruno', 'simone.bruno@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'ATHLETE', 1, 'MASCHIO', '1995-10-27', '2025-11-18 18:30:00'),
+                                                                                        (12, 'Martina', 'Rizzo', 'martina.rizzo@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'ATHLETE', 2, 'FEMMINA', '1997-08-11', '2025-11-21 18:30:00'),
+                                                                                        (13, 'Alessio', 'Moretti', 'alessio.moretti@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'ATHLETE', NULL, 'MASCHIO', '1994-04-03', '2025-11-24 18:30:00'),
+                                                                                        (14, 'Federica', 'Barbieri', 'federica.barbieri@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'ATHLETE', 4, 'FEMMINA', '1992-09-16', '2025-11-27 18:30:00'),
+                                                                                        (15, 'Riccardo', 'Fontana', 'riccardo.fontana@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'ATHLETE', 5, 'MASCHIO', '2000-01-30', '2025-11-30 18:30:00'),
+                                                                                        (16, 'Valentina', 'Caruso', 'valentina.caruso@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'ATHLETE', 1, 'FEMMINA', '1996-06-25', '2025-12-03 18:30:00'),
+                                                                                        (17, 'Stefano', 'Marino', 'stefano.marino@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'ATHLETE', NULL, 'MASCHIO', '1989-03-08', '2025-12-06 18:30:00'),
+                                                                                        (18, 'Alice', 'De Luca', 'alice.deluca@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'ATHLETE', 3, 'FEMMINA', '1998-11-20', '2025-12-09 18:30:00'),
+                                                                                        (19, 'Lorenzo', 'Serra', 'lorenzo.serra@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'ATHLETE', 4, 'MASCHIO', '1993-07-04', '2025-12-12 18:30:00'),
+                                                                                        (20, 'Ilaria', 'Villa', 'ilaria.villa@ironlog.it', '$2a$10$n9Pac9f244rftAJOrjQBJOQF8kd8V2W2SqljaukuwKv.figqYJiDy', 'ATHLETE', 5, 'FEMMINA', '1995-12-13', '2025-12-15 18:30:00');
 
 -- scheda (18 righe)
 INSERT INTO scheda (id, nome, note, attiva, data_inizio, atleta_id, autore_id) VALUES
@@ -3109,3 +3120,129 @@ INSERT INTO serie_eseguita (id, sessione_id, numero_serie, esercizio_id, ripetiz
     (2487, 129, 21, 34, 8, 52.50, 8, 66.50),
     (2488, 129, 22, 34, 8, 52.50, 8, 66.50),
     (2489, 129, 23, 34, 8, 52.50, 8, 66.50);
+
+-- alimento (20 righe, dati nutrizionali indicativi per 100g)
+INSERT INTO alimento (id, nome, fonte, calorie100g, proteineg, grassig, carboidratig, fibreg, zuccherig, sodio_mg) VALUES
+                                                                                                                            (1, 'Petto di pollo', 'PERSONALIZZATO', 165.00, 31.00, 3.60, 0.00, 0.00, 0.00, 74.00),
+                                                                                                                            (2, 'Riso basmati', 'PERSONALIZZATO', 130.00, 2.70, 0.30, 28.00, 0.40, 0.10, 1.00),
+                                                                                                                            (3, 'Uova intere', 'PERSONALIZZATO', 155.00, 13.00, 11.00, 1.10, 0.00, 1.10, 124.00),
+                                                                                                                            (4, 'Salmone', 'PERSONALIZZATO', 208.00, 20.00, 13.00, 0.00, 0.00, 0.00, 59.00),
+                                                                                                                            (5, 'Avena', 'PERSONALIZZATO', 389.00, 17.00, 7.00, 66.00, 10.00, 1.00, 2.00),
+                                                                                                                            (6, 'Banana', 'PERSONALIZZATO', 89.00, 1.10, 0.30, 23.00, 2.60, 12.00, 1.00),
+                                                                                                                            (7, 'Olio extravergine di oliva', 'PERSONALIZZATO', 884.00, 0.00, 100.00, 0.00, 0.00, 0.00, 2.00),
+                                                                                                                            (8, 'Broccoli', 'PERSONALIZZATO', 34.00, 2.80, 0.40, 7.00, 2.60, 1.70, 33.00),
+                                                                                                                            (9, 'Patate', 'PERSONALIZZATO', 77.00, 2.00, 0.10, 17.00, 2.20, 0.80, 6.00),
+                                                                                                                            (10, 'Yogurt greco 0%', 'PERSONALIZZATO', 59.00, 10.00, 0.40, 3.60, 0.00, 3.60, 36.00),
+                                                                                                                            (11, 'Tonno al naturale', 'PERSONALIZZATO', 116.00, 26.00, 1.00, 0.00, 0.00, 0.00, 247.00),
+                                                                                                                            (12, 'Mandorle', 'PERSONALIZZATO', 579.00, 21.00, 50.00, 22.00, 12.50, 4.30, 1.00),
+                                                                                                                            (13, 'Pasta di semola', 'PERSONALIZZATO', 131.00, 5.00, 1.10, 25.00, 1.80, 0.60, 6.00),
+                                                                                                                            (14, 'Manzo magro', 'PERSONALIZZATO', 250.00, 26.00, 15.00, 0.00, 0.00, 0.00, 66.00),
+                                                                                                                            (15, 'Lenticchie cotte', 'PERSONALIZZATO', 116.00, 9.00, 0.40, 20.00, 7.90, 1.80, 2.00),
+                                                                                                                            (16, 'Ceci cotti', 'PERSONALIZZATO', 164.00, 8.90, 2.60, 27.00, 7.60, 4.80, 7.00),
+                                                                                                                            (17, 'Fiocchi di latte', 'PERSONALIZZATO', 98.00, 11.00, 4.30, 3.40, 0.00, 3.40, 364.00),
+                                                                                                                            (18, 'Pane integrale', 'PERSONALIZZATO', 247.00, 13.00, 3.40, 41.00, 7.00, 4.00, 400.00),
+                                                                                                                            (19, 'Mela', 'PERSONALIZZATO', 52.00, 0.30, 0.20, 14.00, 2.40, 10.00, 1.00),
+                                                                                                                            (20, 'Avocado', 'PERSONALIZZATO', 160.00, 2.00, 15.00, 9.00, 7.00, 0.70, 7.00);
+
+-- piatto (10 righe: piatti reali usati dal motore di generazione dieta al posto di alimenti sciolti)
+INSERT INTO piatto (id, nome) VALUES
+                                   (1, 'Uova, avena e banana'),
+                                   (2, 'Yogurt greco con mandorle e mela'),
+                                   (3, 'Pollo, riso e broccoli'),
+                                   (4, 'Salmone, patate e avocado'),
+                                   (5, 'Manzo, pasta e broccoli'),
+                                   (6, 'Tonno, ceci e olio EVO'),
+                                   (7, 'Lenticchie, pane integrale e olio EVO'),
+                                   (8, 'Fiocchi di latte e mandorle'),
+                                   (9, 'Mela e mandorle'),
+                                   (10, 'Yogurt greco e banana');
+
+-- piatto_pasto (piatti 1-2 solo colazione, 3-7 pranzo/cena, 8-10 solo spuntino)
+INSERT INTO piatto_pasto (id, piatto_id, tipo_pasto) VALUES
+                                                          (1, 1, 'COLAZIONE'),
+                                                          (2, 2, 'COLAZIONE'),
+                                                          (3, 3, 'PRANZO'),
+                                                          (4, 3, 'CENA'),
+                                                          (5, 4, 'PRANZO'),
+                                                          (6, 4, 'CENA'),
+                                                          (7, 5, 'PRANZO'),
+                                                          (8, 5, 'CENA'),
+                                                          (9, 6, 'PRANZO'),
+                                                          (10, 6, 'CENA'),
+                                                          (11, 7, 'PRANZO'),
+                                                          (12, 7, 'CENA'),
+                                                          (13, 8, 'SPUNTINO'),
+                                                          (14, 9, 'SPUNTINO'),
+                                                          (15, 10, 'SPUNTINO');
+
+-- ingrediente_ricetta (quantita di riferimento in grammi per la porzione base del piatto)
+INSERT INTO ingrediente_ricetta (id, piatto_id, alimento_id, quantita_grammi) VALUES
+                                                                                   (1, 1, 3, 100.00),
+                                                                                   (2, 1, 5, 60.00),
+                                                                                   (3, 1, 6, 100.00),
+                                                                                   (4, 2, 10, 200.00),
+                                                                                   (5, 2, 12, 20.00),
+                                                                                   (6, 2, 19, 150.00),
+                                                                                   (7, 3, 1, 150.00),
+                                                                                   (8, 3, 2, 100.00),
+                                                                                   (9, 3, 8, 150.00),
+                                                                                   (10, 3, 7, 10.00),
+                                                                                   (11, 4, 4, 150.00),
+                                                                                   (12, 4, 9, 200.00),
+                                                                                   (13, 4, 20, 50.00),
+                                                                                   (14, 5, 14, 150.00),
+                                                                                   (15, 5, 13, 90.00),
+                                                                                   (16, 5, 8, 100.00),
+                                                                                   (17, 5, 7, 5.00),
+                                                                                   (18, 6, 11, 150.00),
+                                                                                   (19, 6, 16, 150.00),
+                                                                                   (20, 6, 7, 10.00),
+                                                                                   (21, 7, 15, 200.00),
+                                                                                   (22, 7, 18, 60.00),
+                                                                                   (23, 7, 7, 10.00),
+                                                                                   (24, 8, 17, 150.00),
+                                                                                   (25, 8, 12, 15.00),
+                                                                                   (26, 9, 19, 150.00),
+                                                                                   (27, 9, 12, 20.00),
+                                                                                   (28, 10, 10, 150.00),
+                                                                                   (29, 10, 6, 100.00);
+
+-- integratore (5 righe)
+INSERT INTO integratore (id, nome, dosaggio_default, unita) VALUES
+                                                                 (1, 'Creatina monoidrato', 5.00, 'g'),
+                                                                 (2, 'Proteine whey', 30.00, 'g'),
+                                                                 (3, 'Omega-3', 2.00, 'g'),
+                                                                 (4, 'Vitamina D3', 2000.00, 'UI'),
+                                                                 (5, 'Magnesio', 300.00, 'mg');
+
+-- misurazione_corporea (dati demo per l'atleta Francesca Romano, id 6)
+INSERT INTO misurazione_corporea (id, atleta_id, data, peso_kg, altezza_cm, percentuale_massa_grassa, note) VALUES
+                                                                                                                 (1, 6, '2026-01-05', 62.50, 168, 24.00, 'Misurazione iniziale'),
+                                                                                                                 (2, 6, '2026-02-05', 62.00, 168, 23.50, NULL),
+                                                                                                                 (3, 6, '2026-03-05', 61.50, 168, 23.00, NULL);
+
+-- profilo_metabolico (calcolato con Katch-McArdle sull'ultima misurazione)
+INSERT INTO profilo_metabolico (id, atleta_id, misurazione_riferimento_id, calcolato_il, bmr, tdee, livello_attivita, formula) VALUES
+                                                                                                                                    (1, 6, 3, '2026-03-05', 1392.87, 2158.95, 'MODERATAMENTE_ATTIVO', 'KATCH_MCARDLE');
+
+-- fase (CUT attiva, target calcolato al punto medio dei range configurati)
+INSERT INTO fase (id, atleta_id, profilo_metabolico_riferimento_id, tipo, data_inizio, data_fine, base_target_calorico, target_proteineg, target_grassig, target_carboidratig) VALUES
+                                                                                                                                                                                       (1, 6, 1, 'CUT', '2026-03-06', NULL, 1727.16, 116.85, 55.35, 190.40);
+
+-- voce_diario (pasti registrati per l'atleta demo)
+INSERT INTO voce_diario (id, atleta_id, alimento_id, data, tipo_pasto, quantita_grammi) VALUES
+                                                                                             (1, 6, 10, '2026-03-06', 'COLAZIONE', 170.00),
+                                                                                             (2, 6, 6, '2026-03-06', 'COLAZIONE', 120.00),
+                                                                                             (3, 6, 1, '2026-03-06', 'PRANZO', 150.00),
+                                                                                             (4, 6, 2, '2026-03-06', 'PRANZO', 80.00),
+                                                                                             (5, 6, 8, '2026-03-06', 'PRANZO', 100.00);
+
+-- consumo_acqua
+INSERT INTO consumo_acqua (id, atleta_id, data, ml_consumati, ml_obiettivo) VALUES
+                                                                                (1, 6, '2026-03-06', 500, 2000),
+                                                                                (2, 6, '2026-03-06', 750, 2000);
+
+-- assunzione_integratore
+INSERT INTO assunzione_integratore (id, atleta_id, integratore_id, data, dosaggio_assunto) VALUES
+                                                                                                 (1, 6, 1, '2026-03-06', 5.00),
+                                                                                                 (2, 6, 2, '2026-03-06', 30.00);

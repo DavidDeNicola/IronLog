@@ -27,13 +27,20 @@ export class SidebarComponent implements OnInit {
   voci: VoceMenu[] = [];
 
   private vociAtleta: VoceMenu[] = [
-    { etichetta: 'Dashboard',    percorso: '/dashboard',    icona: 'bi-grid-1x2' },
-    { etichetta: 'Schede',       percorso: '/schede',       icona: 'bi-journal-text' },
-    { etichetta: 'Allenamenti',  percorso: '/allenamento',  icona: 'bi-lightning-charge' },
-    { etichetta: 'Esercizi',     percorso: '/esercizi',     icona: 'bi-list-check' },
-    { etichetta: 'Statistiche',  percorso: '/statistiche',  icona: 'bi-bar-chart' },
-    { etichetta: 'Storico',      percorso: '/storico',      icona: 'bi-clock-history' },
-    { etichetta: 'Profilo',      percorso: '/profilo',      icona: 'bi-person' }
+    { etichetta: 'Dashboard',           percorso: '/dashboard',            icona: 'bi-grid-1x2' },
+    { etichetta: 'Schede',              percorso: '/schede',               icona: 'bi-journal-text' },
+    { etichetta: 'Allenamenti',         percorso: '/allenamento',          icona: 'bi-lightning-charge' },
+    { etichetta: 'Esercizi',            percorso: '/esercizi',             icona: 'bi-list-check' },
+    { etichetta: 'Statistiche',         percorso: '/statistiche',          icona: 'bi-bar-chart' },
+    { etichetta: 'Storico',             percorso: '/storico',              icona: 'bi-clock-history' },
+    { etichetta: 'Diario alimentare',   percorso: '/diario-alimentare',    icona: 'bi-egg-fried' },
+    { etichetta: 'Piano alimentare',    percorso: '/piano-alimentare',     icona: 'bi-basket2' },
+    { etichetta: 'Fasi',                percorso: '/fasi',                 icona: 'bi-graph-up-arrow' },
+    { etichetta: 'Profilo metabolico',  percorso: '/profilo-metabolico',   icona: 'bi-clipboard-pulse' },
+    { etichetta: 'Misurazioni',         percorso: '/misurazioni',          icona: 'bi-rulers' },
+    { etichetta: 'Acqua',               percorso: '/acqua',                icona: 'bi-cup-straw' },
+    { etichetta: 'Integratori',         percorso: '/integratori',          icona: 'bi-capsule' },
+    { etichetta: 'Profilo',             percorso: '/profilo',              icona: 'bi-person' }
   ];
 
   private vociCoach: VoceMenu[] = [

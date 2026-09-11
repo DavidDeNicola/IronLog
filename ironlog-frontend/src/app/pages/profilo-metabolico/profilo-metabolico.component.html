@@ -1,0 +1,132 @@
+<div class="intestazione-pagina">
+  <h1>Profilo metabolico</h1>
+</div>
+
+@if (caricamento) {
+  <p class="stato-messaggio">Caricamento…</p>
+}
+
+@else if (errore) {
+  <p class="stato-messaggio errore">Impossibile caricare il profilo metabolico. Riprova più tardi.</p>
+}
+
+@else {
+
+  @if (datiBiometriciMancanti) {
+    <div class="card-form">
+      <div class="form-testata">
+        <span class="form-titolo">Dati biometrici</span>
+        <span class="form-descrizione">
+          Servono sesso e data di nascita per calcolare BMR e TDEE.
+        </span>
+      </div>
+
+      <form (ngSubmit)="salvaDatiBiometrici()" #formBio="ngForm">
+        <div class="griglia-campi">
+          <div class="campo">
+            <label for="sesso">Sesso</label>
+            <select id="sesso" name="sesso" class="form-select" [(ngModel)]="formBiometrici.sesso" required>
+              <option [ngValue]="null" disabled>Seleziona…</option>
+              <option value="MASCHIO">Maschio</option>
+              <option value="FEMMINA">Femmina</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="dataNascita">Data di nascita</label>
+            <input type="date" id="dataNascita" name="dataNascita" class="form-control"
+                   [(ngModel)]="formBiometrici.dataNascita" required />
+          </div>
+        </div>
+
+        @if (erroreBiometrici) {
+          <p class="esito errore"><i class="bi bi-exclamation-circle"></i> {{ erroreBiometrici }}</p>
+        }
+
+        <button type="submit" class="btn btn-primary"
+                [disabled]="formBio.invalid || salvataggioBiometriciInCorso">
+          {{ salvataggioBiometriciInCorso ? 'Salvataggio…' : 'Salva dati biometrici' }}
+        </button>
+      </form>
+    </div>
+  }
+
+  @if (attuale) {
+    <div class="griglia-stat">
+      <div class="card-stat">
+        <span class="stat-etichetta">BMR</span>
+        <span class="stat-valore">{{ attuale.bmr }} kcal</span>
+        <span class="stat-nota">Metabolismo basale</span>
+      </div>
+      <div class="card-stat">
+        <span class="stat-etichetta">TDEE</span>
+        <span class="stat-valore">{{ attuale.tdee }} kcal</span>
+        <span class="stat-nota">Fabbisogno totale</span>
+      </div>
+      <div class="card-stat">
+        <span class="stat-etichetta">Formula</span>
+        <span class="stat-valore-piccolo">{{ attuale.formula === 'MIFFLIN_ST_JEOR' ? 'Mifflin-St Jeor' : 'Katch-McArdle' }}</span>
+        <span class="stat-nota">Calcolato il {{ attuale.calcolatoIl | date:'d MMM yyyy' }}</span>
+      </div>
+    </div>
+  }
+
+  <div class="card-form">
+    <div class="form-testata">
+      <span class="form-titolo">Calcola profilo metabolico</span>
+      <span class="form-descrizione">
+        Seleziona il tuo livello di attività per ricalcolare BMR e TDEE in base all'ultima misurazione.
+      </span>
+    </div>
+
+    <form (ngSubmit)="calcola()" #formMet="ngForm">
+      <div class="griglia-campi">
+        <div class="campo">
+          <label for="livello">Livello di attività</label>
+          <select id="livello" name="livello" class="form-select" [(ngModel)]="formMetabolico.livelloAttivita" required>
+            <option [ngValue]="null" disabled>Seleziona…</option>
+            @for (l of livelli; track l.valore) {
+              <option [value]="l.valore">{{ l.etichetta }}</option>
+            }
+          </select>
+        </div>
+        <div class="campo">
+          <label for="formula">Formula (facoltativa)</label>
+          <select id="formula" name="formula" class="form-select" [(ngModel)]="formMetabolico.formulaForzata">
+            <option [ngValue]="null">Automatica</option>
+            <option value="MIFFLIN_ST_JEOR">Mifflin-St Jeor</option>
+            <option value="KATCH_MCARDLE">Katch-McArdle</option>
+          </select>
+        </div>
+      </div>
+
+      @if (erroreCalcolo) {
+        <p class="esito errore"><i class="bi bi-exclamation-circle"></i> {{ erroreCalcolo }}</p>
+      }
+
+      <button type="submit" class="btn btn-primary" [disabled]="formMet.invalid || calcoloInCorso">
+        {{ calcoloInCorso ? 'Calcolo…' : 'Calcola' }}
+      </button>
+    </form>
+  </div>
+
+  <div class="sezione-titolo">Storico</div>
+
+  @if (storico.length === 0) {
+    <div class="stato-vuoto">
+      <i class="bi bi-clipboard-pulse"></i>
+      <p>Nessun calcolo effettuato finora.</p>
+    </div>
+  } @else {
+    <div class="lista-storico">
+      @for (p of storico; track p.id) {
+        <div class="card-storico">
+          <span class="storico-data">{{ p.calcolatoIl | date:'d MMM yyyy' }}</span>
+          <span class="storico-dato"><strong>{{ p.bmr }}</strong> BMR</span>
+          <span class="storico-dato"><strong>{{ p.tdee }}</strong> TDEE</span>
+          <span class="storico-livello">{{ p.livelloAttivita }}</span>
+        </div>
+      }
+    </div>
+  }
+
+}

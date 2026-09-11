@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.ironlog.app.model.Ruolo;
+import org.ironlog.app.model.Sesso;
+
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -16,4 +19,6 @@ public class ProfiloResponseDTO {
     private String cognome;
     private String email;
     private Ruolo ruolo;
+    private Sesso sesso;
+    private LocalDate dataNascita;
 }

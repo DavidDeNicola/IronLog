@@ -1,0 +1,188 @@
+<div class="intestazione-pagina">
+  <h1>Diario alimentare</h1>
+  <input type="date" class="form-control input-data" [(ngModel)]="data" (change)="cambiaData()" />
+</div>
+
+@if (caricamento) {
+  <p class="stato-messaggio">Caricamento…</p>
+}
+
+@else if (errore) {
+  <p class="stato-messaggio errore">Impossibile caricare il diario. Riprova più tardi.</p>
+}
+
+@else {
+
+  <div class="griglia-riepilogo">
+    <div class="card-grafico">
+      <h2>Macro di oggi</h2>
+      <div class="contenitore-canvas">
+        <canvas #canvasMacro></canvas>
+        @if (!riepilogo || riepilogo.calorieTotali === 0) {
+          <div class="velo-vuoto">Nessun dato per questo giorno.</div>
+        }
+      </div>
+    </div>
+
+    @if (riepilogo) {
+      <div class="card-stat-riepilogo">
+        <div class="stat-riga">
+          <span class="stat-etichetta">Calorie</span>
+          <span class="stat-valore">{{ riepilogo.calorieTotali }} kcal</span>
+        </div>
+        @if (riepilogo.targetCalorico !== null) {
+          <div class="stat-riga">
+            <span class="stat-etichetta">Target</span>
+            <span class="stat-valore-piccolo">{{ riepilogo.targetCalorico }} kcal</span>
+          </div>
+          <div class="stat-riga">
+            <span class="stat-etichetta">Differenza</span>
+            <span class="stat-valore-piccolo"
+                  [class.positivo]="(riepilogo.differenzaCalorica ?? 0) <= 0"
+                  [class.negativo]="(riepilogo.differenzaCalorica ?? 0) > 0">
+              {{ (riepilogo.differenzaCalorica ?? 0) > 0 ? '+' : '' }}{{ riepilogo.differenzaCalorica }} kcal
+            </span>
+          </div>
+        }
+        <div class="stat-riga">
+          <span class="stat-etichetta">Proteine</span>
+          <span class="stat-valore-piccolo">{{ riepilogo.proteineTotali }} g</span>
+        </div>
+        <div class="stat-riga">
+          <span class="stat-etichetta">Grassi</span>
+          <span class="stat-valore-piccolo">{{ riepilogo.grassiTotali }} g</span>
+        </div>
+        <div class="stat-riga">
+          <span class="stat-etichetta">Carboidrati</span>
+          <span class="stat-valore-piccolo">{{ riepilogo.carboidratiTotali }} g</span>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="card-form">
+    <div class="form-testata">
+      <span class="form-titolo">Aggiungi alimento</span>
+    </div>
+
+    @if (!alimentoSelezionato) {
+      <div class="barra-ricerca">
+        <i class="bi bi-search"></i>
+        <input type="text" class="form-control" placeholder="Cerca un alimento…"
+               [(ngModel)]="ricercaAlimento" (ngModelChange)="onRicercaCambiata()" />
+      </div>
+
+      @if (risultatiRicerca.length > 0) {
+        <div class="lista-risultati">
+          @for (a of risultatiRicerca; track a.id) {
+            <button type="button" class="riga-risultato" (click)="selezionaAlimento(a)">
+              <span class="risultato-nome">{{ a.nome }}</span>
+              <span class="risultato-info">{{ a.calorie100g }} kcal /100g</span>
+            </button>
+          }
+        </div>
+      }
+
+      @if (!mostraFormNuovoAlimento) {
+        <button type="button" class="btn-aggiungi-catalogo" (click)="apriFormNuovoAlimento()">
+          <i class="bi bi-plus-lg"></i> Nuovo alimento personalizzato
+        </button>
+      } @else {
+        <div class="riquadro-nuovo-alimento">
+          <div class="griglia-campi">
+            <div class="campo">
+              <label for="nomeAlimento">Nome</label>
+              <input type="text" id="nomeAlimento" class="form-control" [(ngModel)]="formNuovoAlimento.nome" />
+            </div>
+            <div class="campo">
+              <label for="calorie">Calorie /100g</label>
+              <input type="number" id="calorie" class="form-control" min="0" [(ngModel)]="formNuovoAlimento.calorie100g" />
+            </div>
+            <div class="campo">
+              <label for="proteine">Proteine g /100g</label>
+              <input type="number" id="proteine" class="form-control" min="0" [(ngModel)]="formNuovoAlimento.proteineG" />
+            </div>
+            <div class="campo">
+              <label for="grassi">Grassi g /100g</label>
+              <input type="number" id="grassi" class="form-control" min="0" [(ngModel)]="formNuovoAlimento.grassiG" />
+            </div>
+            <div class="campo">
+              <label for="carboidrati">Carboidrati g /100g</label>
+              <input type="number" id="carboidrati" class="form-control" min="0" [(ngModel)]="formNuovoAlimento.carboidratiG" />
+            </div>
+          </div>
+
+          @if (erroreNuovoAlimento) {
+            <p class="esito errore"><i class="bi bi-exclamation-circle"></i> {{ erroreNuovoAlimento }}</p>
+          }
+
+          <div class="barra-azioni">
+            <button type="button" class="btn-annulla" (click)="annullaFormNuovoAlimento()" [disabled]="salvataggioAlimentoInCorso">
+              Annulla
+            </button>
+            <button type="button" class="btn btn-primary" (click)="salvaNuovoAlimento()" [disabled]="salvataggioAlimentoInCorso">
+              {{ salvataggioAlimentoInCorso ? 'Salvataggio…' : 'Salva e seleziona' }}
+            </button>
+          </div>
+        </div>
+      }
+    } @else {
+      <div class="alimento-selezionato">
+        <div class="alimento-selezionato-info">
+          <span class="alimento-nome">{{ alimentoSelezionato.nome }}</span>
+          <span class="alimento-macro">{{ alimentoSelezionato.calorie100g }} kcal /100g</span>
+        </div>
+        <button type="button" class="btn-rimuovi-selezione" (click)="deselezionaAlimento()">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <div class="riga-form">
+        <div class="campo">
+          <label for="pasto">Pasto</label>
+          <select id="pasto" class="form-select" [(ngModel)]="formVoce.tipoPasto">
+            @for (p of pasti; track p.valore) {
+              <option [value]="p.valore">{{ p.etichetta }}</option>
+            }
+          </select>
+        </div>
+        <div class="campo">
+          <label for="quantita">Quantità (g)</label>
+          <input type="number" id="quantita" class="form-control" min="0" [(ngModel)]="formVoce.quantitaGrammi" />
+        </div>
+        <button type="button" class="btn btn-primary" (click)="aggiungiVoce()"
+                [disabled]="!formVoce.quantitaGrammi || aggiuntaInCorso">
+          {{ aggiuntaInCorso ? 'Aggiunta…' : 'Aggiungi al diario' }}
+        </button>
+      </div>
+    }
+
+    @if (erroreAggiunta) {
+      <p class="esito errore"><i class="bi bi-exclamation-circle"></i> {{ erroreAggiunta }}</p>
+    }
+  </div>
+
+  @for (p of pasti; track p.valore) {
+    <div class="sezione-pasto">
+      <div class="sezione-titolo">{{ p.etichetta }}</div>
+      @if (vociPerPasto(p.valore).length === 0) {
+        <p class="stato-vuoto-inline">Nessun alimento registrato.</p>
+      } @else {
+        <div class="lista-voci">
+          @for (v of vociPerPasto(p.valore); track v.id) {
+            <div class="riga-voce">
+              <span class="voce-nome">{{ v.alimentoNome }}</span>
+              <span class="voce-quantita">{{ v.quantitaGrammi }} g</span>
+              <span class="voce-calorie">{{ v.calorie }} kcal</span>
+              <button type="button" class="btn-elimina-voce" (click)="eliminaVoce(v.id)"
+                      [disabled]="eliminazioneInCorsoId === v.id">
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+
+}

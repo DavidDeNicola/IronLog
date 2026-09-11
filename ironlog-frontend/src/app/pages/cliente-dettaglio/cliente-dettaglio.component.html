@@ -52,3 +52,80 @@
     }
   </div>
 }
+
+<div class="sezione-titolo">Nutrizione</div>
+
+@if (caricamentoNutrizione) {
+  <p class="stato-messaggio">Caricamento…</p>
+} @else {
+
+  @if (faseAttiva) {
+    <div class="card-nutrizione-fase">
+      <div class="nutrizione-fase-testa">
+        <span class="nutrizione-tipo">{{ faseAttiva.tipo }}</span>
+        <span class="badge-attiva">Attiva</span>
+      </div>
+      <div class="nutrizione-fase-corpo">
+        <span class="nutrizione-target">
+          {{ faseAttiva.targetCaloricoAttuale }} kcal
+          @if (badgeAdattato) {
+            <span class="badge-adattato"><i class="bi bi-arrow-repeat"></i> Adattato</span>
+          }
+        </span>
+        <span class="nutrizione-macro">
+          {{ faseAttiva.targetProteineG }}g P · {{ faseAttiva.targetGrassiG }}g G · {{ faseAttiva.targetCarboidratiG }}g C
+        </span>
+      </div>
+    </div>
+  } @else {
+    <p class="stato-vuoto-inline">Nessuna fase attiva.</p>
+  }
+
+  <div class="griglia-nutrizione">
+
+    <div class="card-mini">
+      <span class="mini-titolo"><i class="bi bi-egg-fried"></i> Diario di oggi</span>
+      @if (riepilogoDiario) {
+        <span class="mini-valore">{{ riepilogoDiario.calorieTotali }} kcal</span>
+        @if (riepilogoDiario.targetCalorico !== null) {
+          <span class="mini-nota">target {{ riepilogoDiario.targetCalorico }} kcal</span>
+        }
+      } @else {
+        <span class="mini-nota">Nessun dato per oggi.</span>
+      }
+    </div>
+
+    <div class="card-mini">
+      <span class="mini-titolo"><i class="bi bi-cup-straw"></i> Acqua di oggi</span>
+      @if (acquaOggi.length > 0) {
+        <span class="mini-valore">{{ totaleAcquaOggi }} ml</span>
+      } @else {
+        <span class="mini-nota">Nessun dato per oggi.</span>
+      }
+    </div>
+
+    <div class="card-mini">
+      <span class="mini-titolo"><i class="bi bi-capsule"></i> Integratori di oggi</span>
+      @if (assunzioniOggi.length > 0) {
+        @for (a of assunzioniOggi; track a.id) {
+          <span class="mini-riga">{{ a.integratoreNome }} · {{ a.dosaggioAssunto }}</span>
+        }
+      } @else {
+        <span class="mini-nota">Nessuna assunzione registrata.</span>
+      }
+    </div>
+
+    <div class="card-mini">
+      <span class="mini-titolo"><i class="bi bi-rulers"></i> Ultime misurazioni</span>
+      @if (ultimeMisurazioni.length > 0) {
+        @for (m of ultimeMisurazioni; track m.id) {
+          <span class="mini-riga">{{ m.data | date:'d MMM yyyy' }} · {{ m.pesoKg }} kg</span>
+        }
+      } @else {
+        <span class="mini-nota">Nessuna misurazione registrata.</span>
+      }
+    </div>
+
+  </div>
+
+}

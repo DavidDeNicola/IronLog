@@ -2,6 +2,7 @@ package org.ironlog.app.service;
 
 import lombok.RequiredArgsConstructor;
 import org.ironlog.app.dto.CambioPasswordRequestDTO;
+import org.ironlog.app.dto.DatiBiometriciRequestDTO;
 import org.ironlog.app.exception.PasswordAttualeErrataException;
 import org.ironlog.app.exception.UtenteNonTrovatoException;
 import org.ironlog.app.model.Scheda;
@@ -69,5 +70,16 @@ public class ProfiloServiceImpl implements ProfiloService {
         // 4. Elimina l'utente: le righe di utente_preferito vengono rimosse in
         //    automatico (lato proprietario della ManyToMany).
         utenteRepository.delete(gestito);
+    }
+
+    @Override
+    @Transactional
+    public void aggiornaDatiBiometrici(Utente utente, DatiBiometriciRequestDTO request) {
+        Utente gestito = utenteRepository.findById(utente.getId())
+                .orElseThrow(() -> new UtenteNonTrovatoException("Utente non trovato"));
+
+        gestito.setSesso(request.getSesso());
+        gestito.setDataNascita(request.getDataNascita());
+        utenteRepository.save(gestito);
     }
 }
