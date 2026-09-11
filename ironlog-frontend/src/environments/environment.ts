@@ -8,5 +8,5 @@ export const environment = {
    * e assicurati che quell'origine sia ammessa da `cors.allowed-origins`
    * nell'application.properties del backend.
    */
-  apiUrl: 'http://localhost:8080'
+  apiUrl: 'http://192.168.1.5:8080'
 };

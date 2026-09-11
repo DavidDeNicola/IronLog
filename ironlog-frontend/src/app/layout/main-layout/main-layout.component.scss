@@ -13,7 +13,7 @@
 .hamburger {
   display: none;
   position: fixed;
-  top: 1rem;
+  top: calc(1rem + env(safe-area-inset-top));
   left: 1rem;
   z-index: 30;
   width: 42px;
@@ -38,7 +38,7 @@
   }
 
   .contenuto {
-    padding: 4.5rem 1rem 1.5rem;
+    padding: calc(4.5rem + env(safe-area-inset-top)) 1rem 1.5rem;
   }
 
   .overlay {
