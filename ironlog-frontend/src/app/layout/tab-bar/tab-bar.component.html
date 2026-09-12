@@ -1,0 +1,9 @@
+<nav class="tab-bar">
+  <a *ngFor="let voce of voci"
+     [routerLink]="voce.link"
+     routerLinkActive="attiva"
+     class="tab-voce">
+    <i class="bi {{ voce.icona }}"></i>
+    <span>{{ voce.etichetta }}</span>
+  </a>
+</nav>
