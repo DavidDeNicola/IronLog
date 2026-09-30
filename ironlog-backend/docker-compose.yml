@@ -1,0 +1,40 @@
+name: ironlog
+
+services:
+  mysql-ironlog:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: ironlog
+    volumes:
+      - mysql-ironlog-data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  ironlog-backend:
+    build: .
+    depends_on:
+      mysql-ironlog:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-ironlog:3306/ironlog
+      DB_PASS: password
+      JWT_SECRET: Rj7vQm2XpL9sT4wZ8nB3cF6hK1yD5gA0eU7iO2tN4qM
+    ports:
+      - "8080:8080"
+
+  ironlog-frontend:
+    build:
+      context: "../ironlog-frontend"
+    depends_on: 
+      - ironlog-backend
+    ports:
+      - "4200:80"
+
+volumes:
+  mysql-ironlog-data:
