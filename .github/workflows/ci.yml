@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    name: Test backend
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ironlog-backend
+
+    steps:
+      - name: Checkout del codice
+        uses: actions/checkout@v5
+
+      - name: Installa Java 25
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
+          cache-dependency-path: ironlog-backend/pom.xml
+
+      - name: Rende eseguibile il Maven Wrapper
+        run: chmod +x mvnw
+
+      - name: Esegue i test
+        run: ./mvnw -B test
