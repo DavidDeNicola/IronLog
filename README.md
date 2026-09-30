@@ -1,5 +1,7 @@
 # IronLog
 
+[![CI](https://github.com/DavidDeNicola/IronLog/actions/workflows/ci.yml/badge.svg)](https://github.com/DavidDeNicola/IronLog/actions/workflows/ci.yml)
+
 **Il registro di allenamento che decide quanto caricare la prossima volta.**
 
 IronLog è un'applicazione web full-stack per la gestione delle schede di palestra: l'atleta
