@@ -1,18 +1,16 @@
 package org.ironlog.app;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 /**
  * Smoke test di avvio del contesto Spring.
- * Richiede un'istanza MySQL attiva e le variabili d'ambiente DB_PASS,
- * JWT_SECRET e JWT_EXPIRATION_MS: e' disabilitato di default per non far
- * fallire la build su un clone pulito. Rimuovi @Disabled per eseguirlo
- * in locale con il database avviato.
+ * Usa il profilo "test" (H2 in memoria), quindi non richiede MySQL
+ * ne' variabili d'ambiente: gira in locale e su GitHub Actions.
  */
 @SpringBootTest
-@Disabled("Richiede MySQL attivo e le variabili d'ambiente di configurazione")
+@ActiveProfiles("test")
 class IronlogApplicationTests {
 
 	@Test
