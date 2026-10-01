@@ -353,10 +353,12 @@ npm install
 npm start
 ```
 
-L'applicazione è su <http://localhost:4200> e punta al backend indicato in
-`src/environments/environment.ts`.
+L'applicazione è su <http://localhost:4200> e, in sviluppo, punta al backend indicato in
+`src/environments/environment.development.ts`. La build di produzione usa invece
+`environment.ts`, dove le API passano per `/backend` e vengono inoltrate al backend dal
+Nginx del container frontend.
 
-> **Dal telefono, sulla stessa rete Wi-Fi:** in `environment.ts` sostituire `localhost` con
+> **Dal telefono, sulla stessa rete Wi-Fi:** in `environment.development.ts` sostituire `localhost` con
 > l'IP della macchina, avviare il frontend con `ng serve --host 0.0.0.0` e aggiungere quello
 > stesso IP a `CORS_ORIGINS`.
 
@@ -403,9 +405,15 @@ cd ironlog-backend
 ./mvnw test
 ```
 
-`CalcolatoreProgressioneTest` copre l'algoritmo di progressione: aumento del 2,5%,
-arrotondamento al disco, deload del 10%, i casi limite sui carichi leggeri e la verifica
-del completamento delle serie.
+- `CalcolatoreProgressioneTest` copre l'algoritmo di progressione: aumento del 2,5%,
+  arrotondamento al disco, deload del 10%, i casi limite sui carichi leggeri e la verifica
+  del completamento delle serie.
+- `IronlogApplicationTests` avvia l'intero contesto Spring su un database **H2 in memoria**
+  (profilo `test`), quindi gira senza MySQL e senza variabili d'ambiente.
+
+A ogni push e pull request i test vengono eseguiti da **GitHub Actions**
+(`.github/workflows/ci.yml`). Se passano e il push è su `main`, un secondo job distribuisce
+automaticamente la nuova versione sul server.
 
 ## Licenza
 
