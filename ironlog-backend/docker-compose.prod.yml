@@ -1,0 +1,30 @@
+name: ironlog
+
+services:
+  ironlog-backend:
+    build: .
+    restart: unless-stopped
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-condiviso:3306/ironlog
+      DB_USER: ironlog
+      DB_PASS: ${IRONLOG_DB_PASS}
+      JWT_SECRET: ${JWT_SECRET}
+      SHOW_SQL: "false"
+      CORS_ORIGINS: https://ironlog.duckdns.org
+      JAVA_TOOL_OPTIONS: "-Xmx256m -Xss512k -XX:+UseSerialGC"
+    networks:
+      - default
+      - rete-condivisa
+
+  ironlog-frontend:
+    build:
+      context: ../ironlog-frontend
+    restart: unless-stopped
+    depends_on:
+      - ironlog-backend
+    ports:
+      - "127.0.0.1:8082:80"
+
+networks:
+  rete-condivisa:
+    external: true
