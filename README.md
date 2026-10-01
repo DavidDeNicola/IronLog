@@ -4,6 +4,8 @@
 
 **Il registro di allenamento che decide quanto caricare la prossima volta.**
 
+🔗 **Demo online: [ironlog-app.duckdns.org](https://ironlog-app.duckdns.org)** · credenziali di prova [qui sotto](#demo-online)
+
 IronLog è un'applicazione web full-stack per la gestione delle schede di palestra: l'atleta
 registra le serie che esegue, l'app calcola da sola il carico della seduta successiva e
 mostra l'andamento del volume nel tempo. Il coach assegna le schede ai propri atleti e ne
@@ -23,6 +25,7 @@ segue i progressi da un pannello dedicato.
 
 ## Indice
 
+- [Demo online](#demo-online)
 - [Il problema e l'idea](#il-problema-e-lidea)
 - [Funzionalità principali](#funzionalità-principali)
 - [Il motore della progressione](#il-motore-della-progressione)
@@ -39,6 +42,24 @@ segue i progressi da un pannello dedicato.
 - [Licenza](#licenza)
 
 ---
+
+## Demo online
+
+L'applicazione è pubblicata su **<https://ironlog-app.duckdns.org>** e si può provare
+con questi utenti:
+
+| Ruolo | Email | Password |
+|---|---|---|
+| Atleta | `francesca.romano@ironlog.it` | `password` |
+| Coach | `marco.rossi@ironlog.it` | `password` |
+
+I dati sono dimostrativi: il database viene ricreato a ogni aggiornamento dell'app e le
+date degli allenamenti di esempio vengono riportate al giorno di avvio, così dashboard,
+streak e statistiche mostrano sempre la settimana in corso.
+
+L'app gira in container Docker su AWS EC2, dietro un reverse proxy Nginx con HTTPS
+Let's Encrypt. Ogni push su `main` viene testato e distribuito automaticamente da
+GitHub Actions.
 
 ## Il problema e l'idea
 
