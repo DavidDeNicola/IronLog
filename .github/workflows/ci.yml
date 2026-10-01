@@ -30,3 +30,25 @@ jobs:
 
       - name: Esegue i test
         run: ./mvnw -B test
+
+  deploy:
+    name: Deploy su EC2
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          command_timeout: 30m
+          script: |
+            set -e
+            cd ~/IronLog
+            git pull
+            cd ironlog-backend
+            docker compose -f docker-compose.prod.yml up -d --build
+            docker image prune -f
