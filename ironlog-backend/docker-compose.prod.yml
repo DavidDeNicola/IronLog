@@ -10,7 +10,7 @@ services:
       DB_PASS: ${IRONLOG_DB_PASS}
       JWT_SECRET: ${JWT_SECRET}
       SHOW_SQL: "false"
-      CORS_ORIGINS: https://ironlog.duckdns.org
+      CORS_ORIGINS: https://ironlog-app.duckdns.org
       JAVA_TOOL_OPTIONS: "-Xmx256m -Xss512k -XX:+UseSerialGC"
     networks:
       - default
