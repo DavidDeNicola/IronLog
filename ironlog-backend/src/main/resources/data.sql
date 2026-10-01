@@ -3109,3 +3109,17 @@ INSERT INTO serie_eseguita (id, sessione_id, numero_serie, esercizio_id, ripetiz
     (2487, 129, 21, 34, 8, 52.50, 8, 66.50),
     (2488, 129, 22, 34, 8, 52.50, 8, 66.50),
     (2489, 129, 23, 34, 8, 52.50, 8, 66.50);
+
+
+-- ---------------------------------------------------------------------------
+-- Date demo relative al momento di avvio.
+-- Tutte le date del seed vengono traslate della stessa quantita', in modo che
+-- l'ultima seduta registrata risulti di 3 ore fa. Gli intervalli tra le
+-- sedute restano invariati: streak, statistiche e storico non cambiano.
+-- ---------------------------------------------------------------------------
+SET @shift_min = TIMESTAMPDIFF(MINUTE, (SELECT MAX(eseguita_il) FROM sessione), NOW() - INTERVAL 3 HOUR);
+
+UPDATE utente  SET creato_il   = creato_il + INTERVAL @shift_min MINUTE;
+UPDATE scheda  SET data_inizio = DATE(data_inizio + INTERVAL @shift_min MINUTE);
+UPDATE sessione SET eseguita_il = eseguita_il + INTERVAL @shift_min MINUTE,
+                    conclusa_il = conclusa_il + INTERVAL @shift_min MINUTE;
