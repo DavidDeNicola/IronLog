@@ -3,7 +3,7 @@ import { MainLayoutComponent } from './layout/main-layout/main-layout.component'
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegistrazioneComponent } from './pages/registrazione/registrazione.component';
-import {authGuard, coachGuard} from './app.guard';
+import {authGuard, coachGuard, dashboardGuard} from './app.guard';
 import { SchedeComponent } from './pages/schede/schede.component';
 import { DettaglioSchedaComponent } from './pages/dettaglio-scheda/dettaglio-scheda.component';
 import { EserciziComponent } from './pages/esercizi/esercizi.component';
@@ -26,7 +26,7 @@ export const routes: Routes = [
     component: MainLayoutComponent,
     canActivate: [authGuard],
     children: [
-      { path: 'dashboard', component: DashboardComponent },
+      { path: 'dashboard', component: DashboardComponent, canActivate: [dashboardGuard] },
       { path: 'schede', component: SchedeComponent },
       { path: 'schede/nuova', component: CreaSchedaComponent },
       { path: 'schede/:id', component: DettaglioSchedaComponent },
